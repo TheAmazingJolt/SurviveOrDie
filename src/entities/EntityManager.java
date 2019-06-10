@@ -27,6 +27,10 @@ public class EntityManager {
 	private ArrayList<Entity> entities3;
 	private ArrayList<Entity> e3overflow1;
 	private ArrayList<Entity> e3overflow2;
+
+	private ArrayList<Entity> entities4;
+	private ArrayList<Entity> e4overflow1;
+	private ArrayList<Entity> e4overflow2;
 	
 	private ArrayList<Entity> toAdd;
 	private ArrayList<NPC> toAddNpc2;
@@ -35,6 +39,7 @@ public class EntityManager {
 	private ArrayList<NPC> npcs;
 	private ArrayList<NPC> npcs2;
 	private ArrayList<NPC> npcs3;
+	private ArrayList<NPC> npcs4;
 	
 	private boolean positionDetermined = false;
 	private int currentSorting = 0;
@@ -62,15 +67,20 @@ public class EntityManager {
 		entities3 = new ArrayList<Entity>();
 		e3overflow1 = new ArrayList<Entity>();
 		e3overflow2 = new ArrayList<Entity>();
+		entities4 = new ArrayList<Entity>();
+		e4overflow1 = new ArrayList<Entity>();
+		e4overflow2 = new ArrayList<Entity>();
 		toAdd = new ArrayList<Entity>();
 		toAddNpc2 = new ArrayList<NPC>();
 		toRemove = new ArrayList<Entity>();
 		npcs = new ArrayList<NPC>();
 		npcs2 = new ArrayList<NPC>();
 		npcs3 = new ArrayList<NPC>();
+		npcs4 = new ArrayList<NPC>();
 		addEntity1(player);
 		addEntity2(player);
 		addEntity3(player);
+		addEntity4(player);
 		addEntity1(player2);
 		addNPCMain(new Francisco(handler, 832f, 832f, -3));
 		addNPC2Main(new Sierra(handler, 832f, 832f, -4));
@@ -167,6 +177,34 @@ public class EntityManager {
 	        entities3.addAll(toAdd);
 	        toAdd.clear();
 	        entities3.removeAll(toRemove);
+	        toRemove.clear();
+		}
+		if(handler.getWorld().getCurrentWorld() == 4) {
+			for(Entity e : entities4) {
+	            e.tick();
+	        }
+	        for(Entity e : e4overflow1) {
+	            if(e == player) {
+	            	continue;
+	            }
+	            e.tick();
+	        }
+	        for(Entity e : e4overflow2) {
+	            if(e == player) {
+	            	continue;
+	            }
+	            e.tick();
+	        }
+	        for(NPC n : npcs4) {
+	        	n.tick();
+	        }
+	        entities4.sort(renderSorter);
+	        e4overflow1.sort(renderSorter);
+	        e4overflow2.sort(renderSorter);
+	        npcs4.sort(renderSorter);
+	        entities4.addAll(toAdd);
+	        toAdd.clear();
+	        entities4.removeAll(toRemove);
 	        toRemove.clear();
 		}
     }
@@ -303,6 +341,49 @@ public class EntityManager {
 	    				continue;
 		    		}
 		    	}
+    		}else if(handler.getWorld().getCurrentWorld() == 4) {
+    			for(Entity e : entities4) {
+		    		if(e == player)
+		    			continue;
+		    		if(player.getX() >= e.getX() - 5 && player.getX() <= e.getX() + e.getWidth() + 5) {
+		    			if(player.getY() >= e.getY() - 5 && player.getY() <= e.getY() + e.getHeight() + 5) {
+		    				currentSorting = 1;
+		    				positionDetermined = true;
+		    			}else {
+		    				continue;
+		    			}
+		    		}else {
+	    				continue;
+		    		}
+		    	}
+		    	for(Entity e : e4overflow1) {
+		    		if(e == player)
+		    			continue;
+		    		if(player.getX() >= e.getX() - 5 && player.getX() <= e.getX() + e.getWidth() + 5) {
+		    			if(player.getY() >= e.getY() - 5 && player.getY() <= e.getY() + e.getHeight() + 5) {
+		    				currentSorting = 2;
+		    				positionDetermined = true;
+		    			}else {
+		    				continue;
+		    			}
+		    		}else {
+	    				continue;
+		    		}
+		    	}
+		    	for(Entity e : e4overflow2) {
+		    		if(e == player)
+		    			continue;
+		    		if(player.getX() >= e.getX() - 5 && player.getX() <= e.getX() + e.getWidth() + 5) {
+		    			if(player.getY() >= e.getY() - 5 && player.getY() <= e.getY() + e.getHeight() + 5) {
+		    				currentSorting = 3;
+		    				positionDetermined = true;
+		    			}else {
+		    				continue;
+		    			}
+		    		}else {
+	    				continue;
+		    		}
+		    	}
     		}
     	}
     	if(player.getxMove() != 0 || player.getyMove() != 0) {
@@ -401,8 +482,38 @@ public class EntityManager {
 	    		n.render(g);
 	    	}
     		player.postRender(g);
+    	}else if(handler.getWorld().getCurrentWorld() == 4){
+    		if(currentSorting == 0)
+    			player.render(g);
+    		for(Entity e : entities4)
+    		{
+    			if(e == player && currentSorting != 1) {
+    				continue;
+    			}
+    			if(e.isActive())
+    				e.render(g);
+    		}
+    		for(Entity e : e4overflow1)
+    		{
+    			if(e == player && currentSorting != 2) {
+    				continue;
+    			}
+    			if(e.isActive())
+    				e.render(g);
+    		}
+    		for(Entity e : e4overflow2)
+    		{
+    			if(e == player && currentSorting != 3) {
+    				continue;
+    			}
+    			if(e.isActive())
+    				e.render(g);
+    		}
+	    	for(NPC n : npcs4) {
+	    		n.render(g);
+	    	}
+    		player.postRender(g);
     	}
-        
     }
     
     public void addToOverflow() {
@@ -412,6 +523,8 @@ public class EntityManager {
     	e2overflow2.add(player);
     	e3overflow1.add(player);
     	e3overflow2.add(player);
+    	e4overflow1.add(player);
+    	e4overflow2.add(player);
     }
     
     public ArrayList<Entity> getE1overflow1() {
@@ -436,6 +549,14 @@ public class EntityManager {
 
 	public ArrayList<Entity> getE3overflow2() {
 		return e3overflow2;
+	}
+	
+	public ArrayList<Entity> getE4overflow1() {
+		return e4overflow1;
+	}
+
+	public ArrayList<Entity> getE4overflow2() {
+		return e4overflow2;
 	}
 
 	public void addEntity1(Entity e)
@@ -475,6 +596,19 @@ public class EntityManager {
 	    	return;
 	    }
 	    entities3.add(e);
+    }
+    
+    public void addEntity4(Entity e)
+    {
+	    if(entities4.size() >= 67) {
+	   		if(e4overflow1.size() >= 67) {
+	   			e4overflow2.add(e);
+	   			return;
+	   		}
+	   		e4overflow1.add(e);
+	    	return;
+	    }
+	    entities4.add(e);
     }
     
     public void add(Entity e)
@@ -537,6 +671,11 @@ public class EntityManager {
     public ArrayList<Entity> getEntities3()
     {
         return entities3;
+    }
+    
+    public ArrayList<Entity> getEntities4()
+    {
+        return entities4;
     }
 
     public void setEntities2(ArrayList<Entity> entities)

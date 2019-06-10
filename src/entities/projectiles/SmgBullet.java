@@ -231,6 +231,45 @@ public class SmgBullet extends Projectile
         			}
         		}
         	}
+        }if(handler.getWorld().getCurrentWorld() == 4) {
+        	for(Entity e : handler.getWorld().getEntityManager().getEntities4())
+        	{
+        		if(e != this && e.getCollisionBounds(0.0F, 0.0F).intersects(ar) && e != player && !e.isAmmo())
+        		{
+        			int healthBefore = health;
+        			e.hurt(this.attack);
+        			if(health != healthBefore)
+        				health = healthBefore;
+        			else {
+        				die();
+        			}
+        		}
+        	}
+        	for(Entity e : handler.getWorld().getEntityManager().getE4overflow1())
+        	{
+        		if(e != this && e.getCollisionBounds(0.0F, 0.0F).intersects(ar) && e != player && !e.isAmmo())
+        		{
+        			int healthBefore = health;
+        			e.hurt(this.attack);
+        			if(health != healthBefore)
+        				health = healthBefore;
+        			else {
+        				die();
+        			}
+        		}
+        	}for(Entity e : handler.getWorld().getEntityManager().getE4overflow2())
+        	{
+        		if(e != this && e.getCollisionBounds(0.0F, 0.0F).intersects(ar) && e != player && !e.isAmmo())
+        		{
+        			int healthBefore = health;
+        			e.hurt(this.attack);
+        			if(health != healthBefore)
+        				health = healthBefore;
+        			else {
+        				die();
+        			}
+        		}
+        	}
         }
     }
 

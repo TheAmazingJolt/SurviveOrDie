@@ -157,6 +157,28 @@ public abstract class Entity
                 if(!e.equals(this) && e.getCollisionBounds(0.0F, 0.0F).intersects(getCollisionBounds(xOffset, yOffset)))
                     return true;
             }
+    	}else if(handler.getWorld().getCurrentWorld() == 4) {
+    		for(Entity e : handler.getWorld().getEntityManager().getEntities4())
+            {
+    			if(handler.getWorld().getEntityManager().getPlayer2() != null && e.equals(handler.getWorld().getEntityManager().getPlayer2()))
+    				return false;
+                if(!e.equals(this) && e.getCollisionBounds(0.0F, 0.0F).intersects(getCollisionBounds(xOffset, yOffset)))
+                    return true;
+            }
+    		for(Entity e : handler.getWorld().getEntityManager().getE4overflow1())
+            {
+    			if(handler.getWorld().getEntityManager().getPlayer2() != null && e.equals(handler.getWorld().getEntityManager().getPlayer2()))
+    				return false;
+                if(!e.equals(this) && e.getCollisionBounds(0.0F, 0.0F).intersects(getCollisionBounds(xOffset, yOffset)))
+                    return true;
+            }
+    		for(Entity e : handler.getWorld().getEntityManager().getE4overflow2())
+            {
+    			if(handler.getWorld().getEntityManager().getPlayer2() != null && e.equals(handler.getWorld().getEntityManager().getPlayer2()))
+    				return false;
+                if(!e.equals(this) && e.getCollisionBounds(0.0F, 0.0F).intersects(getCollisionBounds(xOffset, yOffset)))
+                    return true;
+            }
     	}
         return false;
     }

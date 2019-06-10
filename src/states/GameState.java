@@ -43,7 +43,17 @@ public class GameState extends State
             	return;
         	}
         }else if(handler.getWorld().getCurrentWorld() == 2) {
-        	if(player.getKilledBosses() >= 1 && player.getX() >= 1472 && player.getY() >= 0 && player.getX() <= 1536 && player.getY() <= 64) {
+        	if(player.getKilledBosses() >= 2 && player.getX() >= 1472 && player.getY() >= 0 && player.getX() <= 1536 && player.getY() <= 64) {
+        		handler.getWorld().setCurrentWorld(player.getKilledBosses() + 1);
+            	handler.getWorld().getEntityManager().getPlayer().setKilledEnemies(0);
+            	handler.getWorld().getEntityManager().getPlayer().setPos(handler.getWorld().getEntityManager().getPlayer().getStartX(), 
+            			handler.getWorld().getEntityManager().getPlayer().getStartY());
+            	State.setPreviousState(handler.getGame().gameState);
+            	State.setState(handler.getGame().worldLoadState);
+            	return;
+            }
+        }else if(handler.getWorld().getCurrentWorld() == 3) {
+        	if(player.getKilledBosses() >= 3 && player.getX() >= 1472 && player.getY() >= 0 && player.getX() <= 1536 && player.getY() <= 64) {
         		handler.getWorld().setCurrentWorld(player.getKilledBosses() + 1);
             	handler.getWorld().getEntityManager().getPlayer().setKilledEnemies(0);
             	handler.getWorld().getEntityManager().getPlayer().setPos(handler.getWorld().getEntityManager().getPlayer().getStartX(), 

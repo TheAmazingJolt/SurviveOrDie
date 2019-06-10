@@ -22,6 +22,8 @@ import items.ItemManager;
 import main.Handler;
 import tiles.DoorTile;
 import tiles.DoorTile2;
+import tiles.SandyDoorTile;
+import tiles.SandyDoorTile2;
 import tiles.Tile;
 import tiles.structures.Structure;
 import utils.Utils;
@@ -64,14 +66,32 @@ public class World
     {
         entityManager.tick();
         itemManager.tick();
-        if(handler.getWorld().getEntityManager().getPlayer().getKilledEnemies() >= 5)
+        if(handler.getWorld().getEntityManager().getPlayer().getKilledEnemies() >= 5) {
+        	if(handler.getWorld().getCurrentWorld() == 4) {
+        		SandyDoorTile.open();
+        		return;
+        	}
             DoorTile.open();
-        else
+        }else {
+        	if(handler.getWorld().getCurrentWorld() == 4) {
+        		SandyDoorTile.close();
+        		return;
+        	}
         	DoorTile.close();
-        if(handler.getWorld().getEntityManager().getPlayer().getKilledBosses() >= 1 * handler.getWorld().getCurrentWorld())
+        }
+        if(handler.getWorld().getEntityManager().getPlayer().getKilledBosses() >= 1 * handler.getWorld().getCurrentWorld()) {
+        	if(handler.getWorld().getCurrentWorld() == 4) {
+        		SandyDoorTile2.open();
+        		return;
+        	}
             DoorTile2.open();
-        else
+    	}else {
+        	if(handler.getWorld().getCurrentWorld() == 4) {
+        		SandyDoorTile2.close();
+        		return;
+        	}
         	DoorTile2.close();
+    	}
     }
 
     public void render(Graphics g)
@@ -279,6 +299,16 @@ public class World
         			Tile.getTiles().add(Tile.icyGrassTile);
         		}else if(tiles[x][y] == 14) {
         			Tile.getTiles().add(Tile.doorTile2);
+        		}else if(tiles[x][y] == 15) {
+        			Tile.getTiles().add(Tile.sandTile);
+        		}else if(tiles[x][y] == 16) {
+        			Tile.getTiles().add(Tile.sandStoneTile);
+        		}else if(tiles[x][y] == 17) {
+        			Tile.getTiles().add(Tile.sandStoneWallTile);
+        		}else if(tiles[x][y] == 18) {
+        			Tile.getTiles().add(Tile.sandyDoorTile);
+        		}else if(tiles[x][y] == 19) {
+        			Tile.getTiles().add(Tile.sandyDoorTile2);
         		}
         	}
         }

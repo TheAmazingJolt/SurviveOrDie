@@ -25,7 +25,12 @@ public class Tile {
 	public static Tile icyRockTile = new IcyRockTile(11);
 	public static Tile icyStoneTile = new IcyStoneTile(12);
 	public static Tile icyGrassTile = new IcyGrassTile(13);
-	public static Tile doorTile2 = new DoorTile(14);
+	public static Tile doorTile2 = new DoorTile2(14);
+	public static Tile sandTile = new SandTile(15);
+	public static Tile sandStoneTile = new SandStoneTile(16);
+	public static Tile sandStoneWallTile = new SandStoneWallTile(17);
+	public static Tile sandyDoorTile = new SandyDoorTile(18);
+	public static Tile sandyDoorTile2 = new SandyDoorTile2(19);
 	
 	public static final int TILEWIDTH = 64, TILEHEIGHT = 64;
 	

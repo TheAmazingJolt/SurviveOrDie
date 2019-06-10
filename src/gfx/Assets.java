@@ -26,8 +26,10 @@ public class Assets
     public static BufferedImage sand;
     public static BufferedImage hellGrass;
     public static BufferedImage stoneWall;
+    public static BufferedImage sandStoneWall;
     public static BufferedImage hellStoneWall;
     public static BufferedImage stone;
+    public static BufferedImage sandStone;
     public static BufferedImage hellStone;
     public static BufferedImage water;
     public static BufferedImage woodenStructure;
@@ -322,8 +324,10 @@ public class Assets
         sand = sheet.crop(width * 4, height * 2, width, height);
         hellGrass = sheet.crop(0, width * 2, width, height);
         stoneWall = sheet.crop(96, 0, 32, 32);
+        sandStoneWall = sheet.crop(width * 5, height * 3, width, height);
         hellStoneWall = sheet.crop(0, height, width, height);
         stone = sheet.crop(96, 32, 32, 32);
+        sandStone = sheet.crop(width * 5, height * 2, width, height);
         hellStone = sheet.crop(width, height * 2, width, height);
         water = sheet.crop(width * 2, height * 3, width, height);
         woodenStructure = sheet.crop(width * 2, height * 2, width, height);

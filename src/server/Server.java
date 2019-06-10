@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import entities.Entity;
 import main.Handler;
 import utils.Timer;
-import utils.Utils;
 
 public class Server {
 
@@ -47,22 +46,29 @@ public class Server {
 	public static void tick() {
 		if(active) {
 			try {
-				handler.getWorld().getEntityManager().getPlayer2().setX(in.readFloat());
-				handler.getWorld().getEntityManager().getPlayer2().setY(in.readFloat());
-				handler.getWorld().getEntityManager().getPlayer2().setHealth(in.readInt());
-				handler.getWorld().getEntityManager().getPlayer().setHealth(in.readInt());
-				handler.getWorld().getEntityManager().getPlayer2().setxMove(in.readFloat());
-				handler.getWorld().getEntityManager().getPlayer2().setyMove(in.readFloat());
-				entities = setEntityList();
-				int size = in.read();
-				for(int i = 0; i < size; i++) {
-					Entity e = entities.get(i);
-		           	if(e.getId() < 0)
-		           		continue;
-					int activity = in.read();
-					if(activity == 1) {
-						e.suicide();
+				if(timer == null) {
+					timer = new Timer(25, 1);
+				}else if(timer != null && !timer.isCompleted()) {
+					timer.tick();
+				}else if(timer != null && timer.isCompleted()) {
+					handler.getWorld().getEntityManager().getPlayer2().setX(in.readFloat());
+					handler.getWorld().getEntityManager().getPlayer2().setY(in.readFloat());
+					handler.getWorld().getEntityManager().getPlayer2().setHealth(in.readInt());
+					handler.getWorld().getEntityManager().getPlayer().setHealth(in.readInt());
+					handler.getWorld().getEntityManager().getPlayer2().setxMove(in.readFloat());
+					handler.getWorld().getEntityManager().getPlayer2().setyMove(in.readFloat());
+					entities = setEntityList();
+					int size = in.read();
+					for(int i = 0; i < size; i++) {
+						Entity e = entities.get(i);
+			           	if(e.getId() < 0)
+			           		continue;
+						int activity = in.read();
+						if(activity == 1) {
+							e.suicide();
+						}
 					}
+					timer = null;
 				}
 				return;
 			}catch(IOException i) {

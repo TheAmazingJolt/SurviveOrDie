@@ -42,31 +42,38 @@ public class Client {
 	public static void tick() {
 		if(active) {
 			try{
-				out.writeFloat(handler.getWorld().getEntityManager().getPlayer().getX());
-				out.writeFloat(handler.getWorld().getEntityManager().getPlayer().getY());
-				out.writeInt(handler.getWorld().getEntityManager().getPlayer().getHealth());
-				out.writeInt(handler.getWorld().getEntityManager().getPlayer2().getHealth());
-				out.writeFloat(handler.getWorld().getEntityManager().getPlayer().getxMove());
-				out.writeFloat(handler.getWorld().getEntityManager().getPlayer().getyMove());
-				entities = setEntityList();
-				out.writeInt(entities.size());
-				for(int i = 1;i<entities.size();i++) {
-			       	for(Entity e : entities) {
-			           	if(e.getId() < 0)
-			           		continue;
-			           	if(e.getId() == i) {
-			           		if(e.isActive()) {
-			           			out.write(i - 1);
-			           			out.write(0);
-			               	}else if(!e.isActive()) {
-			           			out.write(i - 1);
-			               		out.write(1);
-			               	}
-			           	}else {
-			           		continue;
-			           	}
-			       	}
-			    }
+				if(timer == null) {
+					timer = new Timer(25, 1);
+				}else if(timer != null && !timer.isCompleted()) {
+					timer.tick();
+				}else if(timer != null && timer.isCompleted()) {
+					out.writeFloat(handler.getWorld().getEntityManager().getPlayer().getX());
+					out.writeFloat(handler.getWorld().getEntityManager().getPlayer().getY());
+					out.writeInt(handler.getWorld().getEntityManager().getPlayer().getHealth());
+					out.writeInt(handler.getWorld().getEntityManager().getPlayer2().getHealth());
+					out.writeFloat(handler.getWorld().getEntityManager().getPlayer().getxMove());
+					out.writeFloat(handler.getWorld().getEntityManager().getPlayer().getyMove());
+					entities = setEntityList();
+					out.writeInt(entities.size());
+					for(int i = 1;i<entities.size();i++) {
+				       	for(Entity e : entities) {
+				           	if(e.getId() < 0)
+				           		continue;
+				           	if(e.getId() == i) {
+				           		if(e.isActive()) {
+				           			out.write(i - 1);
+				           			out.write(0);
+				               	}else if(!e.isActive()) {
+				           			out.write(i - 1);
+				               		out.write(1);
+				               	}
+				           	}else {
+				           		continue;
+				           	}
+				       	}
+				    }
+					timer = null;
+				}
 				return;
 			}catch(IOException i) {
 				i.printStackTrace();

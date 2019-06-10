@@ -23,6 +23,7 @@ public class Assets
     
     public static BufferedImage dirt;
     public static BufferedImage grass;
+    public static BufferedImage sand;
     public static BufferedImage hellGrass;
     public static BufferedImage stoneWall;
     public static BufferedImage hellStoneWall;
@@ -39,6 +40,10 @@ public class Assets
     public static BufferedImage closedDoor;
     public static BufferedImage openDoor2;
     public static BufferedImage closedDoor2;
+    public static BufferedImage openSandyDoor;
+    public static BufferedImage closedSandyDoor;
+    public static BufferedImage openSandyDoor2;
+    public static BufferedImage closedSandyDoor2;
     public static BufferedImage warp;
     public static BufferedImage icyWall;
     public static BufferedImage icyGrass;
@@ -314,6 +319,7 @@ public class Assets
         
         dirt = sheet.crop(32, 0, 32, 32);
         grass = sheet.crop(64, 0, 32, 32);
+        sand = sheet.crop(width * 4, height * 2, width, height);
         hellGrass = sheet.crop(0, width * 2, width, height);
         stoneWall = sheet.crop(96, 0, 32, 32);
         hellStoneWall = sheet.crop(0, height, width, height);
@@ -325,6 +331,10 @@ public class Assets
         openDoor = sheet.crop(width * 2, height, 32, 32);
         closedDoor2 = sheet.crop(width * 3, height * 3, 32, 32);
         openDoor2 = sheet.crop(width * 4, height * 3, 32, 32);
+        closedSandyDoor = sheet.crop(width * 4, height, 32, 32);
+        openSandyDoor = sheet.crop(width * 5, height, 32, 32);
+        closedSandyDoor2 = sheet.crop(width * 4, 0, 32, 32);
+        openSandyDoor2 = sheet.crop(width * 5, 0, 32, 32);
         warp = sheet.crop(0, 0, 32, 32);
         icyGrass = sheet.crop(width * 3, height * 2, width, height);
         icyStone = sheet.crop(0, height * 3, width, height);

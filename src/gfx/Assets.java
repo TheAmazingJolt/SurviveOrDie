@@ -2,6 +2,9 @@ package gfx;
 
 import java.awt.Font;
 import java.awt.image.BufferedImage;
+import java.io.File;
+
+import javax.imageio.ImageIO;
 
 // Referenced classes of package gfx:
 //            FontLoader, SpriteSheet, ImageLoader
@@ -157,6 +160,8 @@ public class Assets
 	
     public static void init()
     {
+    	ImageIO.setCacheDirectory(new File("res/cache"));
+    	
     	font11 = FontLoader.loadFont("res/fonts/slkscr.ttf", 11F);
     	font16 = FontLoader.loadFont("res/fonts/slkscr.ttf", 16F);
         font20 = FontLoader.loadFont("res/fonts/slkscr.ttf", 20F);

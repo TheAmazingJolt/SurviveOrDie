@@ -21,25 +21,25 @@ public class MultiplayerGameState extends State
 
     public void tick()
     {
-        if(handler.getWorld().getEntityManager().getPlayer().getInventory().isActive())
-            canPause = false;
-        else
-            canPause = true;
-        if(handler.getKeyManager().keyJustPressed(27) && canPause)
-            State.setState(handler.getGame().pauseState);
-        if(handler.getWorld().getEntityManager().getPlayer().getKilledBosses() <= 1 && 
-        		handler.getWorld().getEntityManager().getPlayer().getX() >= 1079 &&
-        		handler.getWorld().getEntityManager().getPlayer().getY() >= 2239) {
-        	handler.getWorld().setCurrentWorld(handler.getWorld().getEntityManager().getPlayer().getKilledBosses() + 1);
-        	//1000,2100
-        	State.setState(handler.getGame().worldLoadState);
-          }
-        handler.getWorld().tick();
+//        if(handler.getWorld().getEntityManager().getPlayer().getInventory().isActive())
+//            canPause = false;
+//        else
+//            canPause = true;
+//        if(handler.getKeyManager().keyJustPressed(27) && canPause)
+//            State.setState(handler.getGame().pauseState);
+//        if(handler.getWorld().getEntityManager().getPlayer().getKilledBosses() <= 1 && 
+//        		handler.getWorld().getEntityManager().getPlayer().getX() >= 1079 &&
+//        		handler.getWorld().getEntityManager().getPlayer().getY() >= 2239) {
+//        	handler.getWorld().setCurrentWorld(handler.getWorld().getEntityManager().getPlayer().getKilledBosses() + 1);
+//        	//1000,2100
+//        	State.setState(handler.getGame().worldLoadState);
+//          }
+//        handler.getWorld().tick();
     }
 
     public void render(Graphics g)
     {
-        handler.getWorld().render(g);
+//        handler.getWorld().render(g);
     }
 
     

@@ -79,8 +79,6 @@ public class Help
 
     public void tick()
     {
-    	if(handler.getGame().isMultiplayer())
-    		return;
     	if(!handler.getWorld().isLoaded() && !completed && handler.getWorld().getCurrentWorld() == 1) {
     		active = true;
     		if(!audioStarted) {

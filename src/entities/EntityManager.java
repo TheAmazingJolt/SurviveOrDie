@@ -50,9 +50,8 @@ public class EntityManager {
 	public EntityManager(Handler handler, Player player) {
 		this.handler = handler;
 		this.player = player;
-		if(handler.getGame().isMultiplayer()) {
+		if(handler.getGame().isMultiplayer())
 			player2 = new Player(handler, 3164, 3164, 2, -2);
-		}
 		entities1 = new ArrayList<Entity>();
 		e1overflow1 = new ArrayList<Entity>();
 		e1overflow2 = new ArrayList<Entity>();
@@ -71,7 +70,8 @@ public class EntityManager {
 		addEntity1(player);
 		addEntity2(player);
 		addEntity3(player);
-		addEntity1(player2);
+		if(handler.getGame().isMultiplayer())
+			addEntity1(player2);
 		addNPCMain(new Francisco(handler, 832f, 832f, -3));
 		addNPC2Main(new Sierra(handler, 832f, 832f, -4));
 		addNPC3Main(new Chris(handler, 832f, 832f, -5));

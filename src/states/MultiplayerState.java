@@ -41,15 +41,15 @@ public class MultiplayerState extends State
     {
         if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_J)) {
         	
-        	world = new World(handler, "res/worlds/world1.txt");
-            handler.setWorld(world);
-            
-            handler.getWorld().setLoaded(false);
-            handler.getWorld().setCount(World.getCount() + 1);
-            handler.getWorld().setLoadedWorld(World.getCount());
-            handler.getWorld().setCurrentWorld(1);
-        	
-            handler.getWorld().getEntityManager().createPlayer2();
+//        	world = new World(handler, "res/worlds/world1.txt");
+//            handler.setWorld(world);
+//            
+//            handler.getWorld().setLoaded(false);
+//            handler.getWorld().setCount(World.getCount() + 1);
+//            handler.getWorld().setLoadedWorld(World.getCount());
+//            handler.getWorld().setCurrentWorld(1);
+//        	
+//            handler.getWorld().getEntityManager().createPlayer2();
             
         	State.setState(handler.getGame().multiplayerWorldLoadState);
         }

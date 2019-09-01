@@ -1,5 +1,6 @@
 package server;
 
+import java.awt.event.KeyEvent;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
@@ -42,38 +43,47 @@ public class Client {
 	public static void tick() {
 		if(active) {
 			try{
-				if(timer == null) {
-					timer = new Timer(25, 1);
-				}else if(timer != null && !timer.isCompleted()) {
-					timer.tick();
-				}else if(timer != null && timer.isCompleted()) {
-					out.writeFloat(handler.getWorld().getEntityManager().getPlayer().getX());
-					out.writeFloat(handler.getWorld().getEntityManager().getPlayer().getY());
-					out.writeInt(handler.getWorld().getEntityManager().getPlayer().getHealth());
-					out.writeInt(handler.getWorld().getEntityManager().getPlayer2().getHealth());
-					out.writeFloat(handler.getWorld().getEntityManager().getPlayer().getxMove());
-					out.writeFloat(handler.getWorld().getEntityManager().getPlayer().getyMove());
-					entities = setEntityList();
-					out.writeInt(entities.size());
-					for(int i = 1;i<entities.size();i++) {
-				       	for(Entity e : entities) {
-				           	if(e.getId() < 0)
-				           		continue;
-				           	if(e.getId() == i) {
-				           		if(e.isActive()) {
-				           			out.write(i - 1);
-				           			out.write(0);
-				               	}else if(!e.isActive()) {
-				           			out.write(i - 1);
-				               		out.write(1);
-				               	}
-				           	}else {
-				           		continue;
-				           	}
-				       	}
-				    }
-					timer = null;
+				//keyboard keys
+				if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_W)) {
+					out.writeUTF("W");
+				}else if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_S)) {
+					out.writeUTF("S");
+				}else if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_A)) {
+					out.writeUTF("A");
+				}else if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_D)) {
+					out.writeUTF("D");
+				}else if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_1)) {
+					out.writeUTF("1");
+				}else if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_2)) {
+					out.writeUTF("2");
+				}else if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_3)) {
+					out.writeUTF("3");
+				}else if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_4)) {
+					out.writeUTF("4");
+				}else if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_5)) {
+					out.writeUTF("5");
+				}else if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_SHIFT)) {
+					out.writeUTF("shift");
+				}else if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_E)) {
+					out.writeUTF("e");
+				}else if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_ESCAPE)) {
+					out.writeUTF("escape");
+				}else if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_RIGHT)) {
+					out.writeUTF("right");
+				}else if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_LEFT)) {
+					out.writeUTF("left");
 				}
+				
+				//mouse
+				if(handler.getMouseManager().isLeftPressed()) {
+					out.writeUTF("left");
+				}else if(handler.getMouseManager().isRightPressed()) {
+					out.writeUTF("right");
+				}
+				out.writeFloat(handler.getMouseManager().getMouseX());
+				out.writeFloat(handler.getMouseManager().getMouseY());
+				out.writeFloat(handler.getGameCamera().getxOffset());
+				out.writeFloat(handler.getGameCamera().getyOffset());
 				return;
 			}catch(IOException i) {
 				i.printStackTrace();

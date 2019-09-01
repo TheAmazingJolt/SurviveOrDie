@@ -30,12 +30,12 @@ public class MultiplayerWorldLoadState extends State
 
     public void tick()
     {
-    	handler.getWorld().unloadWorld();
-    	Tile.getTiles().removeAll(Tile.getTiles());
-    	
-        world = new World(handler, "res/worlds/world" + handler.getWorld().getCurrentWorld() + ".txt");
-        
-        handler.setWorld(world);
+//    	handler.getWorld().unloadWorld();
+//    	Tile.getTiles().removeAll(Tile.getTiles());
+//    	
+//        world = new World(handler, "res/worlds/world" + handler.getWorld().getCurrentWorld() + ".txt");
+//        
+//        handler.setWorld(world);
         
         MultiplayerState.start();
         

@@ -46,32 +46,48 @@ public class Client {
 				//keyboard keys
 				if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_W)) {
 					out.writeUTF("W");
+					System.out.println("W");
 				}else if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_S)) {
 					out.writeUTF("S");
+					System.out.println("S");
 				}else if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_A)) {
 					out.writeUTF("A");
+					System.out.println("A");
 				}else if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_D)) {
 					out.writeUTF("D");
+					System.out.println("D");
 				}else if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_1)) {
 					out.writeUTF("1");
+					System.out.println("1");
 				}else if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_2)) {
 					out.writeUTF("2");
+					System.out.println("2");
 				}else if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_3)) {
 					out.writeUTF("3");
+					System.out.println("3");
 				}else if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_4)) {
 					out.writeUTF("4");
+					System.out.println("4");
 				}else if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_5)) {
 					out.writeUTF("5");
+					System.out.println("5");
 				}else if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_SHIFT)) {
 					out.writeUTF("shift");
+					System.out.println("shift");
 				}else if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_E)) {
 					out.writeUTF("e");
+					System.out.println("e");
 				}else if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_ESCAPE)) {
 					out.writeUTF("escape");
+					System.out.println("escape");
 				}else if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_RIGHT)) {
 					out.writeUTF("right");
+					System.out.println("right");
 				}else if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_LEFT)) {
 					out.writeUTF("left");
+					System.out.println("left");
+				}else {
+					out.writeUTF("none");
 				}
 				
 				//mouse
@@ -79,7 +95,10 @@ public class Client {
 					out.writeUTF("left");
 				}else if(handler.getMouseManager().isRightPressed()) {
 					out.writeUTF("right");
+				}else {
+					out.writeUTF("none");
 				}
+				
 				out.writeFloat(handler.getMouseManager().getMouseX());
 				out.writeFloat(handler.getMouseManager().getMouseY());
 				out.writeFloat(handler.getGameCamera().getxOffset());

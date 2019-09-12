@@ -26,7 +26,7 @@ public class MultiplayerState extends State
 	private static Client client2;
 	private UIManager uiManager;
 	private World world;
-	private static int id = 1;
+	private static int id = 2;
 	
 	private static Scanner scanner = new Scanner(System.in);
 

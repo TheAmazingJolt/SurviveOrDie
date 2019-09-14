@@ -13,8 +13,8 @@ public class Tile {
 	public static ArrayList<Structure> structures = new ArrayList<Structure>();
 	public static Tile grassTile = new GrassTile(0);
 	public static Tile dirtTile = new DirtTile(1);
-	public static Tile rockTile = new RockTile(2);
-	public static Tile stoneTile = new StoneTile(3);
+	public static Tile stoneTile = new StoneTile(2);
+	public static Tile rockTile = new RockTile(3);
 	public static Tile waterTile = new WaterTile(4);
 	public static Tile doorTile = new DoorTile(5);
 	public static Tile warpTile = new WarpTile(6);

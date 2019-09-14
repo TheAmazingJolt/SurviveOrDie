@@ -39,7 +39,7 @@ public class World
     private int height2;
     private int spawnX;
     private int spawnY;
-    private int tiles[][];
+    private int[][] tiles;
     private static int count = 0;
     private static int worldNum;
     private static int loadedSave = 1;
@@ -49,6 +49,8 @@ public class World
     private static int currentWorld;
     private static int totalEntities1;
     private static int totalEntities2;
+    
+    private WorldGenerator generator;
 	
     public World(Handler handle, String path)
     {
@@ -57,8 +59,6 @@ public class World
         entityManager = new EntityManager(handler, new Player(handler, 100, 100, 1, -1));
         itemManager = new ItemManager(handler);
         loadWorld(path);
-        spawnX = 3264;
-        spawnY = 3264;
         entityManager.getPlayer().setPos(spawnX, spawnY);
     }
 
@@ -184,15 +184,15 @@ public class World
 
 	public void loadWorld(String path)
     {
+		width = 100;
+		height = 100;
+		spawnX = (width / 2) * 64;
+		spawnY = (height / 2) * 64;
         String file = Utils.loadFileAsString(path);
         String file2 = Utils.loadFileAsString(path.replace(".txt", "entities.txt")); 
         String tokens[] = file.split("\\s+");
         String tokens2[] = file2.split("\\s+");
-        width = Utils.parseInt(tokens[0]);
-        height = Utils.parseInt(tokens[1]);
         height2 = Utils.parseInt(tokens2[0]);
-        //spawnX = Utils.parseInt(tokens[2]);
-        //spawnY = Utils.parseInt(tokens[3]);
         tiles = new int[width][height];
         String token[];
         String token2[];
@@ -266,19 +266,22 @@ public class World
             }
         }
       
+
+		generator = new WorldGenerator(width, height, currentWorld);
+    	generator.generate();
         
         for(int y = 0; y < height; y++) {
         	for(int x = 0; x < width; x++) {
-            	token = tokens[x + y * width + 4].split("\\ ");
-                tiles[x][y] = Utils.parseInt(token[0]);
+//            	token = tokens[x + y * width + 4].split("\\ ");
+                tiles[x][y] = generator.getTile(x, y);
         		if(tiles[x][y] == 0) {
         			Tile.getTiles().add(Tile.grassTile);
         		}else if(tiles[x][y] == 1) {
         			Tile.getTiles().add(Tile.dirtTile);
         		}else if(tiles[x][y] == 2) {
-        			Tile.getTiles().add(Tile.rockTile);
-        		}else if(tiles[x][y] == 3) {
         			Tile.getTiles().add(Tile.stoneTile);
+        		}else if(tiles[x][y] == 3) {
+        			Tile.getTiles().add(Tile.rockTile);
         		}else if(tiles[x][y] == 4) {
         			Tile.getTiles().add(Tile.waterTile);
         		}else if(tiles[x][y] == 5) {
@@ -357,6 +360,10 @@ public class World
 
 	public static void setTotalEntities2(int totalEntities2) {
 		World.totalEntities2 = totalEntities2;
+	}
+	
+	public int[][] getTiles(){
+		return tiles;
 	}
 
 	public int getCurrentWorld() {

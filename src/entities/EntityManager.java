@@ -81,7 +81,8 @@ public class EntityManager {
 		addEntity2(player);
 		addEntity3(player);
 		addEntity4(player);
-		addEntity1(player2);
+		if(handler.getGame().isMultiplayer())
+			addEntity1(player2);
 		addNPCMain(new Francisco(handler, 832f, 832f, -3));
 		addNPC2Main(new Sierra(handler, 832f, 832f, -4));
 		addNPC3Main(new Chris(handler, 832f, 832f, -5));

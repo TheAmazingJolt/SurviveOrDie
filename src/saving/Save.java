@@ -55,8 +55,17 @@ public class Save
             FileWriter fileWriter = new FileWriter(itemFileName);
             BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
             
+            int[][] tiles = handler.getWorld().getTiles();
+            
             bufferedWriter.write(Integer.toString(handler.getWorld().getCurrentWorld()));
-
+            bufferedWriter.newLine();
+            for(int y = 0; y < tiles.length; y++) {
+            	for(int x = 0; x < tiles.length; x++) {
+            		bufferedWriter.write(tiles[x][y] + " ");
+            	}
+            	bufferedWriter.newLine();
+            }
+            
             bufferedWriter.close();
         }
         catch(IOException ex)

@@ -270,7 +270,7 @@ public class LoadState extends State
 
     public void loadStuff(int num)
     {
-    	Load.loadWorldData(saveName, handler);
+    	Load.loadWorldNumData(saveName, handler);
     	world = new World(handler, "res/worlds/world" + worldToLoad + ".txt");
         handler.setWorld(world);
         handler.getWorld().setLoadedWorld(num);

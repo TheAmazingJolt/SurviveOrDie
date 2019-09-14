@@ -46,8 +46,8 @@ public class Load
         }
     }
     
-    public static void loadWorldData(String worldName, Handler handler) {
-    	String itemFileName = (new StringBuilder("res/saves/")).append(worldName).append("/worldSave.txt").toString();
+    public static void loadWorldNumData(String worldName, Handler handler) {
+    	String itemFileName = (new StringBuilder("res/saves/")).append(worldName).append("/worldNumSave.txt").toString();
         try
         {
             FileReader fileReader = new FileReader(itemFileName);

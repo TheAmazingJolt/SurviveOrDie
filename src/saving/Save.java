@@ -46,6 +46,27 @@ public class Save
     	}
     }
     
+    public static void saveWorldNumData(Handler handle, String name) {
+    	handler = handle;
+        createDirectory();
+        String itemFileName = (new StringBuilder("res/saves/")).append(name).append("/worldNumSave.txt").toString();
+        try
+        {
+            FileWriter fileWriter = new FileWriter(itemFileName);
+            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+            
+            bufferedWriter.write(Integer.toString(handler.getWorld().getCurrentWorld()));
+            
+            bufferedWriter.close();
+        }
+        catch(IOException ex)
+        {
+            createDirectory();
+            saveWorldNumData(handler, name);
+            System.out.println((new StringBuilder("Error writing to file '")).append(itemFileName).append("'").toString());
+        }
+    }
+    
     public static void saveWorldData(Handler handle, String name) {
     	handler = handle;
         createDirectory();
@@ -57,7 +78,7 @@ public class Save
             
             int[][] tiles = handler.getWorld().getTiles();
             
-            bufferedWriter.write(Integer.toString(handler.getWorld().getCurrentWorld()));
+            bufferedWriter.write(tiles.length);
             bufferedWriter.newLine();
             for(int y = 0; y < tiles.length; y++) {
             	for(int x = 0; x < tiles.length; x++) {
@@ -71,7 +92,7 @@ public class Save
         catch(IOException ex)
         {
             createDirectory();
-            saveWorldData(handler, name);
+            saveWorldNumData(handler, name);
             System.out.println((new StringBuilder("Error writing to file '")).append(itemFileName).append("'").toString());
         }
     }

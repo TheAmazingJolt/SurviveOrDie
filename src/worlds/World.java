@@ -266,54 +266,105 @@ public class World
             }
         }
       
-
-		generator = new WorldGenerator(width, height, currentWorld);
-    	generator.generate();
-        
-        for(int y = 0; y < height; y++) {
-        	for(int x = 0; x < width; x++) {
-//            	token = tokens[x + y * width + 4].split("\\ ");
-                tiles[x][y] = generator.getTile(x, y);
-        		if(tiles[x][y] == 0) {
-        			Tile.getTiles().add(Tile.grassTile);
-        		}else if(tiles[x][y] == 1) {
-        			Tile.getTiles().add(Tile.dirtTile);
-        		}else if(tiles[x][y] == 2) {
-        			Tile.getTiles().add(Tile.stoneTile);
-        		}else if(tiles[x][y] == 3) {
-        			Tile.getTiles().add(Tile.rockTile);
-        		}else if(tiles[x][y] == 4) {
-        			Tile.getTiles().add(Tile.waterTile);
-        		}else if(tiles[x][y] == 5) {
-        			Tile.getTiles().add(Tile.doorTile);
-        		}else if(tiles[x][y] == 6) {
-        			Tile.getTiles().add(Tile.warpTile);
-        		}else if(tiles[x][y] == 7) {
-        			Tile.getTiles().add(Tile.hellRockTile);
-        		}else if(tiles[x][y] == 8) {
-        			Tile.getTiles().add(Tile.hellStoneTile);
-        		}else if(tiles[x][y] == 9) {
-        			Tile.getTiles().add(Tile.hellGrassTile);
-        		}else if(tiles[x][y] == 11) {
-        			Tile.getTiles().add(Tile.icyRockTile);
-        		}else if(tiles[x][y] == 12) {
-        			Tile.getTiles().add(Tile.icyStoneTile);
-        		}else if(tiles[x][y] == 13) {
-        			Tile.getTiles().add(Tile.icyGrassTile);
-        		}else if(tiles[x][y] == 14) {
-        			Tile.getTiles().add(Tile.doorTile2);
-        		}else if(tiles[x][y] == 15) {
-        			Tile.getTiles().add(Tile.sandTile);
-        		}else if(tiles[x][y] == 16) {
-        			Tile.getTiles().add(Tile.sandStoneTile);
-        		}else if(tiles[x][y] == 17) {
-        			Tile.getTiles().add(Tile.sandStoneWallTile);
-        		}else if(tiles[x][y] == 18) {
-        			Tile.getTiles().add(Tile.sandyDoorTile);
-        		}else if(tiles[x][y] == 19) {
-        			Tile.getTiles().add(Tile.sandyDoorTile2);
-        		}
-        	}
+        if(!loaded) {
+			generator = new WorldGenerator(width, height, currentWorld);
+	    	generator.generate();
+	        
+	        for(int y = 0; y < height; y++) {
+	        	for(int x = 0; x < width; x++) {
+	            	token = tokens[x + y * width + 4].split("\\ ");
+	                tiles[x][y] = generator.getTile(x, y);
+	        		if(tiles[x][y] == 0) {
+	        			Tile.getTiles().add(Tile.grassTile);
+	        		}else if(tiles[x][y] == 1) {
+	        			Tile.getTiles().add(Tile.dirtTile);
+	        		}else if(tiles[x][y] == 2) {
+	        			Tile.getTiles().add(Tile.stoneTile);
+	        		}else if(tiles[x][y] == 3) {
+	        			Tile.getTiles().add(Tile.rockTile);
+	        		}else if(tiles[x][y] == 4) {
+	        			Tile.getTiles().add(Tile.waterTile);
+	        		}else if(tiles[x][y] == 5) {
+	        			Tile.getTiles().add(Tile.doorTile);
+	        		}else if(tiles[x][y] == 6) {
+	        			Tile.getTiles().add(Tile.warpTile);
+	        		}else if(tiles[x][y] == 7) {
+	        			Tile.getTiles().add(Tile.hellRockTile);
+	        		}else if(tiles[x][y] == 8) {
+	        			Tile.getTiles().add(Tile.hellStoneTile);
+	        		}else if(tiles[x][y] == 9) {
+	        			Tile.getTiles().add(Tile.hellGrassTile);
+	        		}else if(tiles[x][y] == 11) {
+	        			Tile.getTiles().add(Tile.icyRockTile);
+	        		}else if(tiles[x][y] == 12) {
+	        			Tile.getTiles().add(Tile.icyStoneTile);
+	        		}else if(tiles[x][y] == 13) {
+	        			Tile.getTiles().add(Tile.icyGrassTile);
+	        		}else if(tiles[x][y] == 14) {
+	        			Tile.getTiles().add(Tile.doorTile2);
+	        		}else if(tiles[x][y] == 15) {
+	        			Tile.getTiles().add(Tile.sandTile);
+	        		}else if(tiles[x][y] == 16) {
+	        			Tile.getTiles().add(Tile.sandStoneTile);
+	        		}else if(tiles[x][y] == 17) {
+	        			Tile.getTiles().add(Tile.sandStoneWallTile);
+	        		}else if(tiles[x][y] == 18) {
+	        			Tile.getTiles().add(Tile.sandyDoorTile);
+	        		}else if(tiles[x][y] == 19) {
+	        			Tile.getTiles().add(Tile.sandyDoorTile2);
+	        		}
+	        	}
+	        }
+        }else if(loaded) {
+        	String save = "save" + loadedSave;
+        	String path2 = save + "/worldSave.txt";
+        	String file3 = Utils.loadFileAsString(path2);
+            String tokens3[] = file3.split("\\s+");
+            for(int y = 0; y < height; y++) {
+	        	for(int x = 0; x < width; x++) {
+	            	token = tokens[x + y * width + 4].split("\\ ");
+	                tiles[x][y] = Utils.parseInt(token);
+	        		if(tiles[x][y] == 0) {
+	        			Tile.getTiles().add(Tile.grassTile);
+	        		}else if(tiles[x][y] == 1) {
+	        			Tile.getTiles().add(Tile.dirtTile);
+	        		}else if(tiles[x][y] == 2) {
+	        			Tile.getTiles().add(Tile.stoneTile);
+	        		}else if(tiles[x][y] == 3) {
+	        			Tile.getTiles().add(Tile.rockTile);
+	        		}else if(tiles[x][y] == 4) {
+	        			Tile.getTiles().add(Tile.waterTile);
+	        		}else if(tiles[x][y] == 5) {
+	        			Tile.getTiles().add(Tile.doorTile);
+	        		}else if(tiles[x][y] == 6) {
+	        			Tile.getTiles().add(Tile.warpTile);
+	        		}else if(tiles[x][y] == 7) {
+	        			Tile.getTiles().add(Tile.hellRockTile);
+	        		}else if(tiles[x][y] == 8) {
+	        			Tile.getTiles().add(Tile.hellStoneTile);
+	        		}else if(tiles[x][y] == 9) {
+	        			Tile.getTiles().add(Tile.hellGrassTile);
+	        		}else if(tiles[x][y] == 11) {
+	        			Tile.getTiles().add(Tile.icyRockTile);
+	        		}else if(tiles[x][y] == 12) {
+	        			Tile.getTiles().add(Tile.icyStoneTile);
+	        		}else if(tiles[x][y] == 13) {
+	        			Tile.getTiles().add(Tile.icyGrassTile);
+	        		}else if(tiles[x][y] == 14) {
+	        			Tile.getTiles().add(Tile.doorTile2);
+	        		}else if(tiles[x][y] == 15) {
+	        			Tile.getTiles().add(Tile.sandTile);
+	        		}else if(tiles[x][y] == 16) {
+	        			Tile.getTiles().add(Tile.sandStoneTile);
+	        		}else if(tiles[x][y] == 17) {
+	        			Tile.getTiles().add(Tile.sandStoneWallTile);
+	        		}else if(tiles[x][y] == 18) {
+	        			Tile.getTiles().add(Tile.sandyDoorTile);
+	        		}else if(tiles[x][y] == 19) {
+	        			Tile.getTiles().add(Tile.sandyDoorTile2);
+	        		}
+	        	}
+	        }
         }
 
     }

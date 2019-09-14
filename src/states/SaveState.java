@@ -53,7 +53,7 @@ public class SaveState extends State
             Save.saveEntityData(handler, saveName);
             Save.savePlayerData(handler.getWorld().getEntityManager().getPlayer(), saveName);
             Save.saveNPCData(handler.getWorld().getEntityManager().getPlayer(), saveName);
-            Save.saveWorldData(handler, saveName);
+            Save.saveWorldNumData(handler, saveName);
             Save.saveOtherData(World.getCount());
             Save.saveSettings(handler);
             System.exit(0);

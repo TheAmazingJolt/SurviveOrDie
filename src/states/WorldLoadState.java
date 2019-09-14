@@ -42,6 +42,10 @@ public class WorldLoadState extends State
     	
     	handler.getWorld().unloadWorld();
     	Tile.getTiles().removeAll(Tile.getTiles());
+    
+    	if(handler.getWorld().getCurrentWorld() == 0) {
+    		handler.getWorld().setCurrentWorld(1);
+    	}
     	
         world = new World(handler, "res/worlds/world" + handler.getWorld().getCurrentWorld() + ".txt");
         
@@ -55,7 +59,7 @@ public class WorldLoadState extends State
         	started = true;
         }
         
-        Save.saveWorldData(handler, "save" + handler.getWorld().getLoadedSave());
+       // Save.saveWorldData(handler, "save" + handler.getWorld().getLoadedSave());
         
         handler.getWorld().getEntityManager().addToOverflow();
         

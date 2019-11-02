@@ -33,7 +33,7 @@ public class Zombie extends Creature
 	
     public Zombie(Handler handler, float x, float y, int id, Player player)
     {
-        super(handler, x, y, 64, 64, maxHealth, id);
+        super(handler, x, y, 64, 64, maxHealth, id, "Zombie");
         this.id = id;
         this.player = player;
         startX = x;

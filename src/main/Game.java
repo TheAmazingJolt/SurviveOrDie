@@ -2,7 +2,9 @@ package main;
 
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import com.sun.glass.events.KeyEvent;
 
@@ -13,21 +15,25 @@ import gfx.GameCamera;
 import guis.GuiManager;
 import input.KeyManager;
 import input.MouseManager;
+import saving.Save;
 import server.Client;
 import server.Server;
 import states.DeathState;
 import states.GameState;
 import states.LoadState;
 import states.MenuState;
+import states.ModeState;
 import states.MultiplayerGameState;
 import states.MultiplayerState;
 import states.MultiplayerWorldLoadState;
 import states.PauseState;
+import states.SaveSelectState;
 import states.SaveState;
 import states.SettingsState;
 import states.State;
 import states.WorldLoadState;
 import utils.Timer;
+import worlds.World;
 
 // Referenced classes of package main:
 //            Handler
@@ -42,6 +48,9 @@ public class Game implements Runnable {
     private boolean multiplayer;
     private boolean debug = false;
     private boolean developer;
+    public boolean creationDateSet = false;
+    
+    private String gameType = "";
     
     private ArrayList<Timer> timers = new ArrayList<Timer>();
     private ArrayList<Timer> timersToRemove = new ArrayList<Timer>();
@@ -62,6 +71,8 @@ public class Game implements Runnable {
     public State multiplayerWorldLoadState;
     public State deathState;
     public State settingsState;
+    public State modeState;
+    public State saveSelectState;
     
     private KeyManager keyManager;
     private MouseManager mouseManager;
@@ -69,6 +80,9 @@ public class Game implements Runnable {
     private GameCamera gameCamera;
     private Handler handler;
     private AudioManager audioManager;
+    
+    public String creationDate;
+    public String modifiedDate;
 
     public Game(String title, boolean multiplayer, boolean developer, int width, int height) {
         running = false;
@@ -104,6 +118,8 @@ public class Game implements Runnable {
         multiplayerWorldLoadState = new MultiplayerWorldLoadState(handler);
         deathState = new DeathState(handler);
         settingsState = new SettingsState(handler);
+        modeState = new ModeState(handler);
+        saveSelectState = new SaveSelectState(handler);
         State.setState(menuState);
     }
 
@@ -119,6 +135,22 @@ public class Game implements Runnable {
         if(developer)
         	if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_F1))
         		debug = !debug;
+        if(!Display.frame.isShowing()) {
+        	String saveName = "save"+handler.getWorld().getLoadedSave();
+            Save.saveWorldData(handler, saveName);
+            Save.saveItemData(handler, handler.getWorld().getEntityManager().getPlayer().getInventory().getInventoryItems(), saveName);
+            if(handler.getGame().getGameType().contains("story")) {
+                Save.saveEntityData(handler, saveName);
+            }else if(handler.getGame().getGameType().contains("creative") || handler.getGame().getGameType().contains("survival")) {
+            	Save.saveGeneratedEntityData(handler, saveName);
+            }
+            Save.savePlayerData(handler.getWorld().getEntityManager().getPlayer(), saveName);
+            Save.saveNPCData(handler.getWorld().getEntityManager().getPlayer(), saveName);
+            Save.saveOtherWorldData(handler, saveName);
+            Save.saveOtherData(World.getCount());
+            Save.saveSettings(handler);
+            System.exit(0);
+        }
     }
 
     private void render() {
@@ -135,6 +167,14 @@ public class Game implements Runnable {
         bs.show();
         g.dispose();
     }
+
+	public String getGameType() {
+		return gameType;
+	}
+
+	public void setGameType(String gameType) {
+		this.gameType = gameType;
+	}
 
 	public void run() {
         init();
@@ -182,7 +222,31 @@ public class Game implements Runnable {
         return gameCamera;
     }
 
-    public int getWidth() {
+    public boolean isCreationDateSet() {
+		return creationDateSet;
+	}
+
+	public void setCreationDateSet(boolean creationDateSet) {
+		this.creationDateSet = creationDateSet;
+	}
+
+	public String getCreationDate() {
+		return creationDate;
+	}
+
+	public void setCreationDate(String creationDate) {
+		this.creationDate = creationDate;
+	}
+
+	public String getModifiedDate() {
+		return modifiedDate;
+	}
+
+	public void setModifiedDate(String modifiedDate) {
+		this.modifiedDate = modifiedDate;
+	}
+
+	public int getWidth() {
         return width;
     }
 

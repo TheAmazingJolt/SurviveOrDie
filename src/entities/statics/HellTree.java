@@ -17,7 +17,7 @@ public class HellTree extends StaticEntity
 	
     public HellTree(Handler handler, float x, float y, int id)
     {
-        super(handler, x, y, 64, 128, maxHealth, id);
+        super(handler, x, y, 64, 128, maxHealth, id, "HellTree");
         this.id = id;
         this.health = maxHealth;
         bounds.x = 10;

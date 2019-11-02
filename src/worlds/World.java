@@ -2,6 +2,7 @@ package worlds;
 
 import java.awt.Graphics;
 
+import entities.Entity;
 import entities.EntityManager;
 import entities.creatures.Boss1;
 import entities.creatures.Boss2;
@@ -37,8 +38,8 @@ public class World
     private int width;
     private int height;
     private int height2;
-    private int spawnX;
-    private int spawnY;
+    private int spawnX = 0;
+    private int spawnY = 0;
     private int[][] tiles;
     private static int count = 0;
     private static int worldNum;
@@ -50,16 +51,29 @@ public class World
     private static int totalEntities1;
     private static int totalEntities2;
     
+    private int worldGenWidth = 100;
+    private int worldGenHeight = 100;
+    
     private WorldGenerator generator;
+    
+    private boolean setup = false;
 	
     public World(Handler handle, String path)
     {
-    	System.out.println("a");
         handler = handle;
-        entityManager = new EntityManager(handler, new Player(handler, 100, 100, 1, -1));
+        entityManager = new EntityManager(handler);
         itemManager = new ItemManager(handler);
-        loadWorld(path);
-        entityManager.getPlayer().setPos(spawnX, spawnY);
+        if(handler.getGame().getGameType().contains("survival") || handler.getGame().getGameType().contains("creative")) {
+        	entityManager.setup(new Player(handler, (worldGenWidth / 2) * 64, (worldGenHeight / 2) * 64, 1, -1));
+        	generateWorld(path);
+        	setup = true;
+        }else if(handler.getGame().getGameType().contains("story")) {
+            spawnX = 3264;
+            spawnY = 3264;
+        	entityManager.setup(new Player(handler, spawnX, spawnY, 1, -1));
+            loadWorld(path);
+        	setup = true;
+        }
     }
 
     public void tick()
@@ -182,17 +196,16 @@ public class World
 		loadedSave = loadedWorld;
 	}
 
-	public void loadWorld(String path)
-    {
-		width = 100;
-		height = 100;
-		spawnX = (width / 2) * 64;
-		spawnY = (height / 2) * 64;
+	public void loadWorld(String path) {
         String file = Utils.loadFileAsString(path);
         String file2 = Utils.loadFileAsString(path.replace(".txt", "entities.txt")); 
         String tokens[] = file.split("\\s+");
         String tokens2[] = file2.split("\\s+");
+        width = Utils.parseInt(tokens[0]);
+        height = Utils.parseInt(tokens[1]);
         height2 = Utils.parseInt(tokens2[0]);
+//        this.spawnX = Utils.parseInt(tokens[2]);
+//        this.spawnY = Utils.parseInt(tokens[3]);
         tiles = new int[width][height];
         String token[];
         String token2[];
@@ -208,7 +221,6 @@ public class World
                 entityName = token2[0];
                 token3 = token2[1].split("\\,");
                	if(currentWorld == 1) {
-               		System.out.println("aaa");
                		entityNum++;
                		if(entityName.contains("t")) {
                        	entityManager.addEntity1(new Tree(handler, (float) Integer.parseInt(token3[0]) * 64, (float) Integer.parseInt(token3[1]) * 64, entityNum));
@@ -266,13 +278,69 @@ public class World
             }
         }
       
+        for(int y = 0; y < height; y++) {
+        	for(int x = 0; x < width; x++) {
+            	token = tokens[x + y * width + 4].split("\\ ");
+                tiles[x][y] = Utils.parseInt(token[0]);
+        		if(tiles[x][y] == 0) {
+        			Tile.getTiles().add(Tile.grassTile);
+        		}else if(tiles[x][y] == 1) {
+        			Tile.getTiles().add(Tile.dirtTile);
+        		}else if(tiles[x][y] == 2) {
+        			Tile.getTiles().add(Tile.rockTile);
+        		}else if(tiles[x][y] == 3) {
+        			Tile.getTiles().add(Tile.stoneTile);
+        		}else if(tiles[x][y] == 4) {
+        			Tile.getTiles().add(Tile.waterTile);
+        		}else if(tiles[x][y] == 5) {
+        			Tile.getTiles().add(Tile.doorTile);
+        		}else if(tiles[x][y] == 6) {
+        			Tile.getTiles().add(Tile.warpTile);
+        		}else if(tiles[x][y] == 7) {
+        			Tile.getTiles().add(Tile.hellRockTile);
+        		}else if(tiles[x][y] == 8) {
+        			Tile.getTiles().add(Tile.hellStoneTile);
+        		}else if(tiles[x][y] == 9) {
+        			Tile.getTiles().add(Tile.hellGrassTile);
+        		}else if(tiles[x][y] == 11) {
+        			Tile.getTiles().add(Tile.icyRockTile);
+        		}else if(tiles[x][y] == 12) {
+        			Tile.getTiles().add(Tile.icyStoneTile);
+        		}else if(tiles[x][y] == 13) {
+        			Tile.getTiles().add(Tile.icyGrassTile);
+        		}else if(tiles[x][y] == 14) {
+        			Tile.getTiles().add(Tile.doorTile2);
+        		}else if(tiles[x][y] == 15) {
+        			Tile.getTiles().add(Tile.sandTile);
+        		}else if(tiles[x][y] == 16) {
+        			Tile.getTiles().add(Tile.sandStoneTile);
+        		}else if(tiles[x][y] == 17) {
+        			Tile.getTiles().add(Tile.sandStoneWallTile);
+        		}else if(tiles[x][y] == 18) {
+        			Tile.getTiles().add(Tile.sandyDoorTile);
+        		}else if(tiles[x][y] == 19) {
+        			Tile.getTiles().add(Tile.sandyDoorTile2);
+        		}
+        	}
+        }
+    }
+	
+	public void generateWorld(String path)
+    {
+		width = 100;
+		height = 100;
+        tiles = new int[width][height];
+        
         if(!loaded) {
-			generator = new WorldGenerator(width, height, currentWorld);
+			generator = new WorldGenerator(width, height, 250, 5, currentWorld, handler);
 	    	generator.generate();
+	    	
+	    	for(Entity e : generator.getEntities()) {
+	    		entityManager.addEntity1(e);
+	    	}
 	        
 	        for(int y = 0; y < height; y++) {
 	        	for(int x = 0; x < width; x++) {
-	            	token = tokens[x + y * width + 4].split("\\ ");
 	                tiles[x][y] = generator.getTile(x, y);
 	        		if(tiles[x][y] == 0) {
 	        			Tile.getTiles().add(Tile.grassTile);
@@ -317,13 +385,14 @@ public class World
 	        }
         }else if(loaded) {
         	String save = "save" + loadedSave;
-        	String path2 = save + "/worldSave.txt";
+        	String path2 = "res/saves/" + save + "/worldSave.txt";
         	String file3 = Utils.loadFileAsString(path2);
             String tokens3[] = file3.split("\\s+");
+            String token4[];
             for(int y = 0; y < height; y++) {
 	        	for(int x = 0; x < width; x++) {
-	            	token = tokens[x + y * width + 4].split("\\ ");
-	                tiles[x][y] = Utils.parseInt(token);
+	            	token4 = tokens3[x + y * width].split("\\ ");
+	                tiles[x][y] = Utils.parseInt(token4[0]);
 	        		if(tiles[x][y] == 0) {
 	        			Tile.getTiles().add(Tile.grassTile);
 	        		}else if(tiles[x][y] == 1) {
@@ -387,7 +456,15 @@ public class World
         return height;
     }
 
-    public static void setCount(int Count)
+    public boolean isSetup() {
+		return setup;
+	}
+
+	public void setSetup(boolean setup) {
+		this.setup = setup;
+	}
+
+	public static void setCount(int Count)
     {
         count = Count;
     }

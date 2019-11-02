@@ -157,6 +157,8 @@ public class Assets
     public static BufferedImage deathScreen;
     public static BufferedImage weaponScreen;
     public static BufferedImage startScreen;
+    public static BufferedImage saveSelectScreen;
+    public static BufferedImage saveSelectBar;
     public static BufferedImage textbox;
     public static BufferedImage outline;
     public static BufferedImage redOutline;
@@ -186,6 +188,8 @@ public class Assets
         weaponScreen = ImageLoader.loadImage("/textures/weaponScreen.png");
         deathScreen = ImageLoader.loadImage("/textures/deathScreen.png");
         startScreen = ImageLoader.loadImage("/textures/startScreen.png");
+        saveSelectScreen = ImageLoader.loadImage("/textures/saveSelectionScreen.png");
+        saveSelectBar = ImageLoader.loadImage("/textures/saveSelectionBar.png");
         textbox = ImageLoader.loadImage("/textures/textbox.png");
         hotbar = ImageLoader.loadImage("/textures/hotbar.png");
         outline = ImageLoader.loadImage("/textures/outline.png");

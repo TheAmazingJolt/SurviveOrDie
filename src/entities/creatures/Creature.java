@@ -53,15 +53,17 @@ public abstract class Creature extends Entity
 	
 	protected String side;
     
-    public Creature(Handler handler, float x, float y, int width, int height, int health, int id)
+    public Creature(Handler handler, float x, float y, int width, int height, int health, int id, String name)
     {
-        super(handler, x, y, width, height, health, id);
+        super(handler, x, y, width, height, health, id, name);
         speed = DEFAULT_SPEED;
         xMove = 0.0F;
         yMove = 0.0F;
     }
     
     public void follow(int arSize, float distance) {
+    	if(handler.getGame().getGameType().contains("creative"))
+    		return;
     	side = checkEntityLocation(following, distance);
         if(side == "bottom")
         {

@@ -18,7 +18,7 @@ public class PistolBullet extends Projectile
 	
     public PistolBullet(Handler handler, float x, float y, Player player)
     {
-        super(handler, x, y, 32, 32, 1);
+        super(handler, x, y, 32, 32, 1, "PistolBullet");
         this.player = player;
         startX = x;
         startY = y;

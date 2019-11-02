@@ -31,8 +31,8 @@ public abstract class NPC extends Creature{
     
     protected BufferedImage face;
 
-	public NPC(Handler handler, float x, float y, int width, int height, int health, int id) {
-		super(handler, x, y, width, height, health, id);
+	public NPC(Handler handler, float x, float y, int width, int height, int health, int id, String name) {
+		super(handler, x, y, width, height, health, id, name);
 		
 		dialougue = new ArrayList<String>();
 		playerresponses = new ArrayList<String>();

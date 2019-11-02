@@ -1,11 +1,13 @@
 package states;
 
-import gfx.Assets;
-import gfx.Text;
-
 import java.awt.Color;
 import java.awt.Graphics;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
+import entities.Entity;
+import gfx.Assets;
+import gfx.Text;
 import main.Handler;
 import saving.Load;
 import saving.Save;
@@ -25,6 +27,9 @@ public class WorldLoadState extends State
 	
 	private boolean started = false;
 	
+    private SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+    private Date date = new Date();  
+	
     public WorldLoadState(Handler handler)
     {
         super(handler);
@@ -34,10 +39,12 @@ public class WorldLoadState extends State
 
     public void tick()
     {
-    	Save.saveItemData(handler, handler.getWorld().getEntityManager().getPlayer().getInventory().getInventoryItems(), "save" + handler.getWorld().getLoadedSave());
-    	//Save.saveEntityData(handler, "save" + handler.getWorld().getLoadedSave());
-        Save.savePlayerData(handler.getWorld().getEntityManager().getPlayer(), "save" + handler.getWorld().getLoadedSave());
-        Save.saveNPCData(handler.getWorld().getEntityManager().getPlayer(), "save" + handler.getWorld().getLoadedSave());
+    	if(handler.getWorld().isSetup()) {
+    		Save.saveItemData(handler, handler.getWorld().getEntityManager().getPlayer().getInventory().getInventoryItems(), "save" + handler.getWorld().getLoadedSave());
+        	//Save.saveEntityData(handler, "save" + handler.getWorld().getLoadedSave());
+            Save.savePlayerData(handler.getWorld().getEntityManager().getPlayer(), "save" + handler.getWorld().getLoadedSave());
+            Save.saveNPCData(handler.getWorld().getEntityManager().getPlayer(), "save" + handler.getWorld().getLoadedSave());
+    	}
         Save.saveOtherData(World.getCount());
     	
     	handler.getWorld().unloadWorld();
@@ -55,11 +62,23 @@ public class WorldLoadState extends State
         Load.loadPlayerData(handler.getWorld().getEntityManager().getPlayer(), "save" + handler.getWorld().getLoadedSave());
         Load.loadNPCData(handler.getWorld().getEntityManager().getPlayer(), "save" + handler.getWorld().getLoadedSave(), handler);
         if(!started) {
-        	Load.loadEntityData(handler, "save" + handler.getWorld().getLoadedSave());
+        	if(handler.getGame().getGameType().contains("story"))
+        		Load.loadEntityData(handler, "save" + handler.getWorld().getLoadedSave());
+        	else {
+        		for(Entity e : Load.loadGeneratedEntityData(handler, "save" + handler.getWorld().getLoadedSave())) {
+        			handler.getWorld().getEntityManager().addEntity1(e);
+        		}
+        	}
         	started = true;
         }
         
-       // Save.saveWorldData(handler, "save" + handler.getWorld().getLoadedSave());
+        Save.saveWorldData(handler, "save" + handler.getWorld().getLoadedSave());
+        Save.saveOtherWorldData(handler, "save" + handler.getWorld().getLoadedSave());
+        if(!handler.getGame().creationDateSet && !handler.getWorld().isLoaded()) {
+        	handler.getGame().setCreationDate(dateFormat.format(date));
+        	System.out.println(handler.getGame().getCreationDate());
+        }
+        Save.saveSaveData(handler, "save" + handler.getWorld().getLoadedSave());
         
         handler.getWorld().getEntityManager().addToOverflow();
         

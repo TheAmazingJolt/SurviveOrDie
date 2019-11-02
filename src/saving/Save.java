@@ -1,11 +1,19 @@
 package saving;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+
 import entities.Entity;
 import entities.creatures.Player;
 import entities.creatures.npcs.NPC;
 import items.Item;
-import java.io.*;
-import java.util.ArrayList;
+import main.Game;
 import main.Handler;
 
 public class Save
@@ -15,6 +23,9 @@ public class Save
     static boolean created = false;
     static boolean npcIn2 = false;
     private static Handler handler;
+    
+    private static SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+    private static Date date = new Date();  
 
     public static void createDirectory()
     {
@@ -27,6 +38,27 @@ public class Save
         }
     }
 
+    public static void saveSaveData(Handler handle, String name) {
+    	handler = handle;
+    	createDirectory();
+    	String fileName = (new StringBuilder("res/saves/")).append(name).append("/saveData.txt").toString();
+    	try {
+    		FileWriter fileWriter = new FileWriter(fileName);
+    		BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+    		
+    		bufferedWriter.write(handler.getGame().creationDate);//date created
+    		bufferedWriter.newLine();
+    		bufferedWriter.write(dateFormat.format(date)); //date modified
+    		bufferedWriter.newLine();
+    		bufferedWriter.write(handler.getGame().getGameType());
+    		bufferedWriter.close();
+    	}catch(IOException ex) {
+    		createDirectory();
+    		saveSettings(handler);
+    		System.out.println("Error writing to file '" + fileName +"'");
+    	}
+    }
+    
     public static void saveSettings(Handler handle) {
     	handler = handle;
     	createDirectory();
@@ -46,7 +78,7 @@ public class Save
     	}
     }
     
-    public static void saveWorldNumData(Handler handle, String name) {
+    public static void saveOtherWorldData(Handler handle, String name) {
     	handler = handle;
         createDirectory();
         String itemFileName = (new StringBuilder("res/saves/")).append(name).append("/worldNumSave.txt").toString();
@@ -62,7 +94,7 @@ public class Save
         catch(IOException ex)
         {
             createDirectory();
-            saveWorldNumData(handler, name);
+            saveOtherWorldData(handler, name);
             System.out.println((new StringBuilder("Error writing to file '")).append(itemFileName).append("'").toString());
         }
     }
@@ -78,8 +110,6 @@ public class Save
             
             int[][] tiles = handler.getWorld().getTiles();
             
-            bufferedWriter.write(tiles.length);
-            bufferedWriter.newLine();
             for(int y = 0; y < tiles.length; y++) {
             	for(int x = 0; x < tiles.length; x++) {
             		bufferedWriter.write(tiles[x][y] + " ");
@@ -92,7 +122,7 @@ public class Save
         catch(IOException ex)
         {
             createDirectory();
-            saveWorldNumData(handler, name);
+            saveWorldData(handler, name);
             System.out.println((new StringBuilder("Error writing to file '")).append(itemFileName).append("'").toString());
         }
     }
@@ -124,6 +154,53 @@ public class Save
         }
     }
 
+    public static void saveGeneratedEntityData(Handler handle, String name) {
+    	handler = handle;
+    	ArrayList<Entity> list = new ArrayList<Entity>();
+    	list.clear();
+    	if(handler.getWorld().getCurrentWorld() == 1) {
+    		list.addAll(handler.getWorld().getEntityManager().getEntities());
+        	handler.getWorld().getEntityManager().getE1overflow1().remove(handler.getWorld().getEntityManager().getPlayer());
+        	list.addAll(handler.getWorld().getEntityManager().getE1overflow1());
+        	handler.getWorld().getEntityManager().getE1overflow2().remove(handler.getWorld().getEntityManager().getPlayer());
+        	list.addAll(handler.getWorld().getEntityManager().getE1overflow2());
+    	}else if(handler.getWorld().getCurrentWorld() == 2) {
+    		list.addAll(handler.getWorld().getEntityManager().getEntities2());
+        	handler.getWorld().getEntityManager().getE2overflow1().remove(handler.getWorld().getEntityManager().getPlayer());
+        	list.addAll(handler.getWorld().getEntityManager().getE2overflow1());
+        	handler.getWorld().getEntityManager().getE2overflow2().remove(handler.getWorld().getEntityManager().getPlayer());
+        	list.addAll(handler.getWorld().getEntityManager().getE2overflow2());
+    	}else if(handler.getWorld().getCurrentWorld() == 3) {
+    		list.addAll(handler.getWorld().getEntityManager().getEntities3());
+        	handler.getWorld().getEntityManager().getE3overflow1().remove(handler.getWorld().getEntityManager().getPlayer());
+        	list.addAll(handler.getWorld().getEntityManager().getE3overflow1());
+        	handler.getWorld().getEntityManager().getE3overflow2().remove(handler.getWorld().getEntityManager().getPlayer());
+        	list.addAll(handler.getWorld().getEntityManager().getE3overflow2());
+    	}
+    	createDirectory();
+        String entityFileName = (new StringBuilder("res/saves/")).append(name).append("/entitySave.txt").toString();
+        try
+        {
+            FileWriter fileWriter = new FileWriter(entityFileName);
+            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+            
+            bufferedWriter.write(Integer.toString(list.size()));
+            bufferedWriter.newLine();
+            
+            for(Entity e : list) {
+            	bufferedWriter.write(e.getName() + " " + Float.toString(e.getX()) + " " + Float.toString(e.getY()));
+            	bufferedWriter.newLine();
+            }
+            bufferedWriter.close();
+        }
+        catch(IOException ex)
+        {
+            createDirectory();
+            saveEntityData(handler, name);
+            System.out.println((new StringBuilder("Error writing to file '")).append(entityFileName).append("'").toString());
+        }
+    }
+    
     public static void saveEntityData(Handler handle, String name)
     {
     	handler = handle;

@@ -17,7 +17,7 @@ public class Coal extends StaticEntity
 	
     public Coal(Handler handler, float x, float y, int id)
     {
-        super(handler, x, y, 64, 64, maxHealth, id);
+        super(handler, x, y, 64, 64, maxHealth, id, "Coal");
         this.id = id;
         this.health = maxHealth;
         bounds.x = 3;

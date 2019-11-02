@@ -33,7 +33,7 @@ public class IcyZombie extends Creature
 	
     public IcyZombie(Handler handler, float x, float y, int id, Player player)
     {
-        super(handler, x, y, 64, 64, maxHealth, id);
+        super(handler, x, y, 64, 64, maxHealth, id, "IcyZombie");
         this.id = id;
         this.player = player;
         startX = x;

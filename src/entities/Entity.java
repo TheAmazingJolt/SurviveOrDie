@@ -26,12 +26,15 @@ public abstract class Entity
     protected Rectangle bounds;
     protected int id;
     protected boolean isNpc = false;
+    
+    protected String name = "";
 
-    public Entity(Handler handler, float x, float y, int width, int height, int health, int id)
+    public Entity(Handler handler, float x, float y, int width, int height, int health, int id, String name)
     {
         active = true;
         attacked = false;
         this.handler = handler;
+        this.name = name;
         this.x = x;
         this.y = y;
         this.width = width;
@@ -51,7 +54,15 @@ public abstract class Entity
 
     public abstract void die();
 
-    public void revive()
+    public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void revive()
     {
         attacked = false;
         active = true;
@@ -99,6 +110,34 @@ public abstract class Entity
                     return true;
             }
     		for(Entity e : handler.getWorld().getEntityManager().getE1overflow2())
+            {
+    			if(handler.getWorld().getEntityManager().getPlayer2() != null && e.equals(handler.getWorld().getEntityManager().getPlayer2()))
+    				return false;
+                if(!e.equals(this) && e.getCollisionBounds(0.0F, 0.0F).intersects(getCollisionBounds(xOffset, yOffset)))
+                    return true;
+            }
+    		for(Entity e : handler.getWorld().getEntityManager().getE1overflow3())
+            {
+    			if(handler.getWorld().getEntityManager().getPlayer2() != null && e.equals(handler.getWorld().getEntityManager().getPlayer2()))
+    				return false;
+                if(!e.equals(this) && e.getCollisionBounds(0.0F, 0.0F).intersects(getCollisionBounds(xOffset, yOffset)))
+                    return true;
+            }
+    		for(Entity e : handler.getWorld().getEntityManager().getE1overflow4())
+            {
+    			if(handler.getWorld().getEntityManager().getPlayer2() != null && e.equals(handler.getWorld().getEntityManager().getPlayer2()))
+    				return false;
+                if(!e.equals(this) && e.getCollisionBounds(0.0F, 0.0F).intersects(getCollisionBounds(xOffset, yOffset)))
+                    return true;
+            }
+    		for(Entity e : handler.getWorld().getEntityManager().getE1overflow5())
+            {
+    			if(handler.getWorld().getEntityManager().getPlayer2() != null && e.equals(handler.getWorld().getEntityManager().getPlayer2()))
+    				return false;
+                if(!e.equals(this) && e.getCollisionBounds(0.0F, 0.0F).intersects(getCollisionBounds(xOffset, yOffset)))
+                    return true;
+            }
+    		for(Entity e : handler.getWorld().getEntityManager().getE1overflow6())
             {
     			if(handler.getWorld().getEntityManager().getPlayer2() != null && e.equals(handler.getWorld().getEntityManager().getPlayer2()))
     				return false;

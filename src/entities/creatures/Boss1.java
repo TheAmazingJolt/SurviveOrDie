@@ -26,7 +26,7 @@ public class Boss1 extends Creature
 	
     public Boss1(Handler handler, float x, float y, int health, int id)
     {
-        super(handler, x, y, 128, 128, maxHealth, id);
+        super(handler, x, y, 128, 128, maxHealth, id, "Boss1");
         this.id = id;
         attackCooldown = 350L;
         startHealth = health;

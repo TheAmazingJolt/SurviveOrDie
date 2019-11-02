@@ -8,7 +8,7 @@ import javafx.embed.swing.JFXPanel;
 
 public class Display {
 
-	private JFrame frame;
+	public static JFrame frame;
     private Canvas canvas;
     private String title;
     private int width;
@@ -26,7 +26,6 @@ public class Display {
 		JFXPanel fxPanel = new JFXPanel();
         frame = new JFrame(title);
         frame.setSize(width, height);
-        frame.setDefaultCloseOperation(3);
         frame.setResizable(false);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);

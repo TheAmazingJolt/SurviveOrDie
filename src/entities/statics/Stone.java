@@ -17,7 +17,7 @@ public class Stone extends StaticEntity
 	
     public Stone(Handler handler, float x, float y, int id)
     {
-        super(handler, x, y, 64, 64, maxHealth, id);
+        super(handler, x, y, 64, 64, maxHealth, id, "Stone");
         this.id = id;
         this.health = maxHealth;
         bounds.x = 3;

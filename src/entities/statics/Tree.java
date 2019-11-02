@@ -17,7 +17,7 @@ public class Tree extends StaticEntity
 	
     public Tree(Handler handler, float x, float y, int id)
     {
-        super(handler, x, y, 64, 128, maxHealth, id);
+        super(handler, x, y, 64, 128, maxHealth, id, "Tree");
         this.id = id;
         this.health = maxHealth;
         bounds.x = 10;

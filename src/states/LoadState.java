@@ -22,7 +22,10 @@ public class LoadState extends State
     private static String saveName;
     private static boolean loading = false;
     private static boolean toLoad = false;
+    private static boolean cantLoad = false;
+    private static boolean saveSelected = false;
     private static int worldToLoad = 1;
+    private static int saveToLoad;
 
     private Button button1;
     private Button button2;
@@ -31,6 +34,7 @@ public class LoadState extends State
     private Button button5;
     private Button button6;
     private Button button7;
+    private Button button8;
     
 	private int buttonX;
 	private int button2X;
@@ -70,6 +74,7 @@ public class LoadState extends State
         button5 = new Button(Assets.smallestButton, button5X, buttonY, smallButtonWidth, buttonHeight, true, "3", handler);
         button6 = new Button(Assets.smallestButton, button6X, buttonY, smallButtonWidth, buttonHeight, true, "4", handler);
         button7 = new Button(Assets.smallestButton, button7X, buttonY, smallButtonWidth, buttonHeight, true, "5", handler);
+        button8 = new Button(Assets.button, handler.getWidth() / 2, buttonY, 480, 120, true, "Continue", handler);
     }
     
     
@@ -88,27 +93,25 @@ public class LoadState extends State
 
 	public void tick()
     {
-		if(loading && toLoad) {
-        	button3.tick();
-			button4.tick();
-			button5.tick();
-			button6.tick();
-			button7.tick();
-		}else if(!(loading && toLoad)) {
+		if(!(loading && toLoad)) {
 			button1.tick();
 			button2.tick();
 		}
 		if(button1 != null && button1.isClicked()) {
-			loading = true;
-            toLoad = true;
-            button1 = null;
+//			loading = true;
+//            toLoad = true;
+//            button1 = null;
             try {
 				Thread.sleep(150);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		}else if(button2.isClicked()) {
+            if(!cantLoad) {
+                saveSelected = true;
+    			State.setState(handler.getGame().saveSelectState);
+            }
+		}else if(button2.isClicked() || cantLoad) {
 			world = new World(handler, "res/worlds/world1.txt");
     		handler.setWorld(world);
         
@@ -117,149 +120,29 @@ public class LoadState extends State
     		handler.getWorld().setCount(World.getCount() + 1);
     		handler.getWorld().setLoadedWorld(World.getCount());
     		handler.getWorld().setCurrentWorld(1);
+    		try {
+				Thread.sleep(150);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
     		State.setPreviousState(handler.getGame().loadState);
-    		State.setState(handler.getGame().worldLoadState);
+    		State.setState(handler.getGame().modeState);
 		}
-        if(toLoad && loading)
-            if(World.getCount() == 0)
-            {
-            	world = new World(handler, "res/worlds/world1.txt");
-                handler.setWorld(world);
-                
-                //handler.getWorld().addEntities();
-                handler.getWorld().setLoaded(false);
-                handler.getWorld().setCount(World.getCount() + 1);
-                handler.getWorld().setLoadedWorld(World.getCount());
-                handler.getWorld().setCurrentWorld(1);
-        		State.setPreviousState(handler.getGame().loadState);
-                State.setState(handler.getGame().worldLoadState);
-            } else
-            if(World.getCount() == 1)
-            {
-                saveName = "save1";
-                loadStuff(1);
-            } else
-            if(World.getCount() == 2)
-            {
-            	button3.setX(handler.getWidth() / 3 - 52);
-            	button4.setX((handler.getWidth() / 3) * 2 - 52);
-            	button3.setTextX();
-            	button4.setTextX();
-            	if(button3.isClicked()) {
-                    saveName = "save1";
-                    loadStuff(1);
-            	}else if(button4.isClicked()) {
-                    saveName = "save2";
-                    loadStuff(2);
-            	}
-            	button5.setActive(false);
-            	button6.setActive(false);
-            	button7.setActive(false);
-            } else
-            if(World.getCount() == 3)
-            {
-            	button3.setX(handler.getWidth() / 4 - 52);
-            	button4.setX((handler.getWidth() / 4) * 2 - 52);
-            	button5.setX((handler.getWidth() / 4) * 3 - 52);
-            	button3.setTextX();
-            	button4.setTextX();
-            	button5.setTextX();
-            	//finish this!!!!!!!!!!
-            	if(button3.isClicked()) {
-                    saveName = "save1";
-                    loadStuff(1);
-            	}else if(button4.isClicked()) {
-                    saveName = "save2";
-                    loadStuff(2);
-            	}else if(button5.isClicked()) {
-                    saveName = "save3";
-                    loadStuff(3);
-            	}
-            	button6.setActive(false);
-            	button7.setActive(false);
-            } else
-            if(World.getCount() == 4)
-            {
-            	button3.setX(handler.getWidth() / 5 - 52);
-            	button4.setX((handler.getWidth() / 5) * 2 - 52);
-            	button5.setX((handler.getWidth() / 5) * 3 - 52);
-            	button6.setX((handler.getWidth() / 5) * 4 - 52);
-            	button3.setTextX();
-            	button4.setTextX();
-            	button5.setTextX();
-            	button6.setTextX();
-            	if(button3.isClicked()) {
-                    saveName = "save1";
-                    loadStuff(1);
-            	}else if(button4.isClicked()) {
-                    saveName = "save2";
-                    loadStuff(2);
-            	}else if(button5.isClicked()) {
-                    saveName = "save3";
-                    loadStuff(3);
-            	}else if(button6.isClicked()) {
-                    saveName = "save4";
-                    loadStuff(4);
-            	}
-            	button7.setActive(false);
-            } else
-            if(World.getCount() == 5) {
-            	button3.setX(handler.getWidth() / 6 - 52);
-            	button4.setX((handler.getWidth() / 6) * 2 - 52);
-            	button5.setX((handler.getWidth() / 6) * 3 - 52);
-            	button6.setX((handler.getWidth() / 6) * 4 - 52);
-            	button7.setX((handler.getWidth() / 6) * 5 - 52);
-            	button3.setTextX();
-            	button4.setTextX();
-            	button5.setTextX();
-            	button6.setTextX();
-            	button7.setTextX();
-            	if(button3.isClicked()) {
-                    saveName = "save1";
-                    loadStuff(1);
-            	}else if(button4.isClicked()) {
-                    saveName = "save2";
-                    loadStuff(2);
-            	}else if(button5.isClicked()) {
-                    saveName = "save3";
-                    loadStuff(3);
-            	}else if(button6.isClicked()) {
-                    saveName = "save4";
-                    loadStuff(4);
-            	}else if(button7.isClicked()) {
-                    saveName = "save5";
-                    loadStuff(5);
-            	}
-            }else if(World.getCount() > 5) {
-            	World.setCount(5);
-            }
-        	
+        if(toLoad && loading) {
+        	saveName = "save" + saveToLoad;
+        	loadStuff(saveToLoad);
+        }
     }
 
     public void render(Graphics g)
     {
-        if(!loading)
+        if(!loading && !cantLoad)
         {
         	g.drawImage(Assets.startScreen, 0, 0, handler.getWidth(), handler.getHeight(), null);
             Text.drawString(g, "Do you want to load save data?", handler.getWidth() / 2, handler.getHeight() / 7, true, Color.WHITE, Assets.font40);
             button1.render(g);
             button2.render(g);
-        } else
-        if(loading)
-        {
-            if(World.getCount() == 0)
-            {
-            	g.drawImage(Assets.startScreen, 0, 0, handler.getWidth(), handler.getHeight(), null);
-                Text.drawString(g, "Can't load. No save files", handler.getWidth() / 2, handler.getHeight() / 7, true, Color.WHITE, Assets.font28);
-                Text.drawString(g, "Press Enter to continue", handler.getWidth() / 2, 3 * (handler.getHeight() / 4), true, Color.WHITE, Assets.font20);
-            }
-            g.drawImage(Assets.startScreen, 0, 0, handler.getWidth(), handler.getHeight(), null);
-            Text.drawString(g, "Which save do you want to load?", handler.getWidth() / 2, handler.getHeight() / 7, true, Color.WHITE, Assets.font40);
-            button3.render(g);
-            button4.render(g);
-            button5.render(g);
-            button6.render(g);
-            button7.render(g);
         }
     }
 
@@ -268,9 +151,41 @@ public class LoadState extends State
         saveName = name;
     }
 
-    public void loadStuff(int num)
+    public static boolean isLoading() {
+		return loading;
+	}
+
+	public static void setLoading(boolean loading) {
+		LoadState.loading = loading;
+	}
+
+	public static boolean isToLoad() {
+		return toLoad;
+	}
+
+	public static void setToLoad(boolean toLoad) {
+		LoadState.toLoad = toLoad;
+	}
+
+	public static int getSaveToLoad() {
+		return saveToLoad;
+	}
+
+	public static void setSaveToLoad(int saveToLoad) {
+		LoadState.saveToLoad = saveToLoad;
+	}
+
+	public static boolean isCantLoad() {
+		return cantLoad;
+	}
+
+	public static void setCantLoad(boolean cantLoad) {
+		LoadState.cantLoad = cantLoad;
+	}
+
+	public void loadStuff(int num)
     {
-    	Load.loadWorldNumData(saveName, handler);
+    	Load.loadOtherWorldData(saveName, handler);
     	world = new World(handler, "res/worlds/world" + worldToLoad + ".txt");
         handler.setWorld(world);
         handler.getWorld().setLoadedWorld(num);
@@ -280,6 +195,7 @@ public class LoadState extends State
         Load.loadNPCData(handler.getWorld().getEntityManager().getPlayer(), saveName, handler);
         //Load.loadEntityData(handler, saveName);
         Load.loadItemData(saveName);
+        Load.loadSaveData(saveName, handler);
         handler.getWorld().setLoaded(true);
 		State.setPreviousState(handler.getGame().loadState);
         State.setState(handler.getGame().worldLoadState);

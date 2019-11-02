@@ -18,7 +18,7 @@ public class SmgBullet extends Projectile
 	
     public SmgBullet(Handler handler, float x, float y, Player player)
     {
-        super(handler, x, y, 32, 32, 1);
+        super(handler, x, y, 32, 32, 1, "SmgBullet");
         this.player = player;
         startX = x;
         startY = y;

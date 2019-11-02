@@ -33,7 +33,7 @@ public class HellZombie extends Creature
 	
     public HellZombie(Handler handler, float x, float y, int id, Player player)
     {
-        super(handler, x, y, 64, 64, maxHealth, id);
+        super(handler, x, y, 64, 64, maxHealth, id, "HellZombie");
         this.id = id;
         this.player = player;
         startX = x;

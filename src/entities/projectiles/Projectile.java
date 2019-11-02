@@ -18,9 +18,9 @@ public abstract class Projectile extends Entity
     protected int attack;
     protected int ammoId;
 	
-    public Projectile(Handler handler, float x, float y, int width, int height, int id)
+    public Projectile(Handler handler, float x, float y, int width, int height, int id, String name)
     {
-        super(handler, x, y, width, height, 1, id);
+        super(handler, x, y, width, height, 1, id, name);
         this.ammoId = id;
         speed = 6F;
         xMove = 0.0F;

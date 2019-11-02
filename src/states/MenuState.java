@@ -54,7 +54,7 @@ public class MenuState extends State
     	button2.tick();
     	if(button1.isClicked()) {
     		if(!handler.getGame().isMultiplayer()) {
-    			Load.loadOtherData();
+    			LoadState.setCantLoad(Load.loadOtherData());
         		try {
     				Thread.sleep(150);
     			} catch (InterruptedException e) {

@@ -30,7 +30,7 @@ public class Sierra extends NPC
 	
     public Sierra(Handler handler, float x, float y, int id)
     {
-        super(handler, x, y, 64, 64, maxHealth, id);
+        super(handler, x, y, 64, 64, maxHealth, id, "Jolt");
         this.id = id;
         startX = x;
         startY = y;

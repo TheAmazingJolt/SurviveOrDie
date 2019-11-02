@@ -66,12 +66,12 @@ public class Player extends Creature
 	
     public Player(Handler handler, float x, float y, int playerId, int id)
     {
-        super(handler, x, y, 64, 64, 10, id);
+        super(handler, x, y, 64, 64, 10, id, "Player");
         this.playerId = playerId;
         attackCooldown = 200L;
         attackCooldown2 = 250;
-        startX = 800F;
-        startY = 800F;
+        startX = x;
+        startY = y;
         health = 10;
         bounds.x = 22;
         bounds.y = 30;
@@ -99,6 +99,8 @@ public class Player extends Creature
         animLeft.tick();
         animRight.tick();
         if(playerId == 1) {
+        	if(handler.getGame().getGameType().contains("creative"))
+        		this.health = 100;
         	if(grave != null) {
         		if(!grave.isCollected())
         			grave.tick();

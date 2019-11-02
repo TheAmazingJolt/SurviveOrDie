@@ -22,7 +22,7 @@ public class Penguin extends Creature
 	
     public Penguin(Handler handler, float x, float y, int id)
     {
-        super(handler, x, y, 64, 64, maxHealth, id);
+        super(handler, x, y, 64, 64, maxHealth, id, "Penguin");
         this.id = id;
         startX = x;
         startY = y;

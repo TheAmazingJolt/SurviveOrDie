@@ -1,14 +1,21 @@
 package saving;
 
-import entities.Entity;
-
-import entities.creatures.Player;
-import entities.creatures.npcs.NPC;
-import inventory.Inventory;
-import items.Item;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 
+import entities.Entity;
+import entities.creatures.Player;
+import entities.creatures.Zombie;
+import entities.creatures.npcs.NPC;
+import entities.statics.Flint;
+import entities.statics.Iron;
+import entities.statics.Stone;
+import entities.statics.Tree;
+import inventory.Inventory;
+import items.Item;
 import main.Handler;
 import states.LoadState;
 import utils.Utils;
@@ -20,8 +27,38 @@ public class Load
     static String line = null;
     static int lineInt;
     static int lineNum;
-    static Item item;
     static int amt;
+    
+    public static void loadSaveData(String worldName, Handler handler) {
+    	String fileName = (new StringBuilder("res/saves/")).append(worldName).append("/saveData.txt").toString();
+    	lineNum = 0;
+        try
+        {
+            FileReader fileReader = new FileReader(fileName);
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+            while((line = bufferedReader.readLine()) != null) 
+            {
+            	lineNum++;
+            	if(lineNum == 1) {
+            		handler.getGame().setCreationDate(line);
+            		handler.getGame().setCreationDateSet(true);
+            	}else if(lineNum == 2) {
+            		handler.getGame().setModifiedDate(line);
+            	}else if(lineNum == 3) {
+            		handler.getGame().setGameType(line);
+            	}
+            }
+            bufferedReader.close();
+        }
+        catch(FileNotFoundException ex)
+        {
+            System.out.println((new StringBuilder("Unable to open file '")).append(fileName).append("'").toString());
+        }
+        catch(IOException ex)
+        {
+            System.out.println((new StringBuilder("Error reading file '")).append(fileName).append("'").toString());
+        }
+    }
     
     public static void loadSettings( Handler handler) {
     	String fileName = "res/saves/settings.txt";
@@ -46,15 +83,19 @@ public class Load
         }
     }
     
-    public static void loadWorldNumData(String worldName, Handler handler) {
+    public static void loadOtherWorldData(String worldName, Handler handler) {
     	String itemFileName = (new StringBuilder("res/saves/")).append(worldName).append("/worldNumSave.txt").toString();
+    	lineNum = 0;
         try
         {
             FileReader fileReader = new FileReader(itemFileName);
             BufferedReader bufferedReader = new BufferedReader(fileReader);
             while((line = bufferedReader.readLine()) != null) 
             {
-                LoadState.setWorldToLoad(Utils.parseInt(line));
+            	lineNum++;
+            	if(lineNum == 1) {
+            		LoadState.setWorldToLoad(Utils.parseInt(line));
+            	}
             }
             bufferedReader.close();
         }
@@ -70,6 +111,7 @@ public class Load
     
     public static void loadItemData(String worldName)
     {
+    	Item item = null;
         String itemFileName = (new StringBuilder("res/saves/")).append(worldName).append("/itemSave.txt").toString();
         Item.addItemsToList();
         try
@@ -79,17 +121,18 @@ public class Load
             while((line = bufferedReader.readLine()) != null) 
             {
                 lineNum++;
-                if(lineNum % 2 != 0)
+                if(lineNum % 2 == 0)
                 {
                     lineInt = Utils.parseInt(line);
                     for(Item i:Item.getItems())
                     {
-                        if(i.getId() == lineInt)
+                        if(i.getId() == lineInt) {
                             item = i;
+                        }
                     }
 
                 } else
-                if(lineNum % 2 == 0)
+                if(lineNum % 2 != 0)
                 {
                     lineInt = Utils.parseInt(line);
                     amt = lineInt;
@@ -169,9 +212,58 @@ public class Load
             System.out.println((new StringBuilder("Error reading file '")).append(entityFileName).append("'").toString());
         }
     }
-
-    public static void loadOtherData()
+    
+    public static ArrayList<Entity> loadGeneratedEntityData(Handler handler, String worldName)
     {
+        String entityFileName = (new StringBuilder("res/saves/")).append(worldName).append("/entitySave.txt").toString();
+        ArrayList<Entity> list = new ArrayList<Entity>();
+        int lineNum = 0;
+        int size = 0;
+        int entityNum = 0;
+        String tokens[];
+        try
+        {
+            FileReader fileReader = new FileReader(entityFileName);
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+            while((line = bufferedReader.readLine()) != null) 
+            {
+                lineNum++;
+                if(lineNum == 1) {
+                	size = Utils.parseInt(line);
+                }
+                if(lineNum > 1 && list.size() < size) {
+                	entityNum++;
+                	tokens = line.split("\\s+");
+                	if(tokens[0].contains("Zombie")) {
+                		list.add(new Zombie(handler, Float.parseFloat(tokens[1]), Float.parseFloat(tokens[2]), entityNum, handler.getWorld().getEntityManager().getPlayer()));
+                	}else if(tokens[0].contains("Tree")) {
+                		list.add(new Tree(handler, Float.parseFloat(tokens[1]), Float.parseFloat(tokens[2]), entityNum));
+                	}else if(tokens[0].contains("Stone")) {
+                		list.add(new Stone(handler, Float.parseFloat(tokens[1]), Float.parseFloat(tokens[2]), entityNum));
+                	}else if(tokens[0].contains("Flint")) {
+                		list.add(new Flint(handler, Float.parseFloat(tokens[1]), Float.parseFloat(tokens[2]), entityNum));
+                	}else if(tokens[0].contains("Iron")) {
+                		list.add(new Iron(handler, Float.parseFloat(tokens[1]), Float.parseFloat(tokens[2]), entityNum));
+                	}
+                }
+            }
+            bufferedReader.close();
+            return list;
+        }
+        catch(FileNotFoundException ex)
+        {
+            System.out.println((new StringBuilder("Unable to open file '")).append(entityFileName).append("'").toString());
+        }
+        catch(IOException ex)
+        {
+            System.out.println((new StringBuilder("Error reading file '")).append(entityFileName).append("'").toString());
+        }
+        return list;
+    }
+
+    public static boolean loadOtherData()
+    {
+    	boolean cantLoad = true;
         String fileName = "res/saves/basicSave.txt";
         try
         {
@@ -179,6 +271,7 @@ public class Load
             BufferedReader bufferedReader = new BufferedReader(fileReader);
             while((line = bufferedReader.readLine()) != null) 
                 World.setCount(Utils.parseInt(line));
+            cantLoad = false;
             bufferedReader.close();
         }
         catch(FileNotFoundException ex)
@@ -189,6 +282,7 @@ public class Load
         {
             System.out.println((new StringBuilder("Error reading file '")).append(fileName).append("'").toString());
         }
+        return cantLoad;
     }
 
     public static void loadPlayerData(Player player, String worldName)

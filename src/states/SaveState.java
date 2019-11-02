@@ -50,10 +50,14 @@ public class SaveState extends State
     		saveName = "save"+handler.getWorld().getLoadedSave();
             Save.saveWorldData(handler, saveName);
             Save.saveItemData(handler, handler.getWorld().getEntityManager().getPlayer().getInventory().getInventoryItems(), saveName);
-            Save.saveEntityData(handler, saveName);
+            if(handler.getGame().getGameType().contains("story")) {
+                Save.saveEntityData(handler, saveName);
+            }else if(handler.getGame().getGameType().contains("creative") || handler.getGame().getGameType().contains("survival")) {
+            	Save.saveGeneratedEntityData(handler, saveName);
+            }
             Save.savePlayerData(handler.getWorld().getEntityManager().getPlayer(), saveName);
             Save.saveNPCData(handler.getWorld().getEntityManager().getPlayer(), saveName);
-            Save.saveWorldNumData(handler, saveName);
+            Save.saveOtherWorldData(handler, saveName);
             Save.saveOtherData(World.getCount());
             Save.saveSettings(handler);
             System.exit(0);

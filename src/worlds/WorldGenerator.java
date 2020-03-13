@@ -4,11 +4,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import entities.Entity;
-import entities.creatures.Zombie;
-import entities.statics.Flint;
-import entities.statics.Iron;
-import entities.statics.Stone;
-import entities.statics.Tree;
+import entities.creatures.Penguin;
 import main.Handler;
 import tiles.Tile;
 import worlds.features.Feature;
@@ -17,7 +13,6 @@ public class WorldGenerator {
 
 	private int width;
 	private int height;
-	private int maxEntityAmt;
 	private int maxFeatureAmt;
 	private int worldId;
 	
@@ -29,101 +24,48 @@ public class WorldGenerator {
 	private int currentX = 0;
 	private int currentY = 0;
 	
-	private int patchWidth = 0;
-	private int patchHeight = 0;
-	private int maxPatchSize = 7;
-	
-	private int patchStartX = 0;
-	private int patchStartY = 0;
-	
-	private int patchTileType = -1;
-	
 	private int x;
 	private int y;
 	private int fx;
 	private int fy;
 	private int fwidth;
 	private int fheight;
-	private int tileX;
-	private int tileY;
-	private int tileWidth;
-	private int tileHeight;
 	private int density;
-	
-	private boolean sizesSet;
-	
-	private ArrayList<Tile> tiles1 = new ArrayList<Tile>();
-	private ArrayList<Tile> tiles2 = new ArrayList<Tile>();
-	private ArrayList<Tile> tiles3 = new ArrayList<Tile>();
-	private ArrayList<Tile> tiles4 = new ArrayList<Tile>();
 	
 	private ArrayList<Entity> entities = new ArrayList<Entity>();
 
-	private ArrayList<Feature> features = new ArrayList<Feature>();
+	private ArrayList<Feature> features;
 	 
 	private Random random = new Random();
 	
 	private Handler handler;
 	
-	public WorldGenerator(int width, int height, int maxEntityAmt, int maxFeatureAmt, int worldId, Handler handler) {
+	public WorldGenerator(int width, int height, int maxFeatureAmt, int worldId, Handler handler) {
 		this.handler = handler;
 		this.width = width;
 		this.height = height;
 		this.worldId = worldId;
-		this.maxEntityAmt = maxEntityAmt;
 		this.maxFeatureAmt = maxFeatureAmt;
 		this.worldWidth = width * 64;
 		this.worldHeight = height * 64;
-		setTileLists();
+		features = new ArrayList<Feature>();
 	}
 	
 	public void generate() {
 		tiles = new int[width + 1][height + 1];
 		if(worldId == 1) {
 			while(currentY < width && currentX < height) {
-				if((currentY == 0 || currentY == height - 1)) {
+				if(currentY == 98 && currentX == 50) {
+					tiles[currentX][currentY] = Tile.warpTile.getId();
+				}else if(currentY == 95 && currentX == 49) {
+					tiles[currentX][currentY] = Tile.doorTile.getId();
+				}else if((currentY == 96 || currentY == 97 || currentY == 98) && (currentX >= 48 && currentX <= 50)) {
+					tiles[currentX][currentY] = Tile.grassTile.getId();
+				}else if((currentY == 0 || currentY >= height - 5) || (currentX == 0 || currentX == width - 1)) {
 					//creates outline of walls?
 					tiles[currentX][currentY] = Tile.rockTile.getId();
-				}else if(currentX == 0 || currentX == width - 1) {
-					tiles[currentX][currentY] = Tile.rockTile.getId();
-				}else if(currentY > 0 && currentY < height - 1 && currentX > 0 && currentX < width - 1) {
-					if(!(tiles[currentX][currentY] > 0)) {
-						int rand = random.nextInt(150);//lower value means more patches
-						if(rand == 0) {
-							patchWidth = random.nextInt(maxPatchSize) + 1;
-							patchHeight = random.nextInt(maxPatchSize) + 1;
-							patchStartX = currentX;
-							patchStartY = currentY;
-							int rand2 = random.nextInt(tiles1.size());
-							patchTileType = tiles1.get(rand2).getId();
-							int x = patchStartX;
-							int y = patchStartY;
-							int endX = patchStartX + patchWidth;
-							int endY = patchStartY + patchHeight;
-							if(endX >= width) {
-								endX = endX - 5;
-							}
-							if(endY >= height) {
-								endY = endY - 5;
-							}
-							for(y = patchStartY; y < endY + 1; y++) {
-								for(x = patchStartX; x < endX + 1; x++) {
-									if(x == endX || x == patchStartX) {
-										if(y == endY || y == patchStartY) {
-											tiles[x][y] = 0;
-											continue;
-										}
-									}
-									tiles[x][y] = patchTileType;
-								}
-							}
-							patchWidth = 0;
-							patchHeight = 0;
-							patchStartX = 0;
-							patchStartY = 0;
-							patchTileType = 0;
-						}
-					}
+				}else {
+					tiles[currentX][currentY] = Tile.grassTile.getId();
 				}
 				currentX++;
 				if(currentX >= width) {
@@ -132,113 +74,577 @@ public class WorldGenerator {
 				}
 				continue;
 			}
-//			while(entities.size() < maxEntityAmt) {
-//				int x = random.nextInt(worldWidth) + 1;
-//				int y = random.nextInt(worldHeight) + 1;
-//				for(Entity e : entities) {
-//					if(e.getX() >= x - 32) {
-//						if(e.getY() >= y - 32) {
-//							//top left
-//							if(e.getName().contains("tree"))
-//								x -= 48;
-//							else
-//								x -= 16;
-//						}else if(e.getY() <= y + 32) {
-//							//bottom left
-//							if(e.getName().contains("tree"))
-//								x -= 48;
-//							else
-//								x -= 16;
-//						}
-//					}else if(e.getX() <= x + 32) {
-//						if(e.getY() >= y - 32) {
-//							//top right
-//							if(e.getName().contains("tree"))
-//								x += 48;
-//							else
-//								x += 16;
-//						}else if(e.getY() <= y + 32) {
-//							//bottom right
-//							if(e.getName().contains("tree"))
-//								x += 48;
-//							else
-//								x += 16;
-//						}
-//					}
-//				}
-//				int entityNum = 0;
-//				if(x > 64 && x < worldWidth - 64) {
-//					if(y > 64 && y < worldHeight - 64) {
-//						entityNum++;
-//						int entityType = random.nextInt(20);
-//						if(entityType == 0 || entityType == 1 || entityType == 2 || entityType == 3 || entityType == 4 || entityType == 5 || entityType == 6) {
-//							entities.add(new Tree(handler, x, y, entityNum));
-//						}else if(entityType == 7 || entityType == 8 || entityType == 9) {
-//							entities.add(new Stone(handler, x, y, entityNum));
-//						}else if(entityType == 10 || entityType == 11 || entityType == 12) {
-//							entities.add(new Iron(handler, x, y, entityNum));
-//						}else if(entityType == 13 || entityType == 14 || entityType == 15) {
-//							entities.add(new Flint(handler, x, y, entityNum));
-//						}else if(entityType == 16 || entityType == 17) {
-//							entities.add(new Zombie(handler, x, y, entityNum, handler.getWorld().getEntityManager().getPlayer()));
-//						}
-//					}
-//				}
-//			}
-			while(features.size() < maxFeatureAmt) {
+			
+			Feature f1 = new Feature("normalForest", 1024, 1024, 64, 64, random.nextInt(40) + 10, handler, tiles);
+			features.add(f1);
+			f1.generate();
+			entities.addAll(f1.getEntities());
+			tiles = f1.getTiles();
+			Feature f2 = new Feature("rockySpot", 1024, 1024, 5312, 64, random.nextInt(40) + 10, handler, tiles);
+			features.add(f2);
+			f2.generate();
+			entities.addAll(f2.getEntities());
+			tiles = f2.getTiles();
+			Feature f3 = new Feature("flintSpot", 1024, 1024, 64, 5056, random.nextInt(40) + 10, handler, tiles);
+			features.add(f3);
+			f3.generate();
+			entities.addAll(f3.getEntities());
+			tiles = f3.getTiles();
+			Feature f4 = new Feature("ironSpot", 1024, 1024, 5312, 5056, random.nextInt(40) + 10, handler, tiles);
+			features.add(f4);
+			f4.generate();
+			entities.addAll(f4.getEntities());
+			tiles = f4.getTiles();
+			Feature f5 = new Feature("graveyard", 1024, 1024, 2624, 64, random.nextInt(40) + 10, handler, tiles);
+			features.add(f5);
+			f5.generate();
+			entities.addAll(f5.getEntities());
+			tiles = f5.getTiles();
+			Feature f6 = new Feature("graveyard", 1024, 1024, 2624, 5056, random.nextInt(40) + 10, handler, tiles);
+			features.add(f6);
+			f6.generate();
+			entities.addAll(f6.getEntities());
+			tiles = f6.getTiles();
+			Feature f7 = new Feature("graveyard", 1024, 1024, 64, 2624, random.nextInt(40) + 10, handler, tiles);
+			features.add(f7);
+			f7.generate();
+			entities.addAll(f7.getEntities());
+			tiles = f7.getTiles();
+			Feature f8 = new Feature("graveyard", 1024, 1024, 5312, 2624, random.nextInt(40) + 10, handler, tiles);
+			features.add(f8);
+			f8.generate();
+			entities.addAll(f8.getEntities());
+			tiles = f8.getTiles();
+			while(features.size() < maxFeatureAmt - 8) {
 				setSizes();
-//				if(x + fwidth >= worldWidth || y + fheight >= worldHeight) {
-//					setSizes();
-//				}
-				int featureNum = random.nextInt(3) + 1; //set number in parentheses to amount of features
-				if(featureNum == 1) {
-					Feature feature = new Feature("normalForest", fwidth, fheight, fx, fy, density, handler, tiles);
-					features.add(feature);
-					feature.generate();
-					entities.addAll(feature.getEntities());
-					tiles = feature.getTiles();
-				}else if(featureNum == 2) {
-					Feature feature = new Feature("rockyForest", fwidth, fheight, fx, fy, density, handler, tiles);
-					features.add(feature);
-					feature.generate();
-					entities.addAll(feature.getEntities());
-					tiles = feature.getTiles();
-				}else if(featureNum == 3) {
-					Feature feature = new Feature("rocks. just rocks", fwidth, fheight, fx, fy, density, handler, tiles);
-					features.add(feature);
-					feature.generate();
-					entities.addAll(feature.getEntities());
-					tiles = feature.getTiles();
+				if(fy > 1024 && fy < 5312) {
+					int featureNum = random.nextInt(7) + 1; //set number in parentheses to amount of features
+					if(featureNum == 1 || featureNum == 2 || featureNum == 3) {
+						Feature feature = new Feature("normalForest", fwidth, fheight, fx, fy, density, handler, tiles);
+						features.add(feature);
+						feature.generate();
+						entities.addAll(feature.getEntities());
+						tiles = feature.getTiles();
+					}else if(featureNum == 4) {
+						Feature feature = new Feature("rockyForest", fwidth, fheight, fx, fy, density, handler, tiles);
+						features.add(feature);
+						feature.generate();
+						entities.addAll(feature.getEntities());
+						tiles = feature.getTiles();
+					}else if(featureNum == 5) {
+						Feature feature = new Feature("rockySpot", fwidth, fheight, fx, fy, density, handler, tiles);
+						features.add(feature);
+						feature.generate();
+						entities.addAll(feature.getEntities());
+						tiles = feature.getTiles();
+					}else if(featureNum == 6) {
+						Feature feature = new Feature("ironSpot", fwidth, fheight, fx, fy, density, handler, tiles);
+						features.add(feature);
+						feature.generate();
+						entities.addAll(feature.getEntities());
+						tiles = feature.getTiles();
+					}else if(featureNum == 7) {
+						Feature feature = new Feature("flintSpot", fwidth, fheight, fx, fy, density, handler, tiles);
+						features.add(feature);
+						feature.generate();
+						entities.addAll(feature.getEntities());
+						tiles = feature.getTiles();
+					}
+				}else if(!(fy > 1024 && fy < 5312)) {
+					if(fx > 1024 && fx < 5312) {
+						int featureNum = random.nextInt(7) + 1; //set number in parentheses to amount of features
+						if(featureNum == 1 || featureNum == 2 || featureNum == 3) {
+							Feature feature = new Feature("normalForest", fwidth, fheight, fx, fy, density, handler, tiles);
+							features.add(feature);
+							feature.generate();
+							entities.addAll(feature.getEntities());
+							tiles = feature.getTiles();
+						}else if(featureNum == 4) {
+							Feature feature = new Feature("rockyForest", fwidth, fheight, fx, fy, density, handler, tiles);
+							features.add(feature);
+							feature.generate();
+							entities.addAll(feature.getEntities());
+							tiles = feature.getTiles();
+						}else if(featureNum == 5) {
+							Feature feature = new Feature("rockySpot", fwidth, fheight, fx, fy, density, handler, tiles);
+							features.add(feature);
+							feature.generate();
+							entities.addAll(feature.getEntities());
+							tiles = feature.getTiles();
+						}else if(featureNum == 6) {
+							Feature feature = new Feature("ironSpot", fwidth, fheight, fx, fy, density, handler, tiles);
+							features.add(feature);
+							feature.generate();
+							entities.addAll(feature.getEntities());
+							tiles = feature.getTiles();
+						}else if(featureNum == 7) {
+							Feature feature = new Feature("flintSpot", fwidth, fheight, fx, fy, density, handler, tiles);
+							features.add(feature);
+							feature.generate();
+							entities.addAll(feature.getEntities());
+							tiles = feature.getTiles();
+						}
+					}else if(!(fx > 1024 && fx < 5312)) {
+						setSizes();
+					}
 				}
+				
 			}
 		}else if(worldId == 2) {
+			while(currentY < width && currentX < height) {
+				if(currentY == 98 && currentX == 50) {
+					tiles[currentX][currentY] = Tile.warpTile.getId();
+				}else if(currentY == 98 && currentX == 48) {
+					tiles[currentX][currentY] = Tile.warpDownTile.getId();
+				}else if(currentY == 95 && currentX == 49) {
+					tiles[currentX][currentY] = Tile.doorTile.getId();
+				}else if((currentY == 96 || currentY == 97 || currentY == 98) && (currentX >= 48 && currentX <= 50)) {
+					tiles[currentX][currentY] = Tile.hellGrassTile.getId();
+				}else if((currentY == 0 || currentY >= height - 5) || (currentX == 0 || currentX == width - 1)) {
+					//creates outline of walls?
+					tiles[currentX][currentY] = Tile.hellRockTile.getId();
+				}else {
+					tiles[currentX][currentY] = Tile.hellGrassTile.getId();
+				}
+				currentX++;
+				if(currentX >= width) {
+					currentY++;
+					currentX = 0;
+				}
+				continue;
+			}
 			
+			Feature f1 = new Feature("normalForest", 1024, 1024, 64, 64, random.nextInt(40) + 10, handler, tiles);
+			features.add(f1);
+			f1.generate();
+			entities.addAll(f1.getEntities());
+			tiles = f1.getTiles();
+			Feature f2 = new Feature("rockySpot", 1024, 1024, 5312, 64, random.nextInt(40) + 10, handler, tiles);
+			features.add(f2);
+			f2.generate();
+			entities.addAll(f2.getEntities());
+			tiles = f2.getTiles();
+			Feature f3 = new Feature("flintSpot", 1024, 1024, 64, 5056, random.nextInt(40) + 10, handler, tiles);
+			features.add(f3);
+			f3.generate();
+			entities.addAll(f3.getEntities());
+			tiles = f3.getTiles();
+			Feature f4 = new Feature("ironSpot", 1024, 1024, 5312, 5056, random.nextInt(40) + 10, handler, tiles);
+			features.add(f4);
+			f4.generate();
+			entities.addAll(f4.getEntities());
+			tiles = f4.getTiles();
+			Feature f5 = new Feature("coalSpot", 1024, 1024, 2624, 64, random.nextInt(40) + 10, handler, tiles);
+			features.add(f5);
+			f5.generate();
+			entities.addAll(f5.getEntities());
+			tiles = f5.getTiles();
+			Feature f6 = new Feature("graveyard", 1024, 1024, 2624, 5056, random.nextInt(40) + 10, handler, tiles);
+			features.add(f6);
+			f6.generate();
+			entities.addAll(f6.getEntities());
+			tiles = f6.getTiles();
+			Feature f7 = new Feature("graveyard", 1024, 1024, 64, 2624, random.nextInt(40) + 10, handler, tiles);
+			features.add(f7);
+			f7.generate();
+			entities.addAll(f7.getEntities());
+			tiles = f7.getTiles();
+			Feature f8 = new Feature("graveyard", 1024, 1024, 5312, 2624, random.nextInt(40) + 10, handler, tiles);
+			features.add(f8);
+			f8.generate();
+			entities.addAll(f8.getEntities());
+			tiles = f8.getTiles();
+			while(features.size() < maxFeatureAmt - 8) {
+				setSizes();
+				if(fy > 1024 && fy < 5312) {
+					int featureNum = random.nextInt(8) + 1; //set number in parentheses to amount of features
+					if(featureNum == 1 || featureNum == 2 || featureNum == 3) {
+						Feature feature = new Feature("normalForest", fwidth, fheight, fx, fy, density, handler, tiles);
+						features.add(feature);
+						feature.generate();
+						entities.addAll(feature.getEntities());
+						tiles = feature.getTiles();
+					}else if(featureNum == 4) {
+						Feature feature = new Feature("rockyForest", fwidth, fheight, fx, fy, density, handler, tiles);
+						features.add(feature);
+						feature.generate();
+						entities.addAll(feature.getEntities());
+						tiles = feature.getTiles();
+					}else if(featureNum == 5) {
+						Feature feature = new Feature("rockySpot", fwidth, fheight, fx, fy, density, handler, tiles);
+						features.add(feature);
+						feature.generate();
+						entities.addAll(feature.getEntities());
+						tiles = feature.getTiles();
+					}else if(featureNum == 6) {
+						Feature feature = new Feature("ironSpot", fwidth, fheight, fx, fy, density, handler, tiles);
+						features.add(feature);
+						feature.generate();
+						entities.addAll(feature.getEntities());
+						tiles = feature.getTiles();
+					}else if(featureNum == 7) {
+						Feature feature = new Feature("flintSpot", fwidth, fheight, fx, fy, density, handler, tiles);
+						features.add(feature);
+						feature.generate();
+						entities.addAll(feature.getEntities());
+						tiles = feature.getTiles();
+					}else if(featureNum == 8) {
+						Feature feature = new Feature("coalSpot", fwidth, fheight, fx, fy, density, handler, tiles);
+						features.add(feature);
+						feature.generate();
+						entities.addAll(feature.getEntities());
+						tiles = feature.getTiles();
+					}
+				}else if(!(fy > 1024 && fy < 5312)) {
+					if(fx > 1024 && fx < 5312) {
+						int featureNum = random.nextInt(8) + 1; //set number in parentheses to amount of features
+						if(featureNum == 1 || featureNum == 2 || featureNum == 3) {
+							Feature feature = new Feature("normalForest", fwidth, fheight, fx, fy, density, handler, tiles);
+							features.add(feature);
+							feature.generate();
+							entities.addAll(feature.getEntities());
+							tiles = feature.getTiles();
+						}else if(featureNum == 4) {
+							Feature feature = new Feature("rockyForest", fwidth, fheight, fx, fy, density, handler, tiles);
+							features.add(feature);
+							feature.generate();
+							entities.addAll(feature.getEntities());
+							tiles = feature.getTiles();
+						}else if(featureNum == 5) {
+							Feature feature = new Feature("rockySpot", fwidth, fheight, fx, fy, density, handler, tiles);
+							features.add(feature);
+							feature.generate();
+							entities.addAll(feature.getEntities());
+							tiles = feature.getTiles();
+						}else if(featureNum == 6) {
+							Feature feature = new Feature("ironSpot", fwidth, fheight, fx, fy, density, handler, tiles);
+							features.add(feature);
+							feature.generate();
+							entities.addAll(feature.getEntities());
+							tiles = feature.getTiles();
+						}else if(featureNum == 7) {
+							Feature feature = new Feature("flintSpot", fwidth, fheight, fx, fy, density, handler, tiles);
+							features.add(feature);
+							feature.generate();
+							entities.addAll(feature.getEntities());
+							tiles = feature.getTiles();
+						}else if(featureNum == 8) {
+							Feature feature = new Feature("coalSpot", fwidth, fheight, fx, fy, density, handler, tiles);
+							features.add(feature);
+							feature.generate();
+							entities.addAll(feature.getEntities());
+							tiles = feature.getTiles();
+						}
+					}else if(!(fx > 1024 && fx < 5312)) {
+						setSizes();
+					}
+				}
+				
+			}
 		}else if(worldId == 3) {
+			while(currentY < width && currentX < height) {
+				if(currentY == 98 && currentX == 50) {
+					tiles[currentX][currentY] = Tile.warpTile.getId();
+				}else if(currentY == 98 && currentX == 48) {
+					tiles[currentX][currentY] = Tile.warpDownTile.getId();
+				}else if(currentY == 95 && currentX == 49) {
+					tiles[currentX][currentY] = Tile.doorTile.getId();
+				}else if((currentY == 96 || currentY == 97 || currentY == 98) && (currentX >= 48 && currentX <= 50)) {
+					tiles[currentX][currentY] = Tile.icyGrassTile.getId();
+				}else if((currentY == 0 || currentY >= height - 5) || (currentX == 0 || currentX == width - 1)) {
+					//creates outline of walls?
+					tiles[currentX][currentY] = Tile.icyRockTile.getId();
+				}else {
+					tiles[currentX][currentY] = Tile.icyGrassTile.getId();
+				}
+				currentX++;
+				if(currentX >= width) {
+					currentY++;
+					currentX = 0;
+				}
+				continue;
+			}
 			
+			Feature f1 = new Feature("normalForest", 1024, 1024, 64, 64, random.nextInt(40) + 10, handler, tiles);
+			features.add(f1);
+			f1.generate();
+			entities.addAll(f1.getEntities());
+			tiles = f1.getTiles();
+			Feature f2 = new Feature("rockySpot", 1024, 1024, 5312, 64, random.nextInt(40) + 10, handler, tiles);
+			features.add(f2);
+			f2.generate();
+			entities.addAll(f2.getEntities());
+			tiles = f2.getTiles();
+			Feature f3 = new Feature("flintSpot", 1024, 1024, 64, 5056, random.nextInt(40) + 10, handler, tiles);
+			features.add(f3);
+			f3.generate();
+			entities.addAll(f3.getEntities());
+			tiles = f3.getTiles();
+			Feature f4 = new Feature("ironSpot", 1024, 1024, 5312, 5056, random.nextInt(40) + 10, handler, tiles);
+			features.add(f4);
+			f4.generate();
+			entities.addAll(f4.getEntities());
+			tiles = f4.getTiles();
+			Feature f5 = new Feature("graveyard", 1024, 1024, 2624, 64, random.nextInt(40) + 10, handler, tiles);
+			features.add(f5);
+			f5.generate();
+			entities.addAll(f5.getEntities());
+			tiles = f5.getTiles();
+			Feature f6 = new Feature("graveyard", 1024, 1024, 2624, 5056, random.nextInt(40) + 10, handler, tiles);
+			features.add(f6);
+			f6.generate();
+			entities.addAll(f6.getEntities());
+			tiles = f6.getTiles();
+			Feature f7 = new Feature("graveyard", 1024, 1024, 64, 2624, random.nextInt(40) + 10, handler, tiles);
+			features.add(f7);
+			f7.generate();
+			entities.addAll(f7.getEntities());
+			tiles = f7.getTiles();
+			Feature f8 = new Feature("graveyard", 1024, 1024, 5312, 2624, random.nextInt(40) + 10, handler, tiles);
+			features.add(f8);
+			f8.generate();
+			entities.addAll(f8.getEntities());
+			tiles = f8.getTiles();
+			while(features.size() < maxFeatureAmt - 8) {
+				setSizes();
+				if(fy > 1024 && fy < 5312) {
+					int featureNum = random.nextInt(8) + 1; //set number in parentheses to amount of features
+					if(featureNum == 1 || featureNum == 2 || featureNum == 3) {
+						Feature feature = new Feature("normalForest", fwidth, fheight, fx, fy, density, handler, tiles);
+						features.add(feature);
+						feature.generate();
+						entities.addAll(feature.getEntities());
+						tiles = feature.getTiles();
+					}else if(featureNum == 4) {
+						Feature feature = new Feature("rockyForest", fwidth, fheight, fx, fy, density, handler, tiles);
+						features.add(feature);
+						feature.generate();
+						entities.addAll(feature.getEntities());
+						tiles = feature.getTiles();
+					}else if(featureNum == 5) {
+						Feature feature = new Feature("rockySpot", fwidth, fheight, fx, fy, density, handler, tiles);
+						features.add(feature);
+						feature.generate();
+						entities.addAll(feature.getEntities());
+						tiles = feature.getTiles();
+					}else if(featureNum == 6) {
+						Feature feature = new Feature("ironSpot", fwidth, fheight, fx, fy, density, handler, tiles);
+						features.add(feature);
+						feature.generate();
+						entities.addAll(feature.getEntities());
+						tiles = feature.getTiles();
+					}else if(featureNum == 7) {
+						Feature feature = new Feature("flintSpot", fwidth, fheight, fx, fy, density, handler, tiles);
+						features.add(feature);
+						feature.generate();
+						entities.addAll(feature.getEntities());
+						tiles = feature.getTiles();
+					}else if(featureNum == 8) {
+						Feature feature = new Feature("coalSpot", fwidth, fheight, fx, fy, density, handler, tiles);
+						features.add(feature);
+						feature.generate();
+						entities.addAll(feature.getEntities());
+						tiles = feature.getTiles();
+					}
+				}else if(!(fy > 1024 && fy < 5312)) {
+					if(fx > 1024 && fx < 5312) {
+						int featureNum = random.nextInt(8) + 1; //set number in parentheses to amount of features
+						if(featureNum == 1 || featureNum == 2 || featureNum == 3) {
+							Feature feature = new Feature("normalForest", fwidth, fheight, fx, fy, density, handler, tiles);
+							features.add(feature);
+							feature.generate();
+							entities.addAll(feature.getEntities());
+							tiles = feature.getTiles();
+						}else if(featureNum == 4) {
+							Feature feature = new Feature("rockyForest", fwidth, fheight, fx, fy, density, handler, tiles);
+							features.add(feature);
+							feature.generate();
+							entities.addAll(feature.getEntities());
+							tiles = feature.getTiles();
+						}else if(featureNum == 5) {
+							Feature feature = new Feature("rockySpot", fwidth, fheight, fx, fy, density, handler, tiles);
+							features.add(feature);
+							feature.generate();
+							entities.addAll(feature.getEntities());
+							tiles = feature.getTiles();
+						}else if(featureNum == 6) {
+							Feature feature = new Feature("ironSpot", fwidth, fheight, fx, fy, density, handler, tiles);
+							features.add(feature);
+							feature.generate();
+							entities.addAll(feature.getEntities());
+							tiles = feature.getTiles();
+						}else if(featureNum == 7) {
+							Feature feature = new Feature("flintSpot", fwidth, fheight, fx, fy, density, handler, tiles);
+							features.add(feature);
+							feature.generate();
+							entities.addAll(feature.getEntities());
+							tiles = feature.getTiles();
+						}else if(featureNum == 8) {
+							Feature feature = new Feature("coalSpot", fwidth, fheight, fx, fy, density, handler, tiles);
+							features.add(feature);
+							feature.generate();
+							entities.addAll(feature.getEntities());
+							tiles = feature.getTiles();
+						}
+					}else if(!(fx > 1024 && fx < 5312)) {
+						setSizes();
+					}
+				}
+				
+			}
+			int penguinAmt = random.nextInt(50) + 1;
+			for(int i = 1; i<penguinAmt; i++) {
+				entities.add(new Penguin(handler, random.nextInt(worldWidth - 64) + 64, random.nextInt(worldHeight - 256) + 64, entities.size() + 1));
+			}
 		}else if(worldId == 4) {
+			while(currentY < width && currentX < height) {
+				if(currentY == 98 && currentX == 48) {
+					tiles[currentX][currentY] = Tile.warpDownTile.getId();
+				}else if(currentY == 95 && currentX == 49) {
+					tiles[currentX][currentY] = Tile.sandyDoorTile.getId();
+				}else if((currentY == 96 || currentY == 97 || currentY == 98) && (currentX >= 48 && currentX <= 50)) {
+					tiles[currentX][currentY] = Tile.sandTile.getId();
+				}else if((currentY == 0 || currentY >= height - 5) || (currentX == 0 || currentX == width - 1)) {
+					//creates outline of walls?
+					tiles[currentX][currentY] = Tile.sandStoneWallTile.getId();
+				}else {
+					tiles[currentX][currentY] = Tile.sandTile.getId();
+				}
+				currentX++;
+				if(currentX >= width) {
+					currentY++;
+					currentX = 0;
+				}
+				continue;
+			}
 			
+			Feature f1 = new Feature("normalForest", 1024, 1024, 64, 64, random.nextInt(40) + 10, handler, tiles);
+			features.add(f1);
+			f1.generate();
+			entities.addAll(f1.getEntities());
+			tiles = f1.getTiles();
+			Feature f2 = new Feature("rockySpot", 1024, 1024, 5312, 64, random.nextInt(40) + 10, handler, tiles);
+			features.add(f2);
+			f2.generate();
+			entities.addAll(f2.getEntities());
+			tiles = f2.getTiles();
+			Feature f3 = new Feature("flintSpot", 1024, 1024, 64, 5056, random.nextInt(40) + 10, handler, tiles);
+			features.add(f3);
+			f3.generate();
+			entities.addAll(f3.getEntities());
+			tiles = f3.getTiles();
+			Feature f4 = new Feature("ironSpot", 1024, 1024, 5312, 5056, random.nextInt(40) + 10, handler, tiles);
+			features.add(f4);
+			f4.generate();
+			entities.addAll(f4.getEntities());
+			tiles = f4.getTiles();
+			Feature f5 = new Feature("graveyard", 1024, 1024, 2624, 64, random.nextInt(40) + 10, handler, tiles);
+			features.add(f5);
+			f5.generate();
+			entities.addAll(f5.getEntities());
+			tiles = f5.getTiles();
+			Feature f6 = new Feature("graveyard", 1024, 1024, 2624, 5056, random.nextInt(40) + 10, handler, tiles);
+			features.add(f6);
+			f6.generate();
+			entities.addAll(f6.getEntities());
+			tiles = f6.getTiles();
+			Feature f7 = new Feature("graveyard", 1024, 1024, 64, 2624, random.nextInt(40) + 10, handler, tiles);
+			features.add(f7);
+			f7.generate();
+			entities.addAll(f7.getEntities());
+			tiles = f7.getTiles();
+			Feature f8 = new Feature("graveyard", 1024, 1024, 5312, 2624, random.nextInt(40) + 10, handler, tiles);
+			features.add(f8);
+			f8.generate();
+			entities.addAll(f8.getEntities());
+			tiles = f8.getTiles();
+			while(features.size() < maxFeatureAmt - 8) {
+				setSizes();
+				if(fy > 1024 && fy < 5312) {
+					int featureNum = random.nextInt(8) + 1; //set number in parentheses to amount of features
+					if(featureNum == 1 || featureNum == 2 || featureNum == 3) {
+						Feature feature = new Feature("normalForest", fwidth, fheight, fx, fy, density, handler, tiles);
+						features.add(feature);
+						feature.generate();
+						entities.addAll(feature.getEntities());
+						tiles = feature.getTiles();
+					}else if(featureNum == 4) {
+						Feature feature = new Feature("rockyForest", fwidth, fheight, fx, fy, density, handler, tiles);
+						features.add(feature);
+						feature.generate();
+						entities.addAll(feature.getEntities());
+						tiles = feature.getTiles();
+					}else if(featureNum == 5) {
+						Feature feature = new Feature("rockySpot", fwidth, fheight, fx, fy, density, handler, tiles);
+						features.add(feature);
+						feature.generate();
+						entities.addAll(feature.getEntities());
+						tiles = feature.getTiles();
+					}else if(featureNum == 6) {
+						Feature feature = new Feature("ironSpot", fwidth, fheight, fx, fy, density, handler, tiles);
+						features.add(feature);
+						feature.generate();
+						entities.addAll(feature.getEntities());
+						tiles = feature.getTiles();
+					}else if(featureNum == 7) {
+						Feature feature = new Feature("flintSpot", fwidth, fheight, fx, fy, density, handler, tiles);
+						features.add(feature);
+						feature.generate();
+						entities.addAll(feature.getEntities());
+						tiles = feature.getTiles();
+					}else if(featureNum == 8) {
+						Feature feature = new Feature("coalSpot", fwidth, fheight, fx, fy, density, handler, tiles);
+						features.add(feature);
+						feature.generate();
+						entities.addAll(feature.getEntities());
+						tiles = feature.getTiles();
+					}
+				}else if(!(fy > 1024 && fy < 5312)) {
+					if(fx > 1024 && fx < 5312) {
+						int featureNum = random.nextInt(8) + 1; //set number in parentheses to amount of features
+						if(featureNum == 1 || featureNum == 2 || featureNum == 3) {
+							Feature feature = new Feature("normalForest", fwidth, fheight, fx, fy, density, handler, tiles);
+							features.add(feature);
+							feature.generate();
+							entities.addAll(feature.getEntities());
+							tiles = feature.getTiles();
+						}else if(featureNum == 4) {
+							Feature feature = new Feature("rockyForest", fwidth, fheight, fx, fy, density, handler, tiles);
+							features.add(feature);
+							feature.generate();
+							entities.addAll(feature.getEntities());
+							tiles = feature.getTiles();
+						}else if(featureNum == 5) {
+							Feature feature = new Feature("rockySpot", fwidth, fheight, fx, fy, density, handler, tiles);
+							features.add(feature);
+							feature.generate();
+							entities.addAll(feature.getEntities());
+							tiles = feature.getTiles();
+						}else if(featureNum == 6) {
+							Feature feature = new Feature("ironSpot", fwidth, fheight, fx, fy, density, handler, tiles);
+							features.add(feature);
+							feature.generate();
+							entities.addAll(feature.getEntities());
+							tiles = feature.getTiles();
+						}else if(featureNum == 7) {
+							Feature feature = new Feature("flintSpot", fwidth, fheight, fx, fy, density, handler, tiles);
+							features.add(feature);
+							feature.generate();
+							entities.addAll(feature.getEntities());
+							tiles = feature.getTiles();
+						}else if(featureNum == 8) {
+							Feature feature = new Feature("coalSpot", fwidth, fheight, fx, fy, density, handler, tiles);
+							features.add(feature);
+							feature.generate();
+							entities.addAll(feature.getEntities());
+							tiles = feature.getTiles();
+						}
+					}else if(!(fx > 1024 && fx < 5312)) {
+						setSizes();
+					}
+				}
+			}
 		}
-	}
-	
-	private void setTileLists() {
-		//world1
-		tiles1.add(Tile.dirtTile);
-		tiles1.add(Tile.stoneTile);
-		tiles1.add(Tile.waterTile);
-		//world2
-		tiles2.add(Tile.dirtTile);
-		tiles2.add(Tile.hellGrassTile);
-		tiles2.add(Tile.hellStoneTile);
-		//world3
-		tiles3.add(Tile.dirtTile);
-		tiles3.add(Tile.icyGrassTile);
-		tiles3.add(Tile.icyStoneTile);
-		//world4
-		tiles4.add(Tile.sandTile);
-		tiles4.add(Tile.sandyDoorTile);
-		tiles4.add(Tile.sandyDoorTile2);
-		tiles4.add(Tile.sandStoneTile);
-		tiles4.add(Tile.waterTile);
 	}
 	
 	private void setSizes() {
@@ -247,12 +653,8 @@ public class WorldGenerator {
 		fx = (int) (Math.floor(x/64) * 64);
 		fy = (int) (Math.floor(y/64) * 64);
 		fwidth = (int) (Math.floor((random.nextInt(1024) + 256) / 64) * 64);
-		fheight = (int) (Math.floor((random.nextInt(1024) + 256) / 64) * 64);
-		tileX = (int) Math.floor(fx / 64);
-		tileY = (int) Math.floor(fy / 64);
-		tileWidth = (int) Math.floor(fwidth / 64);
-		tileHeight = (int) Math.floor(fheight / 64);
-		density = random.nextInt(50) + 10;
+		fheight = fwidth;
+		density = random.nextInt(30) + 10;
 		if(worldWidth - (fx + fwidth) <= 0) {
 			setSizes();
 		}else if(worldHeight - (fy + fheight) <= 0) {
@@ -266,6 +668,10 @@ public class WorldGenerator {
 	
 	public int getTile(int x, int y) {
 		return tiles[x][y];
+	}
+
+	public ArrayList<Feature> getFeatures() {
+		return features;
 	}
 	
 }

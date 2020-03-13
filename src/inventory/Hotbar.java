@@ -278,9 +278,9 @@ public class Hotbar
     {
         if(checkIfContains(item.getId()) && item.isHeal())
         {
-            if(item.getName() == "Health Boost Potion")
+            if(item.getName() == "HealthBoostPotion")
                 handler.getWorld().getEntityManager().getPlayer().setMaxHealth(handler.getWorld().getEntityManager().getPlayer().getMaxHealth() + 5);
-            if(item.getName() == "Steel Health Boost Potion")
+            if(item.getName() == "SteelHealthBoostPotion")
                 handler.getWorld().getEntityManager().getPlayer().setMaxHealth(handler.getWorld().getEntityManager().getPlayer().getMaxHealth() + 10);
             handler.getWorld().getEntityManager().getPlayer().setHealth(handler.getWorld().getEntityManager().getPlayer().getMaxHealth());
             handler.getWorld().getEntityManager().getPlayer().getInventory().removeItem(item, 1);
@@ -294,7 +294,7 @@ public class Hotbar
     {
     	if(checkIfContains(item.getId()) && item.isRanged())
         {
-        	if(item.getAmmoType().getName() == "Pistol Bullet") {
+        	if(item.getAmmoType().getName() == "PistolBullet") {
         		if(handler.getWorld().getEntityManager().getPlayer().getInventory().checkIfContains(item.getAmmoType().getId())) {
                 	PistolBullet bullet = new PistolBullet(handler, -10, -10, handler.getWorld().getEntityManager().getPlayer());
                    	handler.getWorld().getEntityManager().add(bullet);
@@ -303,7 +303,7 @@ public class Hotbar
         		}else {
         			return;
         		}
-        	}else if(item.getAmmoType().getName() == "Smg Bullet") {
+        	}else if(item.getAmmoType().getName() == "SmgBullet") {
         		if(handler.getWorld().getEntityManager().getPlayer().getInventory().checkIfContains(item.getAmmoType().getId())) {
                 	SmgBullet bullet = new SmgBullet(handler, -10, -10, handler.getWorld().getEntityManager().getPlayer());
                    	handler.getWorld().getEntityManager().add(bullet);

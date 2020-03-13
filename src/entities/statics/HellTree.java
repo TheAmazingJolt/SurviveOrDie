@@ -25,6 +25,18 @@ public class HellTree extends StaticEntity
         bounds.width = width - 20;
         bounds.height = (int)((float)height - (float)height / 1.5F);
     }
+    
+    public HellTree(Handler handler, float x, float y, int id, boolean isActive)
+    {
+        super(handler, x, y, 64, 128, maxHealth, id, "HellTree");
+        this.id = id;
+        this.health = maxHealth;
+        this.active = isActive;
+        bounds.x = 10;
+        bounds.y = (int)((float)height / 1.5F);
+        bounds.width = width - 20;
+        bounds.height = (int)((float)height - (float)height / 1.5F);
+    }
 
     public void tick()
     {

@@ -15,6 +15,18 @@ public class IcyTree extends StaticEntity
 
 	private static int maxHealth = 40;
 	
+    public IcyTree(Handler handler, float x, float y, int id, boolean isActive)
+    {
+        super(handler, x, y, 64, 128, maxHealth, id, "IcyTree");
+        this.id = id;
+        this.health = maxHealth;
+        this.active = isActive;
+        bounds.x = 10;
+        bounds.y = (int)((float)height / 1.5F);
+        bounds.width = width - 20;
+        bounds.height = (int)((float)height - (float)height / 1.5F);
+    }
+    
     public IcyTree(Handler handler, float x, float y, int id)
     {
         super(handler, x, y, 64, 128, maxHealth, id, "IcyTree");

@@ -38,6 +38,7 @@ public class Assets
     public static BufferedImage woodenStructure;
     public static BufferedImage tree;
     public static BufferedImage hellTree;
+    public static BufferedImage deadTree;
     public static BufferedImage rock;
     public static BufferedImage ironOre;
     public static BufferedImage flintRock;
@@ -50,6 +51,7 @@ public class Assets
     public static BufferedImage openSandyDoor2;
     public static BufferedImage closedSandyDoor2;
     public static BufferedImage warp;
+    public static BufferedImage warpDown;
     public static BufferedImage icyWall;
     public static BufferedImage icyGrass;
     public static BufferedImage icyStone;
@@ -95,6 +97,7 @@ public class Assets
     public static BufferedImage player_up[];
     public static BufferedImage player_left[];
     public static BufferedImage player_right[];
+    public static BufferedImage player_spin[];
     
     public static BufferedImage player_dead;
     public static BufferedImage player_face;
@@ -203,6 +206,7 @@ public class Assets
         player_up = new BufferedImage[2];
         player_left = new BufferedImage[2];
         player_right = new BufferedImage[2];
+        player_spin = new BufferedImage[4];
         player_down[0] = animations.crop(width * 4, 0, 32, 32);
         player_down[1] = animations.crop(width * 5, 0, 32, 32);
         player_up[0] = animations.crop(width * 6, 0, 32, 32);
@@ -211,6 +215,10 @@ public class Assets
         player_right[1] = animations.crop(width * 5, 32, 32, 32);
         player_left[0] = animations.crop(width * 6, 32, 32, 32);
         player_left[1] = animations.crop(width * 7, 32, 32, 32);
+        player_spin[0] = animations.crop(width * 6, 32, 32, 32);
+        player_spin[1] = animations.crop(width * 4, 0, 32, 32);
+        player_spin[2] = animations.crop(width * 4, 32, 32, 32);
+        player_spin[3] = animations.crop(width * 6, 0, 32, 32);
         player_dead = animations.crop(0, height * 15, width, height);
         player_face = animations.crop(width, height * 15, width, height);
 
@@ -349,6 +357,7 @@ public class Assets
         closedSandyDoor2 = sheet.crop(width * 4, 0, 32, 32);
         openSandyDoor2 = sheet.crop(width * 5, 0, 32, 32);
         warp = sheet.crop(0, 0, 32, 32);
+        warpDown = sheet.crop(0, height * 4, 32, 32);
         icyGrass = sheet.crop(width * 3, height * 2, width, height);
         icyStone = sheet.crop(0, height * 3, width, height);
         icyWall = sheet.crop(width, height * 3, width, height);
@@ -361,6 +370,7 @@ public class Assets
         flintRock = sheet.crop(width, height * 15, 32, 32);
         coal = sheet.crop(width, height * 12, width, height);
         icyTree = sheet.crop(width * 2, height * 13, width, height * 2);
+        deadTree = sheet.crop(width * 3, height * 13, width, height * 2);
         
         rottenFlesh = sheet.crop(width * 11, height * 15, 32, 32);
         wood = sheet.crop(width * 14, height * 15, 32, 32);

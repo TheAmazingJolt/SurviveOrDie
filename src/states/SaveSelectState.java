@@ -43,17 +43,21 @@ public class SaveSelectState extends State{
 	
 	private int buttonX;
 	private int buttonY;
+	private int button2Y;
 	private int buttonWidth;
 	private int buttonHeight;
 	
 	private int selectedSave = 1;
 	private int amountOfSaves;
 	
+	private static int furthestWorld;
+	
 	private boolean saveAmtSet = false;
 	private boolean saveIsSelected = true;
 	private boolean dataLoaded = false;
 	
 	private Color colorForPlayButton = Color.WHITE;
+	private Color colorForCancelButton = Color.WHITE;
 	
 	public SaveSelectState(Handler handler)
     {
@@ -87,6 +91,7 @@ public class SaveSelectState extends State{
         buttonHeight = 37;
         buttonX = x + 530;
         buttonY = y + 290;
+        button2Y = buttonY + buttonHeight + 10;
         handler.getWorld();
         uiManager = new UIManager(handler);
         handler.getMouseManager().setUIManager(uiManager);
@@ -154,11 +159,21 @@ public class SaveSelectState extends State{
 					LoadState.setSaveToLoad(selectedSave);
 					State.setState(handler.getGame().loadState);
 				}
+			}else if(mouseY >= button2Y && mouseY <= button2Y + buttonHeight) {
+				colorForCancelButton = Color.YELLOW;
+				if(handler.getMouseManager().isLeftPressed()) {
+					LoadState.setLoading(false);
+					LoadState.setToLoad(false);
+					LoadState.setSaveToLoad(0);
+					State.setState(handler.getGame().loadState);
+				}
 			}else {
 				colorForPlayButton = Color.WHITE;
+				colorForCancelButton = Color.WHITE;
 			}
     	}else {
     		colorForPlayButton = Color.WHITE;
+			colorForCancelButton = Color.WHITE;
     	}
     	if(saveIsSelected) {
     		Load.loadSaveData("save" + selectedSave, handler);
@@ -186,9 +201,21 @@ public class SaveSelectState extends State{
 		
 			Text.drawString(g, "Game Type: ", infoBoxLineX + 2, infoBoxLine3Y - 10, true, Color.WHITE, Assets.font20);
 			Text.drawString(g, handler.getGame().getGameType(), infoBoxLineX, infoBoxLine3Y + 10, true, Color.WHITE, Assets.font20);
+			
+			Text.drawString(g, "Furthest World: ", infoBoxLineX + 2, infoBoxLine4Y - 10, true, Color.WHITE, Assets.font20);
+			Text.drawString(g, Integer.toString(furthestWorld), infoBoxLineX, infoBoxLine4Y + 10, true, Color.WHITE, Assets.font20);
 			Text.drawString(g, "Play", buttonX + buttonWidth / 2, buttonY + buttonHeight / 2, true, colorForPlayButton, Assets.font40);
+			Text.drawString(g, "Cancel", buttonX + buttonWidth / 2, button2Y + buttonHeight / 2, true, colorForCancelButton, Assets.font40);
 		}
         uiManager.render(g);
     }
+
+	public static int getFurthestWorld() {
+		return furthestWorld;
+	}
+
+	public static void setFurthestWorld(int furthest) {
+		furthestWorld = furthest;
+	}
 	
 }

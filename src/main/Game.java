@@ -138,7 +138,7 @@ public class Game implements Runnable {
         if(!Display.frame.isShowing()) {
         	String saveName = "save"+handler.getWorld().getLoadedSave();
             Save.saveWorldData(handler, saveName);
-            Save.saveItemData(handler, handler.getWorld().getEntityManager().getPlayer().getInventory().getInventoryItems(), saveName);
+            Save.saveItemData(handler, saveName);
             if(handler.getGame().getGameType().contains("story")) {
                 Save.saveEntityData(handler, saveName);
             }else if(handler.getGame().getGameType().contains("creative") || handler.getGame().getGameType().contains("survival")) {

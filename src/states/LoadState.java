@@ -130,6 +130,7 @@ public class LoadState extends State
     		State.setState(handler.getGame().modeState);
 		}
         if(toLoad && loading) {
+        	System.out.println(saveToLoad);
         	saveName = "save" + saveToLoad;
         	loadStuff(saveToLoad);
         }
@@ -185,11 +186,16 @@ public class LoadState extends State
 
 	public void loadStuff(int num)
     {
+		System.out.println(num);
     	Load.loadOtherWorldData(saveName, handler);
-    	world = new World(handler, "res/worlds/world" + worldToLoad + ".txt");
-        handler.setWorld(world);
+    	if(handler.getGame().getGameType().contains("story"))
+    		world = new World(handler, "res/worlds/world" + worldToLoad + ".txt");
+    	else
+    		world = new World(handler, true, num, worldToLoad);
+    	handler.setWorld(world);
         handler.getWorld().setLoadedWorld(num);
         handler.getWorld().setCurrentWorld(worldToLoad);
+        handler.getWorld().setFurthestWorldVisited(SaveSelectState.getFurthestWorld());
        // handler.getWorld().addEntities();
         Load.loadPlayerData(handler.getWorld().getEntityManager().getPlayer(), saveName);
         Load.loadNPCData(handler.getWorld().getEntityManager().getPlayer(), saveName, handler);
@@ -197,6 +203,14 @@ public class LoadState extends State
         Load.loadItemData(saveName);
         Load.loadSaveData(saveName, handler);
         handler.getWorld().setLoaded(true);
+        if(handler.getWorld().getCurrentWorld() == 1)
+        	handler.getWorld().setWorld1Loaded(true);
+        if(handler.getWorld().getCurrentWorld() == 2)
+        	handler.getWorld().setWorld2Loaded(true);
+        if(handler.getWorld().getCurrentWorld() == 3)
+        	handler.getWorld().setWorld3Loaded(true);
+        if(handler.getWorld().getCurrentWorld() == 4)
+        	handler.getWorld().setWorld4Loaded(true);
 		State.setPreviousState(handler.getGame().loadState);
         State.setState(handler.getGame().worldLoadState);
     }

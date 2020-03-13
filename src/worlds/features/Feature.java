@@ -4,6 +4,15 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import entities.Entity;
+import entities.creatures.HellZombie;
+import entities.creatures.IcyZombie;
+import entities.creatures.Zombie;
+import entities.statics.Coal;
+import entities.statics.DeadTree;
+import entities.statics.Flint;
+import entities.statics.HellTree;
+import entities.statics.IcyTree;
+import entities.statics.Iron;
 import entities.statics.Stone;
 import entities.statics.Tree;
 import main.Handler;
@@ -57,69 +66,255 @@ public class Feature {
 			for(int y = startY; y < endY; y += 64) {
 				if(!hasMultipleEntities) {
 					if(!hasMultipleTiles) {
-						int randInt = random.nextInt(100) + 1;
-						if(randInt <= density) {
-							entityNum++;
-							if(entityType.contains("Tree")) {
-								entities.add(new Tree(handler, x, y, entityNum));
-							}else if(entityType.contains("Stone")) {
-								entities.add(new Stone(handler, x, y, entityNum));
+						if(handler.getWorld().getCurrentWorld() == 1) {
+							int randInt = random.nextInt(100) + 1;
+							if(randInt <= density) {
+								entityNum++;
+								if(entityType.contains("Tree")) {
+									entities.add(new Tree(handler, x, y, entityNum));
+								}
 							}
-						}
-						if(featureType.contains("normalForest")) {
-							tiles[x/64][y/64] = tileType.id;
-						}else if(featureType.contains("rocks. just rocks")) {
-							tiles[x/64][y/64] = tileType.id;
+							if(featureType.contains("forest")) {
+								tiles[x/64][y/64] = Tile.grassTile.id;
+							}
+						}else if(handler.getWorld().getCurrentWorld() == 2) {
+							int randInt = random.nextInt(100) + 1;
+							if(randInt <= density) {
+								entityNum++;
+								if(entityType.contains("Tree")) {
+									entities.add(new HellTree(handler, x, y, entityNum));
+								}
+							}
+							if(featureType.contains("forest")) {
+								tiles[x/64][y/64] = Tile.hellGrassTile.id;
+							}
+						}else if(handler.getWorld().getCurrentWorld() == 3) {
+							int randInt = random.nextInt(100) + 1;
+							if(randInt <= density) {
+								entityNum++;
+								if(entityType.contains("Tree")) {
+									entities.add(new IcyTree(handler, x, y, entityNum));
+								}
+							}
+							if(featureType.contains("forest")) {
+								tiles[x/64][y/64] = Tile.icyGrassTile.id;
+							}
 						}
 					}else if(hasMultipleTiles) {
-						int randInt = random.nextInt(100) + 1;
-						if(randInt <= density) {
-							entityNum++;
-							if(entityType.contains("Tree")) {
-								entities.add(new Tree(handler, x, y, entityNum));
-							}else if(entityType.contains("Stone")) {
-								entities.add(new Stone(handler, x, y, entityNum));
+						if(handler.getWorld().getCurrentWorld() == 1) {
+							int randInt = random.nextInt(100) + 1;
+							if(randInt <= density) {
+								entityNum++;
+								if(entityType.contains("Stone")) {
+									entities.add(new Stone(handler, x, y, entityNum));
+								}else if(entityType.contains("Iron")) {
+									entities.add(new Iron(handler, x, y, entityNum));
+								}else if(entityType.contains("Flint")) {
+									entities.add(new Flint(handler, x, y, entityNum));
+								}
+							}
+							if(featureType.contains("rockySpot")) {
+								int rand = random.nextInt(4);
+								if(rand < 3) {
+									tiles[x/64][y/64] = Tile.stoneTile.id;
+								}else if(rand == 3) {
+									tiles[x/64][y/64] = Tile.grassTile.id;
+								}
+							}else if(featureType.contains("ironSpot")) {
+								int rand = random.nextInt(4);
+								if(rand < 3) {
+									tiles[x/64][y/64] = Tile.stoneTile.id;
+								}else if(rand == 3) {
+									tiles[x/64][y/64] = Tile.grassTile.id;
+								}
+							}else if(featureType.contains("flintSpot")) {
+								int rand = random.nextInt(4);
+								if(rand < 3) {
+									tiles[x/64][y/64] = Tile.stoneTile.id;
+								}else if(rand == 3) {
+									tiles[x/64][y/64] = Tile.grassTile.id;
+								}
+							}
+						}else if(handler.getWorld().getCurrentWorld() == 2) {
+							int randInt = random.nextInt(100) + 1;
+							if(randInt <= density) {
+								entityNum++;
+								if(entityType.contains("Stone")) {
+									entities.add(new Stone(handler, x, y, entityNum));
+								}else if(entityType.contains("Iron")) {
+									entities.add(new Iron(handler, x, y, entityNum));
+								}else if(entityType.contains("Flint")) {
+									entities.add(new Flint(handler, x, y, entityNum));
+								}else if(entityType.contains("Coal")) {
+									entities.add(new Coal(handler, x, y, entityNum));
+								}
+							}
+							if(featureType.contains("rockySpot") || featureType.contains("ironSpot") || featureType.contains("flintSpot") || featureType.contains("coalSpot")) {
+								int rand = random.nextInt(4);
+								if(rand < 3) {
+									tiles[x/64][y/64] = Tile.hellStoneTile.id;
+								}else if(rand == 3) {
+									tiles[x/64][y/64] = Tile.hellGrassTile.id;
+								}
+							}
+						}else if(handler.getWorld().getCurrentWorld() == 3) {
+							int randInt = random.nextInt(100) + 1;
+							if(randInt <= density) {
+								entityNum++;
+								if(entityType.contains("Stone")) {
+									entities.add(new Stone(handler, x, y, entityNum));
+								}else if(entityType.contains("Iron")) {
+									entities.add(new Iron(handler, x, y, entityNum));
+								}else if(entityType.contains("Flint")) {
+									entities.add(new Flint(handler, x, y, entityNum));
+								}
+							}
+							if(featureType.contains("rockySpot") || featureType.contains("ironSpot") || featureType.contains("flintSpot")) {
+								int rand = random.nextInt(4);
+								if(rand < 3) {
+									tiles[x/64][y/64] = Tile.icyStoneTile.id;
+								}else if(rand == 3) {
+									tiles[x/64][y/64] = Tile.icyGrassTile.id;
+								}
 							}
 						}
-						//tile selection goes here
 					}
 				}else if(hasMultipleEntities) {
 					if(!hasMultipleTiles) {
-						int randInt = random.nextInt(100) + 1;
-						if(randInt <= density) {
-							entityNum++;
-							if(entityType.contains("Tree")) {
-								entities.add(new Tree(handler, x, y, entityNum));
-							}else if(entityType.contains("Stone")) {
-								entities.add(new Stone(handler, x, y, entityNum));
+						if(handler.getWorld().getCurrentWorld() == 1) {
+							int randInt = random.nextInt(100) + 1;
+							if(randInt <= density) {
+								entityNum++;
+								//entity generation here
 							}
+							//tile gen here
 						}
-						//tile selection goes here
 					}else if(hasMultipleTiles) {
-						int randInt = random.nextInt(100) + 1;
-						if(randInt <= density) {
-							entityNum++;
-							int rand = random.nextInt(4);
-							if(rand < 3) {
-								if(entityType.contains("Tree")) {
-									entities.add(new Tree(handler, x, y, entityNum));
-								}else if(entityType.contains("Stone")) {
-									entities.add(new Stone(handler, x, y, entityNum));
-								}
-							}else if(rand == 3) {
-								if(secondaryEntityType.contains("Tree")) {
-									entities.add(new Tree(handler, x, y, entityNum));
-								}else if(secondaryEntityType.contains("Stone")) {
-									entities.add(new Stone(handler, x, y, entityNum));
+						if(handler.getWorld().getCurrentWorld() == 1) {
+							int randInt = random.nextInt(100) + 1;
+							if(randInt <= density) {
+								entityNum++;
+								int rand = random.nextInt(4);
+								if(featureType.contains("rockyForest")) {
+									if(rand < 3) {
+										if(entityType.contains("Tree")) {
+											entities.add(new Tree(handler, x, y, entityNum));
+										}
+									}else if(rand == 3) {
+										if(secondaryEntityType.contains("Stone")) {
+											entities.add(new Stone(handler, x, y, entityNum));
+										}
+									}
+								}else if(featureType.contains("graveyard")) {
+									if(rand < 3) {
+										if(entityType.contains("DeadTree")) {
+											entities.add(new DeadTree(handler, x, y - 64, entityNum));
+										}
+									}else if(rand == 3) {
+										if(secondaryEntityType.contains("Zombie")) {
+											entities.add(new Zombie(handler, x, y, entityNum, handler.getWorld().getEntityManager().getPlayer()));
+										}
+									}
 								}
 							}
-						}
-						if(featureType.contains("rockyForest")) {
-							int rand = random.nextInt(4);
-							if(rand < 3) {
-								tiles[x/64][y/64] = tileType.id;
-							}else if(rand == 3) {
-								tiles[x/64][y/64] = secondaryTileType.id;
+							if(featureType.contains("rockyForest")) {
+								int rand = random.nextInt(4);
+								if(rand < 3) {
+									tiles[x/64][y/64] = Tile.grassTile.id;
+								}else if(rand == 3) {
+									tiles[x/64][y/64] = Tile.stoneTile.id;
+								}
+							}else if(featureType.contains("graveyard")) {
+								int rand = random.nextInt(4);
+								if(rand < 3) {
+									tiles[x/64][y/64] = Tile.dirtTile.id;
+								}else if(rand == 3) {
+									tiles[x/64][y/64] = Tile.grassTile.id;
+								}
+							}
+						}else if(handler.getWorld().getCurrentWorld() == 2) {
+							int randInt = random.nextInt(100) + 1;
+							if(randInt <= density) {
+								entityNum++;
+								int rand = random.nextInt(4);
+								if(featureType.contains("rockyForest")) {
+									if(rand < 3) {
+										if(entityType.contains("Tree")) {
+											entities.add(new HellTree(handler, x, y, entityNum));
+										}
+									}else if(rand == 3) {
+										if(secondaryEntityType.contains("Stone")) {
+											entities.add(new Stone(handler, x, y, entityNum));
+										}
+									}
+								}else if(featureType.contains("graveyard")) {
+									if(rand < 3) {
+										if(entityType.contains("DeadTree")) {
+											entities.add(new DeadTree(handler, x, y - 64, entityNum));
+										}
+									}else if(rand == 3) {
+										if(secondaryEntityType.contains("Zombie")) {
+											entities.add(new HellZombie(handler, x, y, entityNum, handler.getWorld().getEntityManager().getPlayer()));
+										}
+									}
+								}
+							}
+							if(featureType.contains("rockyForest")) {
+								int rand = random.nextInt(4);
+								if(rand < 3) {
+									tiles[x/64][y/64] = Tile.hellGrassTile.id;
+								}else if(rand == 3) {
+									tiles[x/64][y/64] = Tile.hellStoneTile.id;
+								}
+							}else if(featureType.contains("graveyard")) {
+								int rand = random.nextInt(4);
+								if(rand < 3) {
+									tiles[x/64][y/64] = Tile.dirtTile.id;
+								}else if(rand == 3) {
+									tiles[x/64][y/64] = Tile.hellGrassTile.id;
+								}
+							}
+						}else if(handler.getWorld().getCurrentWorld() == 3) {
+							int randInt = random.nextInt(100) + 1;
+							if(randInt <= density) {
+								entityNum++;
+								int rand = random.nextInt(4);
+								if(featureType.contains("rockyForest")) {
+									if(rand < 3) {
+										if(entityType.contains("Tree")) {
+											entities.add(new IcyTree(handler, x, y, entityNum));
+										}
+									}else if(rand == 3) {
+										if(secondaryEntityType.contains("Stone")) {
+											entities.add(new Stone(handler, x, y, entityNum));
+										}
+									}
+								}else if(featureType.contains("graveyard")) {
+									if(rand < 3) {
+										if(entityType.contains("DeadTree")) {
+											entities.add(new DeadTree(handler, x, y - 64, entityNum));
+										}
+									}else if(rand == 3) {
+										if(secondaryEntityType.contains("Zombie")) {
+											entities.add(new IcyZombie(handler, x, y, entityNum, handler.getWorld().getEntityManager().getPlayer()));
+										}
+									}
+								}
+							}
+							if(featureType.contains("rockyForest")) {
+								int rand = random.nextInt(4);
+								if(rand < 3) {
+									tiles[x/64][y/64] = Tile.icyGrassTile.id;
+								}else if(rand == 3) {
+									tiles[x/64][y/64] = Tile.icyStoneTile.id;
+								}
+							}else if(featureType.contains("graveyard")) {
+								int rand = random.nextInt(4);
+								if(rand < 3) {
+									tiles[x/64][y/64] = Tile.dirtTile.id;
+								}else if(rand == 3) {
+									tiles[x/64][y/64] = Tile.icyGrassTile.id;
+								}
 							}
 						}
 					}
@@ -143,13 +338,41 @@ public class Feature {
 			secondaryTileType = Tile.stoneTile;
 			hasMultipleEntities = true;
 			hasMultipleTiles = true;
-		}else if(featureType.contains("rocks. just rocks")) {
+		}else if(featureType.contains("rockySpot")) {
 			entityType = "Stone";
 			secondaryEntityType = "";
 			tileType = Tile.stoneTile;
-			secondaryTileType = null;
+			secondaryTileType = Tile.grassTile;
 			hasMultipleEntities = false;
-			hasMultipleTiles = false;
+			hasMultipleTiles = true;
+		}else if(featureType.contains("graveyard")) {
+			entityType = "DeadTree";
+			secondaryEntityType = "Zombie";
+			tileType = Tile.dirtTile;
+			secondaryTileType = Tile.grassTile;
+			hasMultipleEntities = true;
+			hasMultipleTiles = true;
+		}else if(featureType.contains("ironSpot")) {
+			entityType = "Iron";
+			secondaryEntityType = "";
+			tileType = Tile.stoneTile;
+			secondaryTileType = Tile.grassTile;
+			hasMultipleEntities = false;
+			hasMultipleTiles = true;
+		}else if(featureType.contains("flintSpot")) {
+			entityType = "Flint";
+			secondaryEntityType = "";
+			tileType = Tile.stoneTile;
+			secondaryTileType = Tile.grassTile;
+			hasMultipleEntities = false;
+			hasMultipleTiles = true;
+		}else if(featureType.contains("coalSpot")) {
+			entityType = "Coal";
+			secondaryEntityType = "";
+			tileType = Tile.stoneTile;
+			secondaryTileType = Tile.grassTile;
+			hasMultipleEntities = false;
+			hasMultipleTiles = true;
 		}
 	}
 	
@@ -159,6 +382,46 @@ public class Feature {
 	
 	public int[][] getTiles(){
 		return tiles;
+	}
+
+	public int getStartX() {
+		return startX;
+	}
+
+	public void setStartX(int startX) {
+		this.startX = startX;
+	}
+
+	public int getStartY() {
+		return startY;
+	}
+
+	public void setStartY(int startY) {
+		this.startY = startY;
+	}
+
+	public int getEndX() {
+		return endX;
+	}
+
+	public void setEndX(int endX) {
+		this.endX = endX;
+	}
+
+	public int getEndY() {
+		return endY;
+	}
+
+	public void setEndY(int endY) {
+		this.endY = endY;
+	}
+
+	public String getFeatureType() {
+		return featureType;
+	}
+
+	public void setFeatureType(String featureType) {
+		this.featureType = featureType;
 	}
 	
 }

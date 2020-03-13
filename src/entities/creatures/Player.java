@@ -34,6 +34,7 @@ public class Player extends Creature
     private Animation animUp;
     private Animation animLeft;
     private Animation animRight;
+    private Animation animSpin;
     
     private long attackCooldown;
     private long attackCooldown2;
@@ -50,6 +51,8 @@ public class Player extends Creature
     
     private float startX;
     private float startY;
+    
+    private boolean warping = false;
     
     private Inventory inventory;
     private Grave grave;
@@ -81,6 +84,7 @@ public class Player extends Creature
         animUp = new Animation(500, Assets.player_up);
         animLeft = new Animation(500, Assets.player_left);
         animRight = new Animation(500, Assets.player_right);
+        animSpin = new Animation(250, Assets.player_spin);
         inventory = new Inventory(handler);
         hotbar = new Hotbar(handler);
         help = new Help(handler);
@@ -98,6 +102,7 @@ public class Player extends Creature
         animUp.tick();
         animLeft.tick();
         animRight.tick();
+        animSpin.tick();
         if(playerId == 1) {
         	if(handler.getGame().getGameType().contains("creative"))
         		this.health = 100;
@@ -111,7 +116,7 @@ public class Player extends Creature
             move();
             handler.getGameCamera().centerOnEntity(this);
             checkAttacks();
-            if(handler.getMouseManager().isLeftPressed() && !inventory.isActive()) {
+            if(handler.getMouseManager().isLeftPressed() && !inventory.isActive() && this.active) {
                 checkRangedAttacks();
                 buildStructure();
         		if(handler.getGame().isDebug()) {
@@ -157,20 +162,22 @@ public class Player extends Creature
     	float mouseY = handler.getMouseManager().getMouseY() + handler.getGameCamera().getyOffset();
     	int tileX = (int) Math.floor(mouseX/64);
     	int tileY = (int) Math.floor(mouseY/64);
-    	for(Item i : hotbar.getInventoryItems()) {
-    		if(i.isTile()) {
-    			if(i.getTileType().getId() == 9) {
-    				Structure s = new WoodStructure(9);
-    				Tile.getStructures().add(s);
-    				s.setLocation(tileX, tileY);
-    				inventory.removeItem(i, 1);
-           		 	try {
-						Thread.sleep(150);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
-    				return;
-    			}
+    	if(hotbar.getInventoryItems().size() <= 0)
+    		return;
+    	if(hotbar.getInventoryItems().get(hotbar.getSelectedItem()).isTile()) {
+    		Item i = hotbar.getInventoryItems().get(hotbar.getSelectedItem());
+    		if(i.getTileType().getId() == 10) {
+    			Structure s = new WoodStructure(10);
+    			s.setHandler(handler);
+    			Tile.getStructures().add(s);
+    			s.setLocation(tileX, tileY);
+    			inventory.removeItem(i, 1);
+           		try {
+					Thread.sleep(150);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+    			return;
     		}
     	}
     }
@@ -219,8 +226,11 @@ public class Player extends Creature
             	}
                 this.attackStrength = ((Item)hotbar.getInventoryItems().get(hotbar.getSelectedItem())).getDamage();
             }
-            else
+            else if(handler.getGame().getGameType().contains("survival") || handler.getGame().getGameType().contains("story")) {
                 this.attackStrength = 1;
+            }else if(handler.getGame().getGameType().contains("creative")) {
+            	this.attackStrength = 1000;
+            }
         	if(timer == null)
         		timer = new Timer(attackCooldown, 1);
         	timer.tick();
@@ -314,6 +324,174 @@ public class Player extends Creature
                 				return;
                 		}
                 	}
+                	for(Entity e : handler.getWorld().getEntityManager().getE1overflow3())
+                	{
+                		if(e != this && e.getCollisionBounds(0.0F, 0.0F).intersects(ar))
+                		{
+                			int healthBefore = health;
+                			e.hurt(this.attackStrength);
+                			if(health != healthBefore)
+                				health = healthBefore;
+                			else
+                				return;
+                		}
+                	}
+                	for(Entity e : handler.getWorld().getEntityManager().getE1overflow4())
+                	{
+                		if(e != this && e.getCollisionBounds(0.0F, 0.0F).intersects(ar))
+                		{
+                			int healthBefore = health;
+                			e.hurt(this.attackStrength);
+                			if(health != healthBefore)
+                				health = healthBefore;
+                			else
+                				return;
+                		}
+                	}
+                	for(Entity e : handler.getWorld().getEntityManager().getE1overflow5())
+                	{
+                		if(e != this && e.getCollisionBounds(0.0F, 0.0F).intersects(ar))
+                		{
+                			int healthBefore = health;
+                			e.hurt(this.attackStrength);
+                			if(health != healthBefore)
+                				health = healthBefore;
+                			else
+                				return;
+                		}
+                	}
+                	for(Entity e : handler.getWorld().getEntityManager().getE1overflow6())
+                	{
+                		if(e != this && e.getCollisionBounds(0.0F, 0.0F).intersects(ar))
+                		{
+                			int healthBefore = health;
+                			e.hurt(this.attackStrength);
+                			if(health != healthBefore)
+                				health = healthBefore;
+                			else
+                				return;
+                		}
+                	}
+                	for(Entity e : handler.getWorld().getEntityManager().getE1overflow7())
+                	{
+                		if(e != this && e.getCollisionBounds(0.0F, 0.0F).intersects(ar))
+                		{
+                			int healthBefore = health;
+                			e.hurt(this.attackStrength);
+                			if(health != healthBefore)
+                				health = healthBefore;
+                			else
+                				return;
+                		}
+                	}
+                	for(Entity e : handler.getWorld().getEntityManager().getE1overflow8())
+                	{
+                		if(e != this && e.getCollisionBounds(0.0F, 0.0F).intersects(ar))
+                		{
+                			int healthBefore = health;
+                			e.hurt(this.attackStrength);
+                			if(health != healthBefore)
+                				health = healthBefore;
+                			else
+                				return;
+                		}
+                	}
+                	for(Entity e : handler.getWorld().getEntityManager().getE1overflow9())
+                	{
+                		if(e != this && e.getCollisionBounds(0.0F, 0.0F).intersects(ar))
+                		{
+                			int healthBefore = health;
+                			e.hurt(this.attackStrength);
+                			if(health != healthBefore)
+                				health = healthBefore;
+                			else
+                				return;
+                		}
+                	}
+                	for(Entity e : handler.getWorld().getEntityManager().getE1overflow10())
+                	{
+                		if(e != this && e.getCollisionBounds(0.0F, 0.0F).intersects(ar))
+                		{
+                			int healthBefore = health;
+                			e.hurt(this.attackStrength);
+                			if(health != healthBefore)
+                				health = healthBefore;
+                			else
+                				return;
+                		}
+                	}
+                	for(Entity e : handler.getWorld().getEntityManager().getE1overflow11())
+                	{
+                		if(e != this && e.getCollisionBounds(0.0F, 0.0F).intersects(ar))
+                		{
+                			int healthBefore = health;
+                			e.hurt(this.attackStrength);
+                			if(health != healthBefore)
+                				health = healthBefore;
+                			else
+                				return;
+                		}
+                	}
+                	for(Entity e : handler.getWorld().getEntityManager().getE1overflow12())
+                	{
+                		if(e != this && e.getCollisionBounds(0.0F, 0.0F).intersects(ar))
+                		{
+                			int healthBefore = health;
+                			e.hurt(this.attackStrength);
+                			if(health != healthBefore)
+                				health = healthBefore;
+                			else
+                				return;
+                		}
+                	}
+                	for(Entity e : handler.getWorld().getEntityManager().getE1overflow13())
+                	{
+                		if(e != this && e.getCollisionBounds(0.0F, 0.0F).intersects(ar))
+                		{
+                			int healthBefore = health;
+                			e.hurt(this.attackStrength);
+                			if(health != healthBefore)
+                				health = healthBefore;
+                			else
+                				return;
+                		}
+                	}
+                	for(Entity e : handler.getWorld().getEntityManager().getE1overflow14())
+                	{
+                		if(e != this && e.getCollisionBounds(0.0F, 0.0F).intersects(ar))
+                		{
+                			int healthBefore = health;
+                			e.hurt(this.attackStrength);
+                			if(health != healthBefore)
+                				health = healthBefore;
+                			else
+                				return;
+                		}
+                	}
+                	for(Entity e : handler.getWorld().getEntityManager().getE1overflow15())
+                	{
+                		if(e != this && e.getCollisionBounds(0.0F, 0.0F).intersects(ar))
+                		{
+                			int healthBefore = health;
+                			e.hurt(this.attackStrength);
+                			if(health != healthBefore)
+                				health = healthBefore;
+                			else
+                				return;
+                		}
+                	}
+                	for(Entity e : handler.getWorld().getEntityManager().getE1overflow16())
+                	{
+                		if(e != this && e.getCollisionBounds(0.0F, 0.0F).intersects(ar))
+                		{
+                			int healthBefore = health;
+                			e.hurt(this.attackStrength);
+                			if(health != healthBefore)
+                				health = healthBefore;
+                			else
+                				return;
+                		}
+                	}
                 }else if(handler.getWorld().getCurrentWorld() == 2) {
                 	for(Entity e : handler.getWorld().getEntityManager().getEntities2())
                 	{
@@ -340,6 +518,174 @@ public class Player extends Creature
                 		}
                 	}
                 	for(Entity e : handler.getWorld().getEntityManager().getE2overflow2())
+                	{
+                		if(e != this && e.getCollisionBounds(0.0F, 0.0F).intersects(ar))
+                		{
+                			int healthBefore = health;
+                			e.hurt(this.attackStrength);
+                			if(health != healthBefore)
+                				health = healthBefore;
+                			else
+                				return;
+                		}
+                	}
+                	for(Entity e : handler.getWorld().getEntityManager().getE2overflow3())
+                	{
+                		if(e != this && e.getCollisionBounds(0.0F, 0.0F).intersects(ar))
+                		{
+                			int healthBefore = health;
+                			e.hurt(this.attackStrength);
+                			if(health != healthBefore)
+                				health = healthBefore;
+                			else
+                				return;
+                		}
+                	}
+                	for(Entity e : handler.getWorld().getEntityManager().getE2overflow4())
+                	{
+                		if(e != this && e.getCollisionBounds(0.0F, 0.0F).intersects(ar))
+                		{
+                			int healthBefore = health;
+                			e.hurt(this.attackStrength);
+                			if(health != healthBefore)
+                				health = healthBefore;
+                			else
+                				return;
+                		}
+                	}
+                	for(Entity e : handler.getWorld().getEntityManager().getE2overflow5())
+                	{
+                		if(e != this && e.getCollisionBounds(0.0F, 0.0F).intersects(ar))
+                		{
+                			int healthBefore = health;
+                			e.hurt(this.attackStrength);
+                			if(health != healthBefore)
+                				health = healthBefore;
+                			else
+                				return;
+                		}
+                	}
+                	for(Entity e : handler.getWorld().getEntityManager().getE2overflow6())
+                	{
+                		if(e != this && e.getCollisionBounds(0.0F, 0.0F).intersects(ar))
+                		{
+                			int healthBefore = health;
+                			e.hurt(this.attackStrength);
+                			if(health != healthBefore)
+                				health = healthBefore;
+                			else
+                				return;
+                		}
+                	}
+                	for(Entity e : handler.getWorld().getEntityManager().getE2overflow7())
+                	{
+                		if(e != this && e.getCollisionBounds(0.0F, 0.0F).intersects(ar))
+                		{
+                			int healthBefore = health;
+                			e.hurt(this.attackStrength);
+                			if(health != healthBefore)
+                				health = healthBefore;
+                			else
+                				return;
+                		}
+                	}
+                	for(Entity e : handler.getWorld().getEntityManager().getE2overflow8())
+                	{
+                		if(e != this && e.getCollisionBounds(0.0F, 0.0F).intersects(ar))
+                		{
+                			int healthBefore = health;
+                			e.hurt(this.attackStrength);
+                			if(health != healthBefore)
+                				health = healthBefore;
+                			else
+                				return;
+                		}
+                	}
+                	for(Entity e : handler.getWorld().getEntityManager().getE2overflow9())
+                	{
+                		if(e != this && e.getCollisionBounds(0.0F, 0.0F).intersects(ar))
+                		{
+                			int healthBefore = health;
+                			e.hurt(this.attackStrength);
+                			if(health != healthBefore)
+                				health = healthBefore;
+                			else
+                				return;
+                		}
+                	}
+                	for(Entity e : handler.getWorld().getEntityManager().getE2overflow10())
+                	{
+                		if(e != this && e.getCollisionBounds(0.0F, 0.0F).intersects(ar))
+                		{
+                			int healthBefore = health;
+                			e.hurt(this.attackStrength);
+                			if(health != healthBefore)
+                				health = healthBefore;
+                			else
+                				return;
+                		}
+                	}
+                	for(Entity e : handler.getWorld().getEntityManager().getE2overflow11())
+                	{
+                		if(e != this && e.getCollisionBounds(0.0F, 0.0F).intersects(ar))
+                		{
+                			int healthBefore = health;
+                			e.hurt(this.attackStrength);
+                			if(health != healthBefore)
+                				health = healthBefore;
+                			else
+                				return;
+                		}
+                	}
+                	for(Entity e : handler.getWorld().getEntityManager().getE2overflow12())
+                	{
+                		if(e != this && e.getCollisionBounds(0.0F, 0.0F).intersects(ar))
+                		{
+                			int healthBefore = health;
+                			e.hurt(this.attackStrength);
+                			if(health != healthBefore)
+                				health = healthBefore;
+                			else
+                				return;
+                		}
+                	}
+                	for(Entity e : handler.getWorld().getEntityManager().getE2overflow13())
+                	{
+                		if(e != this && e.getCollisionBounds(0.0F, 0.0F).intersects(ar))
+                		{
+                			int healthBefore = health;
+                			e.hurt(this.attackStrength);
+                			if(health != healthBefore)
+                				health = healthBefore;
+                			else
+                				return;
+                		}
+                	}
+                	for(Entity e : handler.getWorld().getEntityManager().getE2overflow14())
+                	{
+                		if(e != this && e.getCollisionBounds(0.0F, 0.0F).intersects(ar))
+                		{
+                			int healthBefore = health;
+                			e.hurt(this.attackStrength);
+                			if(health != healthBefore)
+                				health = healthBefore;
+                			else
+                				return;
+                		}
+                	}
+                	for(Entity e : handler.getWorld().getEntityManager().getE2overflow15())
+                	{
+                		if(e != this && e.getCollisionBounds(0.0F, 0.0F).intersects(ar))
+                		{
+                			int healthBefore = health;
+                			e.hurt(this.attackStrength);
+                			if(health != healthBefore)
+                				health = healthBefore;
+                			else
+                				return;
+                		}
+                	}
+                	for(Entity e : handler.getWorld().getEntityManager().getE2overflow16())
                 	{
                 		if(e != this && e.getCollisionBounds(0.0F, 0.0F).intersects(ar))
                 		{
@@ -388,6 +734,174 @@ public class Player extends Creature
                 				return;
                 		}
                 	}
+                	for(Entity e : handler.getWorld().getEntityManager().getE3overflow3())
+                	{
+                		if(e != this && e.getCollisionBounds(0.0F, 0.0F).intersects(ar))
+                		{
+                			int healthBefore = health;
+                			e.hurt(this.attackStrength);
+                			if(health != healthBefore)
+                				health = healthBefore;
+                			else
+                				return;
+                		}
+                	}
+                	for(Entity e : handler.getWorld().getEntityManager().getE3overflow4())
+                	{
+                		if(e != this && e.getCollisionBounds(0.0F, 0.0F).intersects(ar))
+                		{
+                			int healthBefore = health;
+                			e.hurt(this.attackStrength);
+                			if(health != healthBefore)
+                				health = healthBefore;
+                			else
+                				return;
+                		}
+                	}
+                	for(Entity e : handler.getWorld().getEntityManager().getE3overflow5())
+                	{
+                		if(e != this && e.getCollisionBounds(0.0F, 0.0F).intersects(ar))
+                		{
+                			int healthBefore = health;
+                			e.hurt(this.attackStrength);
+                			if(health != healthBefore)
+                				health = healthBefore;
+                			else
+                				return;
+                		}
+                	}
+                	for(Entity e : handler.getWorld().getEntityManager().getE3overflow6())
+                	{
+                		if(e != this && e.getCollisionBounds(0.0F, 0.0F).intersects(ar))
+                		{
+                			int healthBefore = health;
+                			e.hurt(this.attackStrength);
+                			if(health != healthBefore)
+                				health = healthBefore;
+                			else
+                				return;
+                		}
+                	}
+                	for(Entity e : handler.getWorld().getEntityManager().getE3overflow7())
+                	{
+                		if(e != this && e.getCollisionBounds(0.0F, 0.0F).intersects(ar))
+                		{
+                			int healthBefore = health;
+                			e.hurt(this.attackStrength);
+                			if(health != healthBefore)
+                				health = healthBefore;
+                			else
+                				return;
+                		}
+                	}
+                	for(Entity e : handler.getWorld().getEntityManager().getE3overflow8())
+                	{
+                		if(e != this && e.getCollisionBounds(0.0F, 0.0F).intersects(ar))
+                		{
+                			int healthBefore = health;
+                			e.hurt(this.attackStrength);
+                			if(health != healthBefore)
+                				health = healthBefore;
+                			else
+                				return;
+                		}
+                	}
+                	for(Entity e : handler.getWorld().getEntityManager().getE3overflow9())
+                	{
+                		if(e != this && e.getCollisionBounds(0.0F, 0.0F).intersects(ar))
+                		{
+                			int healthBefore = health;
+                			e.hurt(this.attackStrength);
+                			if(health != healthBefore)
+                				health = healthBefore;
+                			else
+                				return;
+                		}
+                	}
+                	for(Entity e : handler.getWorld().getEntityManager().getE3overflow10())
+                	{
+                		if(e != this && e.getCollisionBounds(0.0F, 0.0F).intersects(ar))
+                		{
+                			int healthBefore = health;
+                			e.hurt(this.attackStrength);
+                			if(health != healthBefore)
+                				health = healthBefore;
+                			else
+                				return;
+                		}
+                	}
+                	for(Entity e : handler.getWorld().getEntityManager().getE3overflow11())
+                	{
+                		if(e != this && e.getCollisionBounds(0.0F, 0.0F).intersects(ar))
+                		{
+                			int healthBefore = health;
+                			e.hurt(this.attackStrength);
+                			if(health != healthBefore)
+                				health = healthBefore;
+                			else
+                				return;
+                		}
+                	}
+                	for(Entity e : handler.getWorld().getEntityManager().getE3overflow12())
+                	{
+                		if(e != this && e.getCollisionBounds(0.0F, 0.0F).intersects(ar))
+                		{
+                			int healthBefore = health;
+                			e.hurt(this.attackStrength);
+                			if(health != healthBefore)
+                				health = healthBefore;
+                			else
+                				return;
+                		}
+                	}
+                	for(Entity e : handler.getWorld().getEntityManager().getE3overflow13())
+                	{
+                		if(e != this && e.getCollisionBounds(0.0F, 0.0F).intersects(ar))
+                		{
+                			int healthBefore = health;
+                			e.hurt(this.attackStrength);
+                			if(health != healthBefore)
+                				health = healthBefore;
+                			else
+                				return;
+                		}
+                	}
+                	for(Entity e : handler.getWorld().getEntityManager().getE3overflow14())
+                	{
+                		if(e != this && e.getCollisionBounds(0.0F, 0.0F).intersects(ar))
+                		{
+                			int healthBefore = health;
+                			e.hurt(this.attackStrength);
+                			if(health != healthBefore)
+                				health = healthBefore;
+                			else
+                				return;
+                		}
+                	}
+                	for(Entity e : handler.getWorld().getEntityManager().getE3overflow15())
+                	{
+                		if(e != this && e.getCollisionBounds(0.0F, 0.0F).intersects(ar))
+                		{
+                			int healthBefore = health;
+                			e.hurt(this.attackStrength);
+                			if(health != healthBefore)
+                				health = healthBefore;
+                			else
+                				return;
+                		}
+                	}
+                	for(Entity e : handler.getWorld().getEntityManager().getE3overflow16())
+                	{
+                		if(e != this && e.getCollisionBounds(0.0F, 0.0F).intersects(ar))
+                		{
+                			int healthBefore = health;
+                			e.hurt(this.attackStrength);
+                			if(health != healthBefore)
+                				health = healthBefore;
+                			else
+                				return;
+                		}
+                	}
                 }else if(handler.getWorld().getCurrentWorld() == 4) {
                 	for(Entity e : handler.getWorld().getEntityManager().getEntities4())
                 	{
@@ -414,6 +928,174 @@ public class Player extends Creature
                 		}
                 	}
                 	for(Entity e : handler.getWorld().getEntityManager().getE4overflow2())
+                	{
+                		if(e != this && e.getCollisionBounds(0.0F, 0.0F).intersects(ar))
+                		{
+                			int healthBefore = health;
+                			e.hurt(this.attackStrength);
+                			if(health != healthBefore)
+                				health = healthBefore;
+                			else
+                				return;
+                		}
+                	}
+                	for(Entity e : handler.getWorld().getEntityManager().getE4overflow3())
+                	{
+                		if(e != this && e.getCollisionBounds(0.0F, 0.0F).intersects(ar))
+                		{
+                			int healthBefore = health;
+                			e.hurt(this.attackStrength);
+                			if(health != healthBefore)
+                				health = healthBefore;
+                			else
+                				return;
+                		}
+                	}
+                	for(Entity e : handler.getWorld().getEntityManager().getE4overflow4())
+                	{
+                		if(e != this && e.getCollisionBounds(0.0F, 0.0F).intersects(ar))
+                		{
+                			int healthBefore = health;
+                			e.hurt(this.attackStrength);
+                			if(health != healthBefore)
+                				health = healthBefore;
+                			else
+                				return;
+                		}
+                	}
+                	for(Entity e : handler.getWorld().getEntityManager().getE4overflow5())
+                	{
+                		if(e != this && e.getCollisionBounds(0.0F, 0.0F).intersects(ar))
+                		{
+                			int healthBefore = health;
+                			e.hurt(this.attackStrength);
+                			if(health != healthBefore)
+                				health = healthBefore;
+                			else
+                				return;
+                		}
+                	}
+                	for(Entity e : handler.getWorld().getEntityManager().getE4overflow6())
+                	{
+                		if(e != this && e.getCollisionBounds(0.0F, 0.0F).intersects(ar))
+                		{
+                			int healthBefore = health;
+                			e.hurt(this.attackStrength);
+                			if(health != healthBefore)
+                				health = healthBefore;
+                			else
+                				return;
+                		}
+                	}
+                	for(Entity e : handler.getWorld().getEntityManager().getE4overflow7())
+                	{
+                		if(e != this && e.getCollisionBounds(0.0F, 0.0F).intersects(ar))
+                		{
+                			int healthBefore = health;
+                			e.hurt(this.attackStrength);
+                			if(health != healthBefore)
+                				health = healthBefore;
+                			else
+                				return;
+                		}
+                	}
+                	for(Entity e : handler.getWorld().getEntityManager().getE4overflow8())
+                	{
+                		if(e != this && e.getCollisionBounds(0.0F, 0.0F).intersects(ar))
+                		{
+                			int healthBefore = health;
+                			e.hurt(this.attackStrength);
+                			if(health != healthBefore)
+                				health = healthBefore;
+                			else
+                				return;
+                		}
+                	}
+                	for(Entity e : handler.getWorld().getEntityManager().getE4overflow9())
+                	{
+                		if(e != this && e.getCollisionBounds(0.0F, 0.0F).intersects(ar))
+                		{
+                			int healthBefore = health;
+                			e.hurt(this.attackStrength);
+                			if(health != healthBefore)
+                				health = healthBefore;
+                			else
+                				return;
+                		}
+                	}
+                	for(Entity e : handler.getWorld().getEntityManager().getE4overflow10())
+                	{
+                		if(e != this && e.getCollisionBounds(0.0F, 0.0F).intersects(ar))
+                		{
+                			int healthBefore = health;
+                			e.hurt(this.attackStrength);
+                			if(health != healthBefore)
+                				health = healthBefore;
+                			else
+                				return;
+                		}
+                	}
+                	for(Entity e : handler.getWorld().getEntityManager().getE4overflow11())
+                	{
+                		if(e != this && e.getCollisionBounds(0.0F, 0.0F).intersects(ar))
+                		{
+                			int healthBefore = health;
+                			e.hurt(this.attackStrength);
+                			if(health != healthBefore)
+                				health = healthBefore;
+                			else
+                				return;
+                		}
+                	}
+                	for(Entity e : handler.getWorld().getEntityManager().getE4overflow12())
+                	{
+                		if(e != this && e.getCollisionBounds(0.0F, 0.0F).intersects(ar))
+                		{
+                			int healthBefore = health;
+                			e.hurt(this.attackStrength);
+                			if(health != healthBefore)
+                				health = healthBefore;
+                			else
+                				return;
+                		}
+                	}
+                	for(Entity e : handler.getWorld().getEntityManager().getE4overflow13())
+                	{
+                		if(e != this && e.getCollisionBounds(0.0F, 0.0F).intersects(ar))
+                		{
+                			int healthBefore = health;
+                			e.hurt(this.attackStrength);
+                			if(health != healthBefore)
+                				health = healthBefore;
+                			else
+                				return;
+                		}
+                	}
+                	for(Entity e : handler.getWorld().getEntityManager().getE4overflow14())
+                	{
+                		if(e != this && e.getCollisionBounds(0.0F, 0.0F).intersects(ar))
+                		{
+                			int healthBefore = health;
+                			e.hurt(this.attackStrength);
+                			if(health != healthBefore)
+                				health = healthBefore;
+                			else
+                				return;
+                		}
+                	}
+                	for(Entity e : handler.getWorld().getEntityManager().getE4overflow15())
+                	{
+                		if(e != this && e.getCollisionBounds(0.0F, 0.0F).intersects(ar))
+                		{
+                			int healthBefore = health;
+                			e.hurt(this.attackStrength);
+                			if(health != healthBefore)
+                				health = healthBefore;
+                			else
+                				return;
+                		}
+                	}
+                	for(Entity e : handler.getWorld().getEntityManager().getE4overflow16())
                 	{
                 		if(e != this && e.getCollisionBounds(0.0F, 0.0F).intersects(ar))
                 		{
@@ -585,6 +1267,8 @@ public class Player extends Creature
 
     private BufferedImage getCurrentAnimationFrame()
     {
+    	if(warping)
+    		return animSpin.getCurrentFrame();
         if(xMove < 0.0F)
             return animLeft.getCurrentFrame();
         if(xMove > 0.0F)
@@ -614,6 +1298,14 @@ public class Player extends Creature
 
 	public float getStartX() {
 		return startX;
+	}
+
+	public boolean isWarping() {
+		return warping;
+	}
+
+	public void setWarping(boolean warping) {
+		this.warping = warping;
 	}
 
 	public void setStartX(float startX) {

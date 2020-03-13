@@ -53,6 +53,30 @@ public class IcyZombie extends Creature
         this.following = handler.getWorld().getEntityManager().getPlayer();
         this.newSpeed = player.getSpeed() - (player.getSpeed() / 10);
     }
+    
+    public IcyZombie(Handler handler, float x, float y, int id, Player player, boolean isActive)
+    {
+        super(handler, x, y, 64, 64, maxHealth, id, "IcyZombie");
+        this.id = id;
+        this.player = player;
+        startX = x;
+        startY = y;
+        attackCooldown = 200L;
+        this.health = maxHealth;
+        startHealth = this.health;
+        this.active = isActive;
+        bounds.x = 22;
+        bounds.y = 30;
+        bounds.width = 20;
+        bounds.height = 34;
+        this.isFollowing = true;
+        animDown = new Animation(500, Assets.icy_zombie_down);
+        animUp = new Animation(500, Assets.icy_zombie_up);
+        animLeft = new Animation(500, Assets.icy_zombie_left);
+        animRight = new Animation(500, Assets.icy_zombie_right);
+        this.following = handler.getWorld().getEntityManager().getPlayer();
+        this.newSpeed = player.getSpeed() - (player.getSpeed() / 10);
+    }
 
     public void tick()
     {

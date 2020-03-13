@@ -53,6 +53,30 @@ public class HellZombie extends Creature
         this.following = handler.getWorld().getEntityManager().getPlayer();
         this.newSpeed = player.getSpeed() - (player.getSpeed() / 10);
     }
+    
+    public HellZombie(Handler handler, float x, float y, int id, Player player, boolean isActive)
+    {
+        super(handler, x, y, 64, 64, maxHealth, id, "HellZombie");
+        this.id = id;
+        this.player = player;
+        startX = x;
+        startY = y;
+        attackCooldown = 200L;
+        this.health = maxHealth;
+        startHealth = this.health;
+        bounds.x = 22;
+        bounds.y = 30;
+        bounds.width = 20;
+        bounds.height = 34;
+        this.isFollowing = true;
+        this.active = isActive;
+        animDown = new Animation(500, Assets.hell_zombie_down);
+        animUp = new Animation(500, Assets.hell_zombie_up);
+        animLeft = new Animation(500, Assets.hell_zombie_left);
+        animRight = new Animation(500, Assets.hell_zombie_right);
+        this.following = handler.getWorld().getEntityManager().getPlayer();
+        this.newSpeed = player.getSpeed() - (player.getSpeed() / 10);
+    }
 
     public void tick()
     {

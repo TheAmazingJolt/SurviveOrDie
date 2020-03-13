@@ -25,6 +25,18 @@ public class Stone extends StaticEntity
         bounds.width = width - 6;
         bounds.height = (int)((float)height - (float)height / 2.0F);
     }
+    
+    public Stone(Handler handler, float x, float y, int id, boolean isActive)
+    {
+        super(handler, x, y, 64, 64, maxHealth, id, "Stone");
+        this.id = id;
+        this.health = maxHealth;
+        this.active = isActive;
+        bounds.x = 3;
+        bounds.y = (int)((float)height / 2.0F);
+        bounds.width = width - 6;
+        bounds.height = (int)((float)height - (float)height / 2.0F);
+    }
 
     public void tick()
     {

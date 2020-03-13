@@ -53,6 +53,30 @@ public class Zombie extends Creature
         animRight = new Animation(500, Assets.zombie_right);
         this.newSpeed = player.getSpeed() - (player.getSpeed() / 10);
     }
+    
+    public Zombie(Handler handler, float x, float y, int id, Player player, boolean isActive)
+    {
+        super(handler, x, y, 64, 64, maxHealth, id, "Zombie");
+        this.id = id;
+        this.player = player;
+        this.active = isActive;
+        startX = x;
+        startY = y;
+        attackCooldown = 200L;
+        this.health = maxHealth;
+        startHealth = maxHealth;
+        bounds.x = 22;
+        bounds.y = 30;
+        bounds.width = 20;
+        bounds.height = 34;
+        this.isFollowing = true;
+        this.following = handler.getWorld().getEntityManager().getPlayer();
+        animDown = new Animation(500, Assets.zombie_down);
+        animUp = new Animation(500, Assets.zombie_up);
+        animLeft = new Animation(500, Assets.zombie_left);
+        animRight = new Animation(500, Assets.zombie_right);
+        this.newSpeed = player.getSpeed() - (player.getSpeed() / 10);
+    }
 
     public void tick()
     {

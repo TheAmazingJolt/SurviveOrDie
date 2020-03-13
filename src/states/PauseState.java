@@ -39,7 +39,6 @@ public class PauseState extends State
         button1 = new Button(Assets.smallButton, buttonX, buttonY - 30, buttonWidth, buttonHeight, true, "Resume", handler);
         button2 = new Button(Assets.smallButton, button2X, buttonY - 30, buttonWidth, buttonHeight, true, "Exit", handler);
         button3 = new Button(Assets.button, handler.getWidth()/2, buttonY + buttonHeight - 10, 480, buttonHeight, true, "Settings", handler);
-        //settings?
     }
 
     public void tick()

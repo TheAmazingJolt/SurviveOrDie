@@ -20,6 +20,28 @@ public class Penguin extends Creature
     private static int maxHealth = 20;
     private static int startHealth;
 	
+    public Penguin(Handler handler, float x, float y, int id, boolean isActive)
+    {
+        super(handler, x, y, 64, 64, maxHealth, id, "Penguin");
+        this.id = id;
+        startX = x;
+        startY = y;
+        this.health = maxHealth;
+        startHealth = this.health;
+        this.active = isActive;
+        bounds.x = 20;
+        bounds.y = 30;
+        bounds.width = 20;
+        bounds.height = 20;
+        animDown = new Animation(500, Assets.penguin_down);
+        animUp = new Animation(500, Assets.penguin_up);
+        animLeft = new Animation(500, Assets.penguin_left);
+        animRight = new Animation(500, Assets.penguin_right);
+        this.isPassive = true;
+        this.isWandering = true;
+        this.speed = 2f;
+    }
+    
     public Penguin(Handler handler, float x, float y, int id)
     {
         super(handler, x, y, 64, 64, maxHealth, id, "Penguin");

@@ -10,14 +10,14 @@ import main.Handler;
 // Referenced classes of package entities.statics:
 //            StaticEntity
 
-public class Tree extends StaticEntity
+public class DeadTree extends StaticEntity
 {
 
-	private static int maxHealth = 15;
+	private static int maxHealth = 40;
 	
-    public Tree(Handler handler, float x, float y, int id)
+    public DeadTree(Handler handler, float x, float y, int id)
     {
-        super(handler, x, y, 64, 128, maxHealth, id, "Tree");
+        super(handler, x, y, 64, 128, maxHealth, id, "DeadTree");
         this.id = id;
         this.health = maxHealth;
         bounds.x = 10;
@@ -26,9 +26,9 @@ public class Tree extends StaticEntity
         bounds.height = (int)((float)height - (float)height / 1.5F);
     }
     
-    public Tree(Handler handler, float x, float y, int id, boolean isActive)
+    public DeadTree(Handler handler, float x, float y, int id, boolean isActive)
     {
-        super(handler, x, y, 64, 128, maxHealth, id, "Tree");
+        super(handler, x, y, 64, 128, maxHealth, id, "DeadTree");
         this.id = id;
         this.health = maxHealth;
         this.active = isActive;
@@ -37,6 +37,7 @@ public class Tree extends StaticEntity
         bounds.width = width - 20;
         bounds.height = (int)((float)height - (float)height / 1.5F);
     }
+
 
     public void tick()
     {
@@ -59,8 +60,8 @@ public class Tree extends StaticEntity
 
     public void render(Graphics g)
     {
-        g.drawImage(Assets.tree, (int)(x - handler.getGameCamera().getxOffset()), (int)(y - handler.getGameCamera().getyOffset()), width, height, null);
-    	if(handler.getGame().isDebug()) {
+        g.drawImage(Assets.deadTree, (int)(x - handler.getGameCamera().getxOffset()), (int)(y - handler.getGameCamera().getyOffset()), width, height, null);
+        if(handler.getGame().isDebug()) {
     		g.setColor(Color.WHITE);
     	    g.drawRect((int) (this.getCollisionBounds(0.0f, 0.0f).x - handler.getGameCamera().getxOffset()), (int) (this.getCollisionBounds(0.0f, 0.0f).y - handler.getGameCamera().getyOffset()), this.getCollisionBounds(0.0f, 0.0f).width, this.getCollisionBounds(0.0f, 0.0f).height);
     	    g.setColor(null);

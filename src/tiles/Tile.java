@@ -31,6 +31,7 @@ public class Tile {
 	public static Tile sandStoneWallTile = new SandStoneWallTile(17);
 	public static Tile sandyDoorTile = new SandyDoorTile(18);
 	public static Tile sandyDoorTile2 = new SandyDoorTile2(19);
+	public static Tile warpDownTile = new WarpDownTile(20);
 	
 	public static final int TILEWIDTH = 64, TILEHEIGHT = 64;
 	

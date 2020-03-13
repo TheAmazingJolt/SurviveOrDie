@@ -1825,6 +1825,16 @@ public class Inventory
         }
 
         inventoryItems.add(item);
+        for(Item i:inventoryItems)
+        {
+            if(i.getId() == item.getId())
+            {
+                i.setCount(amt);
+                if(i.getCount() <= 0)
+                    i.setCount(1);
+                return;
+            }
+        }
     }
     
     public void addItem(int id, int amt)

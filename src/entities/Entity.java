@@ -144,6 +144,76 @@ public abstract class Entity
                 if(!e.equals(this) && e.getCollisionBounds(0.0F, 0.0F).intersects(getCollisionBounds(xOffset, yOffset)))
                     return true;
             }
+    		for(Entity e : handler.getWorld().getEntityManager().getE1overflow7())
+            {
+    			if(handler.getWorld().getEntityManager().getPlayer2() != null && e.equals(handler.getWorld().getEntityManager().getPlayer2()))
+    				return false;
+                if(!e.equals(this) && e.getCollisionBounds(0.0F, 0.0F).intersects(getCollisionBounds(xOffset, yOffset)))
+                    return true;
+            }
+    		for(Entity e : handler.getWorld().getEntityManager().getE1overflow8())
+            {
+    			if(handler.getWorld().getEntityManager().getPlayer2() != null && e.equals(handler.getWorld().getEntityManager().getPlayer2()))
+    				return false;
+                if(!e.equals(this) && e.getCollisionBounds(0.0F, 0.0F).intersects(getCollisionBounds(xOffset, yOffset)))
+                    return true;
+            }
+    		for(Entity e : handler.getWorld().getEntityManager().getE1overflow9())
+            {
+    			if(handler.getWorld().getEntityManager().getPlayer2() != null && e.equals(handler.getWorld().getEntityManager().getPlayer2()))
+    				return false;
+                if(!e.equals(this) && e.getCollisionBounds(0.0F, 0.0F).intersects(getCollisionBounds(xOffset, yOffset)))
+                    return true;
+            }
+    		for(Entity e : handler.getWorld().getEntityManager().getE1overflow10())
+            {
+    			if(handler.getWorld().getEntityManager().getPlayer2() != null && e.equals(handler.getWorld().getEntityManager().getPlayer2()))
+    				return false;
+                if(!e.equals(this) && e.getCollisionBounds(0.0F, 0.0F).intersects(getCollisionBounds(xOffset, yOffset)))
+                    return true;
+            }
+    		for(Entity e : handler.getWorld().getEntityManager().getE1overflow11())
+            {
+    			if(handler.getWorld().getEntityManager().getPlayer2() != null && e.equals(handler.getWorld().getEntityManager().getPlayer2()))
+    				return false;
+                if(!e.equals(this) && e.getCollisionBounds(0.0F, 0.0F).intersects(getCollisionBounds(xOffset, yOffset)))
+                    return true;
+            }
+    		for(Entity e : handler.getWorld().getEntityManager().getE1overflow12())
+            {
+    			if(handler.getWorld().getEntityManager().getPlayer2() != null && e.equals(handler.getWorld().getEntityManager().getPlayer2()))
+    				return false;
+                if(!e.equals(this) && e.getCollisionBounds(0.0F, 0.0F).intersects(getCollisionBounds(xOffset, yOffset)))
+                    return true;
+            }
+    		for(Entity e : handler.getWorld().getEntityManager().getE1overflow13())
+            {
+    			if(handler.getWorld().getEntityManager().getPlayer2() != null && e.equals(handler.getWorld().getEntityManager().getPlayer2()))
+    				return false;
+                if(!e.equals(this) && e.getCollisionBounds(0.0F, 0.0F).intersects(getCollisionBounds(xOffset, yOffset)))
+                    return true;
+            }
+    		for(Entity e : handler.getWorld().getEntityManager().getE1overflow14())
+            {
+    			if(handler.getWorld().getEntityManager().getPlayer2() != null && e.equals(handler.getWorld().getEntityManager().getPlayer2()))
+    				return false;
+                if(!e.equals(this) && e.getCollisionBounds(0.0F, 0.0F).intersects(getCollisionBounds(xOffset, yOffset)))
+                    return true;
+            }
+    		for(Entity e : handler.getWorld().getEntityManager().getE1overflow15())
+            {
+    			if(handler.getWorld().getEntityManager().getPlayer2() != null && e.equals(handler.getWorld().getEntityManager().getPlayer2()))
+    				return false;
+                if(!e.equals(this) && e.getCollisionBounds(0.0F, 0.0F).intersects(getCollisionBounds(xOffset, yOffset)))
+                    return true;
+            }
+    		for(Entity e : handler.getWorld().getEntityManager().getE1overflow16())
+            {
+    			if(handler.getWorld().getEntityManager().getPlayer2() != null && e.equals(handler.getWorld().getEntityManager().getPlayer2()))
+    				return false;
+                if(!e.equals(this) && e.getCollisionBounds(0.0F, 0.0F).intersects(getCollisionBounds(xOffset, yOffset)))
+                    return true;
+            }
     		for(NPC n : handler.getWorld().getEntityManager().getNpcs()) {
     			if(!n.equals(this) && n.getCollisionBounds(0.0F, 0.0F).intersects(getCollisionBounds(xOffset, yOffset)))
                     return true;
@@ -164,6 +234,104 @@ public abstract class Entity
                     return true;
             }
     		for(Entity e : handler.getWorld().getEntityManager().getE2overflow2())
+            {
+    			if(handler.getWorld().getEntityManager().getPlayer2() != null && e.equals(handler.getWorld().getEntityManager().getPlayer2()))
+    				return false;
+                if(!e.equals(this) && e.getCollisionBounds(0.0F, 0.0F).intersects(getCollisionBounds(xOffset, yOffset)))
+                    return true;
+            }
+    		for(Entity e : handler.getWorld().getEntityManager().getE2overflow3())
+            {
+    			if(handler.getWorld().getEntityManager().getPlayer2() != null && e.equals(handler.getWorld().getEntityManager().getPlayer2()))
+    				return false;
+                if(!e.equals(this) && e.getCollisionBounds(0.0F, 0.0F).intersects(getCollisionBounds(xOffset, yOffset)))
+                    return true;
+            }
+    		for(Entity e : handler.getWorld().getEntityManager().getE2overflow4())
+            {
+    			if(handler.getWorld().getEntityManager().getPlayer2() != null && e.equals(handler.getWorld().getEntityManager().getPlayer2()))
+    				return false;
+                if(!e.equals(this) && e.getCollisionBounds(0.0F, 0.0F).intersects(getCollisionBounds(xOffset, yOffset)))
+                    return true;
+            }
+    		for(Entity e : handler.getWorld().getEntityManager().getE2overflow5())
+            {
+    			if(handler.getWorld().getEntityManager().getPlayer2() != null && e.equals(handler.getWorld().getEntityManager().getPlayer2()))
+    				return false;
+                if(!e.equals(this) && e.getCollisionBounds(0.0F, 0.0F).intersects(getCollisionBounds(xOffset, yOffset)))
+                    return true;
+            }
+    		for(Entity e : handler.getWorld().getEntityManager().getE2overflow6())
+            {
+    			if(handler.getWorld().getEntityManager().getPlayer2() != null && e.equals(handler.getWorld().getEntityManager().getPlayer2()))
+    				return false;
+                if(!e.equals(this) && e.getCollisionBounds(0.0F, 0.0F).intersects(getCollisionBounds(xOffset, yOffset)))
+                    return true;
+            }
+    		for(Entity e : handler.getWorld().getEntityManager().getE2overflow7())
+            {
+    			if(handler.getWorld().getEntityManager().getPlayer2() != null && e.equals(handler.getWorld().getEntityManager().getPlayer2()))
+    				return false;
+                if(!e.equals(this) && e.getCollisionBounds(0.0F, 0.0F).intersects(getCollisionBounds(xOffset, yOffset)))
+                    return true;
+            }
+    		for(Entity e : handler.getWorld().getEntityManager().getE2overflow8())
+            {
+    			if(handler.getWorld().getEntityManager().getPlayer2() != null && e.equals(handler.getWorld().getEntityManager().getPlayer2()))
+    				return false;
+                if(!e.equals(this) && e.getCollisionBounds(0.0F, 0.0F).intersects(getCollisionBounds(xOffset, yOffset)))
+                    return true;
+            }
+    		for(Entity e : handler.getWorld().getEntityManager().getE2overflow9())
+            {
+    			if(handler.getWorld().getEntityManager().getPlayer2() != null && e.equals(handler.getWorld().getEntityManager().getPlayer2()))
+    				return false;
+                if(!e.equals(this) && e.getCollisionBounds(0.0F, 0.0F).intersects(getCollisionBounds(xOffset, yOffset)))
+                    return true;
+            }
+    		for(Entity e : handler.getWorld().getEntityManager().getE2overflow10())
+            {
+    			if(handler.getWorld().getEntityManager().getPlayer2() != null && e.equals(handler.getWorld().getEntityManager().getPlayer2()))
+    				return false;
+                if(!e.equals(this) && e.getCollisionBounds(0.0F, 0.0F).intersects(getCollisionBounds(xOffset, yOffset)))
+                    return true;
+            }
+    		for(Entity e : handler.getWorld().getEntityManager().getE2overflow11())
+            {
+    			if(handler.getWorld().getEntityManager().getPlayer2() != null && e.equals(handler.getWorld().getEntityManager().getPlayer2()))
+    				return false;
+                if(!e.equals(this) && e.getCollisionBounds(0.0F, 0.0F).intersects(getCollisionBounds(xOffset, yOffset)))
+                    return true;
+            }
+    		for(Entity e : handler.getWorld().getEntityManager().getE2overflow12())
+            {
+    			if(handler.getWorld().getEntityManager().getPlayer2() != null && e.equals(handler.getWorld().getEntityManager().getPlayer2()))
+    				return false;
+                if(!e.equals(this) && e.getCollisionBounds(0.0F, 0.0F).intersects(getCollisionBounds(xOffset, yOffset)))
+                    return true;
+            }
+    		for(Entity e : handler.getWorld().getEntityManager().getE2overflow13())
+            {
+    			if(handler.getWorld().getEntityManager().getPlayer2() != null && e.equals(handler.getWorld().getEntityManager().getPlayer2()))
+    				return false;
+                if(!e.equals(this) && e.getCollisionBounds(0.0F, 0.0F).intersects(getCollisionBounds(xOffset, yOffset)))
+                    return true;
+            }
+    		for(Entity e : handler.getWorld().getEntityManager().getE2overflow14())
+            {
+    			if(handler.getWorld().getEntityManager().getPlayer2() != null && e.equals(handler.getWorld().getEntityManager().getPlayer2()))
+    				return false;
+                if(!e.equals(this) && e.getCollisionBounds(0.0F, 0.0F).intersects(getCollisionBounds(xOffset, yOffset)))
+                    return true;
+            }
+    		for(Entity e : handler.getWorld().getEntityManager().getE2overflow15())
+            {
+    			if(handler.getWorld().getEntityManager().getPlayer2() != null && e.equals(handler.getWorld().getEntityManager().getPlayer2()))
+    				return false;
+                if(!e.equals(this) && e.getCollisionBounds(0.0F, 0.0F).intersects(getCollisionBounds(xOffset, yOffset)))
+                    return true;
+            }
+    		for(Entity e : handler.getWorld().getEntityManager().getE2overflow16())
             {
     			if(handler.getWorld().getEntityManager().getPlayer2() != null && e.equals(handler.getWorld().getEntityManager().getPlayer2()))
     				return false;
@@ -196,6 +364,104 @@ public abstract class Entity
                 if(!e.equals(this) && e.getCollisionBounds(0.0F, 0.0F).intersects(getCollisionBounds(xOffset, yOffset)))
                     return true;
             }
+    		for(Entity e : handler.getWorld().getEntityManager().getE3overflow3())
+            {
+    			if(handler.getWorld().getEntityManager().getPlayer2() != null && e.equals(handler.getWorld().getEntityManager().getPlayer2()))
+    				return false;
+                if(!e.equals(this) && e.getCollisionBounds(0.0F, 0.0F).intersects(getCollisionBounds(xOffset, yOffset)))
+                    return true;
+            }
+    		for(Entity e : handler.getWorld().getEntityManager().getE3overflow4())
+            {
+    			if(handler.getWorld().getEntityManager().getPlayer2() != null && e.equals(handler.getWorld().getEntityManager().getPlayer2()))
+    				return false;
+                if(!e.equals(this) && e.getCollisionBounds(0.0F, 0.0F).intersects(getCollisionBounds(xOffset, yOffset)))
+                    return true;
+            }
+    		for(Entity e : handler.getWorld().getEntityManager().getE3overflow5())
+            {
+    			if(handler.getWorld().getEntityManager().getPlayer2() != null && e.equals(handler.getWorld().getEntityManager().getPlayer2()))
+    				return false;
+                if(!e.equals(this) && e.getCollisionBounds(0.0F, 0.0F).intersects(getCollisionBounds(xOffset, yOffset)))
+                    return true;
+            }
+    		for(Entity e : handler.getWorld().getEntityManager().getE3overflow6())
+            {
+    			if(handler.getWorld().getEntityManager().getPlayer2() != null && e.equals(handler.getWorld().getEntityManager().getPlayer2()))
+    				return false;
+                if(!e.equals(this) && e.getCollisionBounds(0.0F, 0.0F).intersects(getCollisionBounds(xOffset, yOffset)))
+                    return true;
+            }
+    		for(Entity e : handler.getWorld().getEntityManager().getE3overflow7())
+            {
+    			if(handler.getWorld().getEntityManager().getPlayer2() != null && e.equals(handler.getWorld().getEntityManager().getPlayer2()))
+    				return false;
+                if(!e.equals(this) && e.getCollisionBounds(0.0F, 0.0F).intersects(getCollisionBounds(xOffset, yOffset)))
+                    return true;
+            }
+    		for(Entity e : handler.getWorld().getEntityManager().getE3overflow8())
+            {
+    			if(handler.getWorld().getEntityManager().getPlayer2() != null && e.equals(handler.getWorld().getEntityManager().getPlayer2()))
+    				return false;
+                if(!e.equals(this) && e.getCollisionBounds(0.0F, 0.0F).intersects(getCollisionBounds(xOffset, yOffset)))
+                    return true;
+            }
+    		for(Entity e : handler.getWorld().getEntityManager().getE3overflow9())
+            {
+    			if(handler.getWorld().getEntityManager().getPlayer2() != null && e.equals(handler.getWorld().getEntityManager().getPlayer2()))
+    				return false;
+                if(!e.equals(this) && e.getCollisionBounds(0.0F, 0.0F).intersects(getCollisionBounds(xOffset, yOffset)))
+                    return true;
+            }
+    		for(Entity e : handler.getWorld().getEntityManager().getE3overflow10())
+            {
+    			if(handler.getWorld().getEntityManager().getPlayer2() != null && e.equals(handler.getWorld().getEntityManager().getPlayer2()))
+    				return false;
+                if(!e.equals(this) && e.getCollisionBounds(0.0F, 0.0F).intersects(getCollisionBounds(xOffset, yOffset)))
+                    return true;
+            }
+    		for(Entity e : handler.getWorld().getEntityManager().getE3overflow11())
+            {
+    			if(handler.getWorld().getEntityManager().getPlayer2() != null && e.equals(handler.getWorld().getEntityManager().getPlayer2()))
+    				return false;
+                if(!e.equals(this) && e.getCollisionBounds(0.0F, 0.0F).intersects(getCollisionBounds(xOffset, yOffset)))
+                    return true;
+            }
+    		for(Entity e : handler.getWorld().getEntityManager().getE3overflow12())
+            {
+    			if(handler.getWorld().getEntityManager().getPlayer2() != null && e.equals(handler.getWorld().getEntityManager().getPlayer2()))
+    				return false;
+                if(!e.equals(this) && e.getCollisionBounds(0.0F, 0.0F).intersects(getCollisionBounds(xOffset, yOffset)))
+                    return true;
+            }
+    		for(Entity e : handler.getWorld().getEntityManager().getE3overflow13())
+            {
+    			if(handler.getWorld().getEntityManager().getPlayer2() != null && e.equals(handler.getWorld().getEntityManager().getPlayer2()))
+    				return false;
+                if(!e.equals(this) && e.getCollisionBounds(0.0F, 0.0F).intersects(getCollisionBounds(xOffset, yOffset)))
+                    return true;
+            }
+    		for(Entity e : handler.getWorld().getEntityManager().getE3overflow14())
+            {
+    			if(handler.getWorld().getEntityManager().getPlayer2() != null && e.equals(handler.getWorld().getEntityManager().getPlayer2()))
+    				return false;
+                if(!e.equals(this) && e.getCollisionBounds(0.0F, 0.0F).intersects(getCollisionBounds(xOffset, yOffset)))
+                    return true;
+            }
+    		for(Entity e : handler.getWorld().getEntityManager().getE3overflow15())
+            {
+    			if(handler.getWorld().getEntityManager().getPlayer2() != null && e.equals(handler.getWorld().getEntityManager().getPlayer2()))
+    				return false;
+                if(!e.equals(this) && e.getCollisionBounds(0.0F, 0.0F).intersects(getCollisionBounds(xOffset, yOffset)))
+                    return true;
+            }
+    		for(Entity e : handler.getWorld().getEntityManager().getE3overflow16())
+            {
+    			if(handler.getWorld().getEntityManager().getPlayer2() != null && e.equals(handler.getWorld().getEntityManager().getPlayer2()))
+    				return false;
+                if(!e.equals(this) && e.getCollisionBounds(0.0F, 0.0F).intersects(getCollisionBounds(xOffset, yOffset)))
+                    return true;
+            }
     	}else if(handler.getWorld().getCurrentWorld() == 4) {
     		for(Entity e : handler.getWorld().getEntityManager().getEntities4())
             {
@@ -212,6 +478,104 @@ public abstract class Entity
                     return true;
             }
     		for(Entity e : handler.getWorld().getEntityManager().getE4overflow2())
+            {
+    			if(handler.getWorld().getEntityManager().getPlayer2() != null && e.equals(handler.getWorld().getEntityManager().getPlayer2()))
+    				return false;
+                if(!e.equals(this) && e.getCollisionBounds(0.0F, 0.0F).intersects(getCollisionBounds(xOffset, yOffset)))
+                    return true;
+            }
+    		for(Entity e : handler.getWorld().getEntityManager().getE4overflow3())
+            {
+    			if(handler.getWorld().getEntityManager().getPlayer2() != null && e.equals(handler.getWorld().getEntityManager().getPlayer2()))
+    				return false;
+                if(!e.equals(this) && e.getCollisionBounds(0.0F, 0.0F).intersects(getCollisionBounds(xOffset, yOffset)))
+                    return true;
+            }
+    		for(Entity e : handler.getWorld().getEntityManager().getE4overflow4())
+            {
+    			if(handler.getWorld().getEntityManager().getPlayer2() != null && e.equals(handler.getWorld().getEntityManager().getPlayer2()))
+    				return false;
+                if(!e.equals(this) && e.getCollisionBounds(0.0F, 0.0F).intersects(getCollisionBounds(xOffset, yOffset)))
+                    return true;
+            }
+    		for(Entity e : handler.getWorld().getEntityManager().getE4overflow5())
+            {
+    			if(handler.getWorld().getEntityManager().getPlayer2() != null && e.equals(handler.getWorld().getEntityManager().getPlayer2()))
+    				return false;
+                if(!e.equals(this) && e.getCollisionBounds(0.0F, 0.0F).intersects(getCollisionBounds(xOffset, yOffset)))
+                    return true;
+            }
+    		for(Entity e : handler.getWorld().getEntityManager().getE4overflow6())
+            {
+    			if(handler.getWorld().getEntityManager().getPlayer2() != null && e.equals(handler.getWorld().getEntityManager().getPlayer2()))
+    				return false;
+                if(!e.equals(this) && e.getCollisionBounds(0.0F, 0.0F).intersects(getCollisionBounds(xOffset, yOffset)))
+                    return true;
+            }
+    		for(Entity e : handler.getWorld().getEntityManager().getE4overflow7())
+            {
+    			if(handler.getWorld().getEntityManager().getPlayer2() != null && e.equals(handler.getWorld().getEntityManager().getPlayer2()))
+    				return false;
+                if(!e.equals(this) && e.getCollisionBounds(0.0F, 0.0F).intersects(getCollisionBounds(xOffset, yOffset)))
+                    return true;
+            }
+    		for(Entity e : handler.getWorld().getEntityManager().getE4overflow8())
+            {
+    			if(handler.getWorld().getEntityManager().getPlayer2() != null && e.equals(handler.getWorld().getEntityManager().getPlayer2()))
+    				return false;
+                if(!e.equals(this) && e.getCollisionBounds(0.0F, 0.0F).intersects(getCollisionBounds(xOffset, yOffset)))
+                    return true;
+            }
+    		for(Entity e : handler.getWorld().getEntityManager().getE4overflow9())
+            {
+    			if(handler.getWorld().getEntityManager().getPlayer2() != null && e.equals(handler.getWorld().getEntityManager().getPlayer2()))
+    				return false;
+                if(!e.equals(this) && e.getCollisionBounds(0.0F, 0.0F).intersects(getCollisionBounds(xOffset, yOffset)))
+                    return true;
+            }
+    		for(Entity e : handler.getWorld().getEntityManager().getE4overflow10())
+            {
+    			if(handler.getWorld().getEntityManager().getPlayer2() != null && e.equals(handler.getWorld().getEntityManager().getPlayer2()))
+    				return false;
+                if(!e.equals(this) && e.getCollisionBounds(0.0F, 0.0F).intersects(getCollisionBounds(xOffset, yOffset)))
+                    return true;
+            }
+    		for(Entity e : handler.getWorld().getEntityManager().getE4overflow11())
+            {
+    			if(handler.getWorld().getEntityManager().getPlayer2() != null && e.equals(handler.getWorld().getEntityManager().getPlayer2()))
+    				return false;
+                if(!e.equals(this) && e.getCollisionBounds(0.0F, 0.0F).intersects(getCollisionBounds(xOffset, yOffset)))
+                    return true;
+            }
+    		for(Entity e : handler.getWorld().getEntityManager().getE4overflow12())
+            {
+    			if(handler.getWorld().getEntityManager().getPlayer2() != null && e.equals(handler.getWorld().getEntityManager().getPlayer2()))
+    				return false;
+                if(!e.equals(this) && e.getCollisionBounds(0.0F, 0.0F).intersects(getCollisionBounds(xOffset, yOffset)))
+                    return true;
+            }
+    		for(Entity e : handler.getWorld().getEntityManager().getE4overflow13())
+            {
+    			if(handler.getWorld().getEntityManager().getPlayer2() != null && e.equals(handler.getWorld().getEntityManager().getPlayer2()))
+    				return false;
+                if(!e.equals(this) && e.getCollisionBounds(0.0F, 0.0F).intersects(getCollisionBounds(xOffset, yOffset)))
+                    return true;
+            }
+    		for(Entity e : handler.getWorld().getEntityManager().getE4overflow14())
+            {
+    			if(handler.getWorld().getEntityManager().getPlayer2() != null && e.equals(handler.getWorld().getEntityManager().getPlayer2()))
+    				return false;
+                if(!e.equals(this) && e.getCollisionBounds(0.0F, 0.0F).intersects(getCollisionBounds(xOffset, yOffset)))
+                    return true;
+            }
+    		for(Entity e : handler.getWorld().getEntityManager().getE4overflow15())
+            {
+    			if(handler.getWorld().getEntityManager().getPlayer2() != null && e.equals(handler.getWorld().getEntityManager().getPlayer2()))
+    				return false;
+                if(!e.equals(this) && e.getCollisionBounds(0.0F, 0.0F).intersects(getCollisionBounds(xOffset, yOffset)))
+                    return true;
+            }
+    		for(Entity e : handler.getWorld().getEntityManager().getE4overflow16())
             {
     			if(handler.getWorld().getEntityManager().getPlayer2() != null && e.equals(handler.getWorld().getEntityManager().getPlayer2()))
     				return false;

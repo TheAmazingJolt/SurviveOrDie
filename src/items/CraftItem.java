@@ -36,7 +36,7 @@ public class CraftItem
 	 public static CraftItem cutAshyWoodItem3 = new CraftItem(Assets.cutAshyWood, "Cut Wood", 19, Item.axeItem, Item.ashyWoodItem, false);
 	 public static CraftItem steelAxeItem = new CraftItem(Assets.steelAxe, "Steel Axe", 20, Item.woodenHandleItem, Item.steelBarItem, true);
 	 public static CraftItem steelHealthBoostItem = new CraftItem(Assets.steelHealthBoostPotion, "Steel Health Boost Potion", 21, Item.healthBoostItem, Item.steelBarItem, false);
-	 //public static CraftItem woodenStructure = new CraftItem(Assets.woodenStructure, "Wooden Structure", 44, Item.cutWoodItem, Item.cutAshyWood, false);
+	 public static CraftItem woodenStructure = new CraftItem(Assets.woodenStructure, "Wooden Structure", 44, Item.cutWoodItem, Item.cutAshyWood, false);
 	 public static CraftItem ashyWoodHandle = new CraftItem(Assets.ashyWoodHandle, "Ashy Wood Handle", 45, Item.cutAshyWood, Item.ashyWoodItem, false);
 	 public static CraftItem steelHammer = new CraftItem(Assets.steelHammer, "Steel Hammer", 46, Item.ashyWoodHandle, Item.steelBarItem, true);
 	 public static CraftItem steelPlate = new CraftItem(Assets.steelPlate, "Steel Plate", 47, Item.steelBarItem, Item.steelHammer, false);
@@ -66,7 +66,7 @@ public class CraftItem
 	 public static CraftItem cutAshyWoodItem6 = new CraftItem(Assets.cutAshyWood, 41, Item.axeItem, Item.ashyWoodItem, false);
 	 public static CraftItem steelAxeItem2 = new CraftItem(Assets.steelAxe, 42, Item.woodenHandleItem, Item.steelBarItem, true);
 	 public static CraftItem steelHealthBoostItem2 = new CraftItem(Assets.steelHealthBoostPotion, 43, Item.healthBoostItem, Item.steelBarItem, false);
-	 //public static CraftItem woodenStructure2 = new CraftItem(Assets.woodenStructure, "Wooden Structure", 49, Item.cutAshyWood, Item.cutWoodItem, false);
+	 public static CraftItem woodenStructure2 = new CraftItem(Assets.woodenStructure, "Wooden Structure", 49, Item.cutAshyWood, Item.cutWoodItem, false);
 	 public static CraftItem ashyWoodHandle2 = new CraftItem(Assets.ashyWoodHandle, "Ashy Wood Handle", 50, Item.ashyWoodItem, Item.cutAshyWood, false);
 	 public static CraftItem steelHammer2 = new CraftItem(Assets.steelHammer, "Steel Hammer", 51, Item.steelBarItem, Item.ashyWoodHandle, true);
 	 public static CraftItem steelPlate2 = new CraftItem(Assets.steelPlate, "Steel Plate", 52, Item.steelHammer, Item.steelBarItem, false);

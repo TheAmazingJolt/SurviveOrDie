@@ -79,152 +79,154 @@ public class Help
 
     public void tick()
     {
-    	if(!handler.getWorld().isLoaded() && !completed && handler.getWorld().getCurrentWorld() == 1) {
-    		active = true;
-    		if(!audioStarted) {
-    			audioStarted = true;
-    			if(help1 == null)
-    				help1 = new Audio("help/help1.m4a", false, true, handler);
-    		}
-    	}
-    	else if(handler.getWorld().isLoaded()) {
-    		if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_H)) {
-            	active = true;
-            	if(help1 == null)
-            		help1 = new Audio("help/help1.m4a", false, true, handler);
-            }
-    	}
-    	if(!active)
-    		return;
-    	size = help.size();
-    	if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_ENTER) && completed) {
-    		currentHelpNum++;
-    	}
-    	if(!completed) {
-    		if(currentHelpNum == 0) {
-    			for(Item i : handler.getWorld().getEntityManager().getPlayer().getInventory().getInventoryItems()) {
-    				if(i.getName().contains("Wood")) {
-    					currentHelpNum++;
-    					if(help2 == null)
-    						help2 = new Audio("help/help2.m4a", false, true, handler);
-    				}
-    			}
-    		}else if(currentHelpNum == 1) {
-    			for(Item i : handler.getWorld().getEntityManager().getPlayer().getInventory().getInventoryItems()) {
-    				if(i.getName().contains("Rock")) {
-    					currentHelpNum++;
-    					if(help3 == null)
-    						help3 = new Audio("help/help3.m4a", false, true, handler);
-    				}
-    			}
-    		}else if(currentHelpNum == 2) {
-    			for(Item i : handler.getWorld().getEntityManager().getPlayer().getInventory().getInventoryItems()) {
-    				if(i.getName().contains("Axe")) {
-    					currentHelpNum++;
-    					if(help4 == null)
-    						help4 = new Audio("help/help4.m4a", false, true, handler);
-    				}
-    			}
-    		}else if(currentHelpNum == 3) {
-    			if(handler.getWorld().getEntityManager().getPlayer().getInventory().checkIfContains(Item.ironOreItem.getId(), Item.flintItem.getId())) {
-    				currentHelpNum++;
-    				if(help5 == null)
-						help5 = new Audio("help/help5.m4a", false, true, handler);
-    			}
-    		}else if(currentHelpNum == 4) {
-    			float px = handler.getWorld().getEntityManager().getPlayer().getX();
-    			float py = handler.getWorld().getEntityManager().getPlayer().getY();
-    			if(px <= 1664 && py <= 1664) {
-    				currentHelpNum++;
-    				if(help6 == null)
-						help6 = new Audio("help/help6.m4a", false, true, handler);
-    			}
-    		}else if(currentHelpNum == 5) {
-    			float px = handler.getWorld().getEntityManager().getPlayer().getX();
-    			float py = handler.getWorld().getEntityManager().getPlayer().getY();
-    			for(NPC n : handler.getWorld().getEntityManager().getNpcs()) {
-    				if(px >= n.getX() - 500 && px <= n.getX() + n.getWidth() + 500) {
-    					if(py >= n.getY() - 500 && py <= n.getY() + n.getHeight() + 500) {
-    						currentHelpNum++;
-    					}
-    				}
-    			}
-    		}
-    	}
-    	currentHelp = null;
-    	currentHelp2 = null;
-    	currentHelp3 = null;
-    	if(currentHelpNum == 0) {
-    		if(size == 1) {
-        		currentHelp = help.get(currentHelpNum);
-        	}else if(size == 2) {
-        		currentHelp = help.get(currentHelpNum);
-        		currentHelp2 = help.get(currentHelpNum + 1);
-        	}else if(size >= 3) {
-        		currentHelp = help.get(currentHelpNum);
-        		currentHelp2 = help.get(currentHelpNum + 1);
-        		currentHelp3 = help.get(currentHelpNum + 2);
-        	}
-    	}if(currentHelpNum == 1) {
-    		if(size == 4) {
-        		currentHelp = help.get(currentHelpNum + 2);
-    		}else if(size == 5) {
-        		currentHelp = help.get(currentHelpNum + 2);
-        		currentHelp2 = help.get(currentHelpNum + 3);
-    		}else if(size >= 6) {
-        		currentHelp = help.get(currentHelpNum + 2);
-        		currentHelp2 = help.get(currentHelpNum + 3);
-        		currentHelp3 = help.get(currentHelpNum + 4);
-    		}
-    	}if(currentHelpNum == 2) {
-    		if(size == 7) {
-        		currentHelp = help.get(currentHelpNum + 4);
-    		}else if(size == 8) {
-        		currentHelp = help.get(currentHelpNum + 4);
-        		currentHelp2 = help.get(currentHelpNum + 5);
-    		}else if(size >= 9) {
-        		currentHelp = help.get(currentHelpNum + 4);
-        		currentHelp2 = help.get(currentHelpNum + 5);
-        		currentHelp3 = help.get(currentHelpNum + 6);
-    		}
-    	}if(currentHelpNum == 3) {
-    		if(size == 10) {
-        		currentHelp = help.get(currentHelpNum + 6);
-    		}else if(size == 11) {
-        		currentHelp = help.get(currentHelpNum + 6);
-        		currentHelp2 = help.get(currentHelpNum + 7);
-    		}else if(size >= 12) {
-        		currentHelp = help.get(currentHelpNum + 6);
-        		currentHelp2 = help.get(currentHelpNum + 7);
-        		currentHelp3 = help.get(currentHelpNum + 8);
-    		}
-    	}if(currentHelpNum == 4) {
-    		if(size == 13) {
-        		currentHelp = help.get(currentHelpNum + 8);
-    		}else if(size == 14) {
-        		currentHelp = help.get(currentHelpNum + 8);
-        		currentHelp2 = help.get(currentHelpNum + 9);
-    		}else if(size >= 15) {
-        		currentHelp = help.get(currentHelpNum + 8);
-        		currentHelp2 = help.get(currentHelpNum + 9);
-        		currentHelp3 = help.get(currentHelpNum + 10);
-    		}
-    	}if(currentHelpNum == 5) {
-    		if(size == 16) {
-        		currentHelp = help.get(currentHelpNum + 10);
-    		}else if(size == 17) {
-        		currentHelp = help.get(currentHelpNum + 10);
-        		currentHelp2 = help.get(currentHelpNum + 11);
-    		}else if(size >= 18) {
-        		currentHelp = help.get(currentHelpNum + 10);
-        		currentHelp2 = help.get(currentHelpNum + 11);
-        		currentHelp3 = help.get(currentHelpNum + 12);
-    		}
-    	}
-    	if(currentHelp == null && currentHelp2 == null && currentHelp3 == null) {
-    		currentHelpNum = 0;
-    		active = false;
-    		completed = true;
+    	if(handler.getGame().getGameType().contains("story")) {
+	    	if(!handler.getWorld().isLoaded() && !completed && handler.getWorld().getCurrentWorld() == 1) {
+	    		active = true;
+	    		if(!audioStarted) {
+	    			audioStarted = true;
+	    			if(help1 == null)
+	    				help1 = new Audio("help/help1.m4a", false, true, handler);
+	    		}
+	    	}
+	    	else if(handler.getWorld().isLoaded()) {
+	    		if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_H)) {
+	            	active = true;
+	            	if(help1 == null)
+	            		help1 = new Audio("help/help1.m4a", false, true, handler);
+	            }
+	    	}
+	    	if(!active)
+	    		return;
+	    	size = help.size();
+	    	if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_ENTER) && completed) {
+	    		currentHelpNum++;
+	    	}
+	    	if(!completed) {
+	    		if(currentHelpNum == 0) {
+	    			for(Item i : handler.getWorld().getEntityManager().getPlayer().getInventory().getInventoryItems()) {
+	    				if(i.getName().contains("Wood")) {
+	    					currentHelpNum++;
+	    					if(help2 == null)
+	    						help2 = new Audio("help/help2.m4a", false, true, handler);
+	    				}
+	    			}
+	    		}else if(currentHelpNum == 1) {
+	    			for(Item i : handler.getWorld().getEntityManager().getPlayer().getInventory().getInventoryItems()) {
+	    				if(i.getName().contains("Rock")) {
+	    					currentHelpNum++;
+	    					if(help3 == null)
+	    						help3 = new Audio("help/help3.m4a", false, true, handler);
+	    				}
+	    			}
+	    		}else if(currentHelpNum == 2) {
+	    			for(Item i : handler.getWorld().getEntityManager().getPlayer().getInventory().getInventoryItems()) {
+	    				if(i.getName().contains("Axe")) {
+	    					currentHelpNum++;
+	    					if(help4 == null)
+	    						help4 = new Audio("help/help4.m4a", false, true, handler);
+	    				}
+	    			}
+	    		}else if(currentHelpNum == 3) {
+	    			if(handler.getWorld().getEntityManager().getPlayer().getInventory().checkIfContains(Item.ironOreItem.getId(), Item.flintItem.getId())) {
+	    				currentHelpNum++;
+	    				if(help5 == null)
+							help5 = new Audio("help/help5.m4a", false, true, handler);
+	    			}
+	    		}else if(currentHelpNum == 4) {
+	    			float px = handler.getWorld().getEntityManager().getPlayer().getX();
+	    			float py = handler.getWorld().getEntityManager().getPlayer().getY();
+	    			if(px <= 1664 && py <= 1664) {
+	    				currentHelpNum++;
+	    				if(help6 == null)
+							help6 = new Audio("help/help6.m4a", false, true, handler);
+	    			}
+	    		}else if(currentHelpNum == 5) {
+	    			float px = handler.getWorld().getEntityManager().getPlayer().getX();
+	    			float py = handler.getWorld().getEntityManager().getPlayer().getY();
+	    			for(NPC n : handler.getWorld().getEntityManager().getNpcs()) {
+	    				if(px >= n.getX() - 500 && px <= n.getX() + n.getWidth() + 500) {
+	    					if(py >= n.getY() - 500 && py <= n.getY() + n.getHeight() + 500) {
+	    						currentHelpNum++;
+	    					}
+	    				}
+	    			}
+	    		}
+	    	}
+	    	currentHelp = null;
+	    	currentHelp2 = null;
+	    	currentHelp3 = null;
+	    	if(currentHelpNum == 0) {
+	    		if(size == 1) {
+	        		currentHelp = help.get(currentHelpNum);
+	        	}else if(size == 2) {
+	        		currentHelp = help.get(currentHelpNum);
+	        		currentHelp2 = help.get(currentHelpNum + 1);
+	        	}else if(size >= 3) {
+	        		currentHelp = help.get(currentHelpNum);
+	        		currentHelp2 = help.get(currentHelpNum + 1);
+	        		currentHelp3 = help.get(currentHelpNum + 2);
+	        	}
+	    	}if(currentHelpNum == 1) {
+	    		if(size == 4) {
+	        		currentHelp = help.get(currentHelpNum + 2);
+	    		}else if(size == 5) {
+	        		currentHelp = help.get(currentHelpNum + 2);
+	        		currentHelp2 = help.get(currentHelpNum + 3);
+	    		}else if(size >= 6) {
+	        		currentHelp = help.get(currentHelpNum + 2);
+	        		currentHelp2 = help.get(currentHelpNum + 3);
+	        		currentHelp3 = help.get(currentHelpNum + 4);
+	    		}
+	    	}if(currentHelpNum == 2) {
+	    		if(size == 7) {
+	        		currentHelp = help.get(currentHelpNum + 4);
+	    		}else if(size == 8) {
+	        		currentHelp = help.get(currentHelpNum + 4);
+	        		currentHelp2 = help.get(currentHelpNum + 5);
+	    		}else if(size >= 9) {
+	        		currentHelp = help.get(currentHelpNum + 4);
+	        		currentHelp2 = help.get(currentHelpNum + 5);
+	        		currentHelp3 = help.get(currentHelpNum + 6);
+	    		}
+	    	}if(currentHelpNum == 3) {
+	    		if(size == 10) {
+	        		currentHelp = help.get(currentHelpNum + 6);
+	    		}else if(size == 11) {
+	        		currentHelp = help.get(currentHelpNum + 6);
+	        		currentHelp2 = help.get(currentHelpNum + 7);
+	    		}else if(size >= 12) {
+	        		currentHelp = help.get(currentHelpNum + 6);
+	        		currentHelp2 = help.get(currentHelpNum + 7);
+	        		currentHelp3 = help.get(currentHelpNum + 8);
+	    		}
+	    	}if(currentHelpNum == 4) {
+	    		if(size == 13) {
+	        		currentHelp = help.get(currentHelpNum + 8);
+	    		}else if(size == 14) {
+	        		currentHelp = help.get(currentHelpNum + 8);
+	        		currentHelp2 = help.get(currentHelpNum + 9);
+	    		}else if(size >= 15) {
+	        		currentHelp = help.get(currentHelpNum + 8);
+	        		currentHelp2 = help.get(currentHelpNum + 9);
+	        		currentHelp3 = help.get(currentHelpNum + 10);
+	    		}
+	    	}if(currentHelpNum == 5) {
+	    		if(size == 16) {
+	        		currentHelp = help.get(currentHelpNum + 10);
+	    		}else if(size == 17) {
+	        		currentHelp = help.get(currentHelpNum + 10);
+	        		currentHelp2 = help.get(currentHelpNum + 11);
+	    		}else if(size >= 18) {
+	        		currentHelp = help.get(currentHelpNum + 10);
+	        		currentHelp2 = help.get(currentHelpNum + 11);
+	        		currentHelp3 = help.get(currentHelpNum + 12);
+	    		}
+	    	}
+	    	if(currentHelp == null && currentHelp2 == null && currentHelp3 == null) {
+	    		currentHelpNum = 0;
+	    		active = false;
+	    		completed = true;
+	    	}
     	}
     	
     }

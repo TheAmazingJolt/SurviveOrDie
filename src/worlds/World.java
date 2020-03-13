@@ -1,6 +1,7 @@
 package worlds;
 
 import java.awt.Graphics;
+import java.awt.event.KeyEvent;
 
 import entities.Entity;
 import entities.EntityManager;
@@ -21,6 +22,7 @@ import entities.statics.Stone;
 import entities.statics.Tree;
 import items.ItemManager;
 import main.Handler;
+import states.State;
 import tiles.DoorTile;
 import tiles.DoorTile2;
 import tiles.SandyDoorTile;
@@ -51,23 +53,28 @@ public class World
     private static int totalEntities1;
     private static int totalEntities2;
     
+    private int furthestWorldVisited = 1;
+    
     private int worldGenWidth = 100;
     private int worldGenHeight = 100;
     
     private WorldGenerator generator;
     
     private boolean setup = false;
+    
+    private boolean world1Loaded = false;
+    private boolean world2Loaded = false;
+    private boolean world3Loaded = false;
+    private boolean world4Loaded = false;
+    
+    private boolean aboutToChange = false;
 	
     public World(Handler handle, String path)
     {
         handler = handle;
         entityManager = new EntityManager(handler);
         itemManager = new ItemManager(handler);
-        if(handler.getGame().getGameType().contains("survival") || handler.getGame().getGameType().contains("creative")) {
-        	entityManager.setup(new Player(handler, (worldGenWidth / 2) * 64, (worldGenHeight / 2) * 64, 1, -1));
-        	generateWorld(path);
-        	setup = true;
-        }else if(handler.getGame().getGameType().contains("story")) {
+        if(handler.getGame().getGameType().contains("story")) {
             spawnX = 3264;
             spawnY = 3264;
         	entityManager.setup(new Player(handler, spawnX, spawnY, 1, -1));
@@ -75,12 +82,56 @@ public class World
         	setup = true;
         }
     }
+    
+    public World(Handler handle, boolean isLoading)
+    {
+        handler = handle;
+        entityManager = new EntityManager(handler);
+        itemManager = new ItemManager(handler);
+        loaded = isLoading;
+	    if(handler.getGame().getGameType().contains("survival") || handler.getGame().getGameType().contains("creative")) {
+	      	entityManager.setup(new Player(handler, (worldGenWidth / 2) * 64, (worldGenHeight / 2) * 64, 1, -1));
+	       	generateWorld();
+	       	setup = true;
+	    }
+    }
+    
+    public World(Handler handle, boolean isLoading, int world)
+    {
+        handler = handle;
+        entityManager = new EntityManager(handler);
+        itemManager = new ItemManager(handler);
+        loaded = isLoading;
+        currentWorld = world;
+	    if(handler.getGame().getGameType().contains("survival") || handler.getGame().getGameType().contains("creative")) {
+	      	entityManager.setup(new Player(handler, (worldGenWidth / 2) * 64, (worldGenHeight / 2) * 64, 1, -1));
+	    	entityManager.getPlayer().setKilledEnemies(14);
+	       	generateWorld();
+	       	setup = true;
+	    }
+    }
+    
+    public World(Handler handle, boolean isLoading, int saveToLoad, int world)
+    {
+        handler = handle;
+        entityManager = new EntityManager(handler);
+        itemManager = new ItemManager(handler);
+        loaded = isLoading;
+        loadedSave = saveToLoad;
+        currentWorld = world;
+	    if(handler.getGame().getGameType().contains("survival") || handler.getGame().getGameType().contains("creative")) {
+	      	entityManager.setup(new Player(handler, (worldGenWidth / 2) * 64, (worldGenHeight / 2) * 64, 1, -1));
+	    	entityManager.getPlayer().setKilledEnemies(14);
+	       	generateWorld();
+	       	setup = true;
+	    }
+    }
 
     public void tick()
     {
         entityManager.tick();
         itemManager.tick();
-        if(handler.getWorld().getEntityManager().getPlayer().getKilledEnemies() >= 5) {
+        if(handler.getWorld().getEntityManager().getPlayer().getKilledEnemies() >= 15) {
         	if(handler.getWorld().getCurrentWorld() == 4) {
         		SandyDoorTile.open();
         		return;
@@ -132,7 +183,55 @@ public class World
         handler.getGuiManager().render(g);
     }
 
-    public Tile getTile(int x, int y)
+    public int getFurthestWorldVisited() {
+		return furthestWorldVisited;
+	}
+
+	public void setFurthestWorldVisited(int furthestWorldVisited) {
+		this.furthestWorldVisited = furthestWorldVisited;
+	}
+
+	public boolean isAboutToChange() {
+		return aboutToChange;
+	}
+
+	public void setAboutToChange(boolean aboutToChange) {
+		this.aboutToChange = aboutToChange;
+	}
+
+	public boolean isWorld1Loaded() {
+		return world1Loaded;
+	}
+
+	public void setWorld1Loaded(boolean world1Loaded) {
+		this.world1Loaded = world1Loaded;
+	}
+
+	public boolean isWorld2Loaded() {
+		return world2Loaded;
+	}
+
+	public void setWorld2Loaded(boolean world2Loaded) {
+		this.world2Loaded = world2Loaded;
+	}
+
+	public boolean isWorld3Loaded() {
+		return world3Loaded;
+	}
+
+	public void setWorld3Loaded(boolean world3Loaded) {
+		this.world3Loaded = world3Loaded;
+	}
+
+	public boolean isWorld4Loaded() {
+		return world4Loaded;
+	}
+
+	public void setWorld4Loaded(boolean world4Loaded) {
+		this.world4Loaded = world4Loaded;
+	}
+
+	public Tile getTile(int x, int y)
     {
         if(x < 0 || y < 0 || x >= width || y >= height)
             return Tile.grassTile;
@@ -320,23 +419,33 @@ public class World
         			Tile.getTiles().add(Tile.sandyDoorTile);
         		}else if(tiles[x][y] == 19) {
         			Tile.getTiles().add(Tile.sandyDoorTile2);
+        		}else if(tiles[x][y] == 20) {
+        			Tile.getTiles().add(Tile.warpDownTile);
         		}
         	}
         }
     }
 	
-	public void generateWorld(String path)
+	public void generateWorld()
     {
 		width = 100;
 		height = 100;
         tiles = new int[width][height];
         
         if(!loaded) {
-			generator = new WorldGenerator(width, height, 250, 5, currentWorld, handler);
+			generator = new WorldGenerator(width, height, 10, currentWorld, handler);
 	    	generator.generate();
 	    	
 	    	for(Entity e : generator.getEntities()) {
-	    		entityManager.addEntity1(e);
+	    		if(currentWorld == 1) {
+	    			entityManager.addEntity1(e);
+	    		}else if(currentWorld == 2) {
+	    			entityManager.addEntity2(e);
+	    		}else if(currentWorld == 3) {
+	    			entityManager.addEntity3(e);
+	    		}else if(currentWorld == 4) {
+	    			entityManager.addEntity4(e);
+	    		}
 	    	}
 	        
 	        for(int y = 0; y < height; y++) {
@@ -380,12 +489,20 @@ public class World
 	        			Tile.getTiles().add(Tile.sandyDoorTile);
 	        		}else if(tiles[x][y] == 19) {
 	        			Tile.getTiles().add(Tile.sandyDoorTile2);
+	        		}else if(tiles[x][y] == 20) {
+	        			Tile.getTiles().add(Tile.warpDownTile);
 	        		}
 	        	}
 	        }
         }else if(loaded) {
         	String save = "save" + loadedSave;
-        	String path2 = "res/saves/" + save + "/worldSave.txt";
+//        	if(currentWorld == 2 && furthestWorldVisited == 1) {
+//        		loaded = false;
+//        	}
+        	if(currentWorld < 1) {
+        		currentWorld = 1;
+        	}
+        	String path2 = "res/saves/" + save + "/world" + currentWorld + "/worldSave.txt";
         	String file3 = Utils.loadFileAsString(path2);
             String tokens3[] = file3.split("\\s+");
             String token4[];
@@ -431,6 +548,8 @@ public class World
 	        			Tile.getTiles().add(Tile.sandyDoorTile);
 	        		}else if(tiles[x][y] == 19) {
 	        			Tile.getTiles().add(Tile.sandyDoorTile2);
+	        		}else if(tiles[x][y] == 20) {
+	        			Tile.getTiles().add(Tile.warpDownTile);
 	        		}
 	        	}
 	        }
@@ -438,12 +557,18 @@ public class World
 
     }
     
-    public void unloadWorld() {
+    public WorldGenerator getGenerator() {
+		return generator;
+	}
+
+	public void unloadWorld() {
     	width = 0;
     	height = 0;
     	spawnX = 0;
     	spawnY = 0;
     	tiles = null;
+    	aboutToChange = false;
+    	getEntityManager().clearEntities();
     }
 
     public int getWidth()

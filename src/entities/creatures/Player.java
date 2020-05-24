@@ -1188,32 +1188,6 @@ public class Player extends Creature
         if(grave == null)
         	grave = new Grave(inventory.getInventoryItems(), this, this.x, this.y, handler);
     	inventory.clear();
-//        for(Iterator<Item> iterator = inventory.getInventoryItems().iterator(); iterator.hasNext();)
-//        {
-//            Item i = (Item)iterator.next();
-//            droppedItems.add(i);
-//            if(inventory.getInventoryItems().size() == droppedItems.size())
-//            {
-//                inventory.dropItem(droppedItems);
-//                State.setState(handler.getGame().deathState);
-//                active = true;
-//                health = maxHealth;
-//                x = startX;
-//                y = startY;
-//                Item ii;
-//                for(Iterator<Item> iterator1 = droppedItems.iterator(); iterator1.hasNext(); ii.setCount(0))
-//                    ii = (Item)iterator1.next();
-//
-//                droppedItems.removeAll(droppedItems);
-//                inventory.getInventoryItems().removeAll(inventory.getInventoryItems());
-//                return;
-//            }
-//        }
-        
-//        for(Item item : inventory.getInventoryItems()) {
-//        	inventory.dropItem(item, item.getCount());
-//        }
-        
         active = true;
         health = maxHealth;
         x = startX;

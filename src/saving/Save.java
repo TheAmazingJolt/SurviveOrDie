@@ -94,7 +94,10 @@ public class Save
     		FileWriter fileWriter = new FileWriter(fileName);
     		BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
     		
-    		bufferedWriter.write(handler.getGame().creationDate);//date created
+    		if(handler.getGame().creationDateSet)
+    			bufferedWriter.write(handler.getGame().creationDate);//date created
+    		else if(!handler.getGame().creationDateSet)
+    			bufferedWriter.write(dateFormat.format(date));
     		bufferedWriter.newLine();
     		bufferedWriter.write(dateFormat.format(date)); //date modified
     		bufferedWriter.newLine();

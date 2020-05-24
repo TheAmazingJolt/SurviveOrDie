@@ -19,7 +19,6 @@ public class Button {
 	private int mouseX;
 	private int mouseY;
 
-	@SuppressWarnings("unused")
 	private boolean centered;
 	private boolean hovering;
 	private boolean clicked;
@@ -98,6 +97,14 @@ public class Button {
 	public void setTextX() {
 		this.textX = this.x + this.width / 2;
 		this.textY = this.y + this.height / 2;
+	}
+
+	public boolean isCentered() {
+		return centered;
+	}
+
+	public void setCentered(boolean centered) {
+		this.centered = centered;
 	}
 	
 }
